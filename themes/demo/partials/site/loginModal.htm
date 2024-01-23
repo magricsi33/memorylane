@@ -1,0 +1,80 @@
+<div
+    :class="{ '!opacity-100 !visible !scale-100': openModal == 'login' }"
+    class="fixed top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%] h-auto scale-0 overflow-auto invisible xl:w-[500px] w-11/12 opacity-0 transition-all ease-in-out duration-200 bg-[#fff] z-[999999]"
+>
+    <div class="p-8 ">
+        <button
+            type="type"
+            @click="openModal = 'null'"
+            class="w-12 h-12 flex items-center justify-center  bg-neutral-700 hover:bg-red-500 absolute right-0 top-0"
+        >
+            <i class="fa-thin fa-xmark text-white"></i>
+        </button>
+        <div id="gameProfileChecker">
+            <form
+                data-request="onSignin"
+                data-request-flash
+                data-request-loading
+            >
+                <h3 class="font-primary text-2xl">
+                    Add meg a belépési adataid
+                </h3>
+                <p class="text-neutral-800">
+                    Folytasd a vásárlást felhasználói fiókkal
+                </p>
+                <div class="flex flex-col gap-3 my-6">
+
+                    <div class="w-full flex flex-col gap-1">
+                        <label
+                            for="login"
+                            class="font-medium mb-[3px] text-sm"
+                            required
+                            >E-mail cím
+                            <sup class="text-red-500 text-[8px]"
+                                >kötelező</sup
+                            ></label
+                        >
+                        <input
+                            type="email"
+                            required
+                            class="bg-[#eee] h-[55px] px-4 w-full focus:outline-0"
+                            name="login"
+                            id="login"
+                            placeholder=""
+                        />
+                    </div>
+                    <div class="w-full flex flex-col gap-1">
+                        <label
+                            for="password"
+                            class="font-medium mb-[3px] text-sm"
+                            required
+                            >Jelszó
+                            <sup class="text-red-500 text-[8px]"
+                                >kötelező</sup
+                            ></label
+                        >
+                        <input
+                            type="password"
+                            required
+                            class="bg-[#eee] h-[55px] px-4 w-full focus:outline-0"
+                            name="password"
+                            id="password"
+                            placeholder=""
+                        />
+                    </div>
+                </div>
+                <button
+                    type="submit"
+                    class="h-[50px] bg-[#2B3990] mb-3 hover:bg-opacity-50 transition-all ease-in-out px-10 text-white font-primary flex items-center justify-center w-full"
+                >
+                    Belépés
+                </button>
+                <div class="text-center">
+                    <a href="#" @click="openModal = 'register'" class="text-neutral-600 text-sm text-center font-bold w-full">
+                        Nincs még <span class="text-[#2B3990]">Memorylane</span> fiókod? <span class="text-[#2B3990]">Irány a regisztráció</span>
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

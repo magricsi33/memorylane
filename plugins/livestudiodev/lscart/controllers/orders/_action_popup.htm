@@ -1,0 +1,43 @@
+<form
+  action=""
+  data-request="onDoMultiAction"
+  data-request-flash
+  data-request-loading
+  data-request-complete="$('.modal').modal('hide');"
+  data-request-data='ids: <?= json_encode($vars["checked"],true) ?>'
+>
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+      &times;
+    </button>
+    <h4 class="modal-title">Válassza ki milyen státuszra szeretné állítani a rendeléseket.</h4>
+  </div>
+  <div class="modal-body">    
+    <div class="form-group">
+        <div class="radio custom-radio">
+            <input checked="checked" name="radio" value="1" type="radio" id="radio_1" />
+            <label for="radio_1">Feldolgozott</label>
+        </div>
+        <div class="radio custom-radio">
+            <input name="radio" value="2" type="radio" id="radio_2" />
+            <label for="radio_2">Kész</label>
+        </div>
+        <div class="radio custom-radio">
+            <input name="radio" value="3" type="radio" id="radio_3" />
+            <label for="radio_3">Elutasítva</label>
+        </div>
+        <div class="radio custom-radio">
+          <input name="radio" value="6" type="radio" id="radio_4" />
+          <label for="radio_4">Véleményezés</label>
+        </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="submit" class="btn btn-warning">
+      Átállítás
+    </button>
+    <button type="button" class="btn btn-default" data-dismiss="modal">
+      Mégsem
+    </button>
+  </div>
+</form>

@@ -1,0 +1,36 @@
+<div class="container mx-auto w-11/12 xl:w-auto xl:py-16 pb-16">
+    <div class="xl:w-6/12 mx-auto">
+        <div class="xl:px-20 xl:border xl:border-zinc-800 text-white rounded-3xl py-20">
+            <h2 class="text-3xl font-bold">
+                Iratkozz fel hírlevelünkre
+            </h2>
+            <p class="text-lg my-8">
+                Ne maradj le a legfrissebb akciókról, kedvezményekről és újdonságokról!
+            </p>
+            <form 
+            data-request="onCreateSub"     
+            data-request-flash 
+            data-request-loading 
+            data-request-validate 
+            data-request-complete="$(this).trigger('reset');" 
+            class="flex flex-wrap">
+                <div class="w-full bg-[#222] flex items-center rounded-3xl py-1 pr-1 relative">
+                    <input type="text" name="email" placeholder="E-mail cím"
+                    class="bg-transparent py-4 w-full rounded-3xl px-5 text-white
+                    focus:border-0 focus:outline-none">
+                    
+                    <button type="submit"
+                    class="text-sm uppercase font-bold hover:bg-[#2B3990] bg-[#1b402f] text-[#2B3990] hover:text-white h-full px-4 rounded-3xl">
+                        Feliratkozás
+                    </button>
+                </div>
+                <span class="text-red-500 text-xs pl-4 font-bold mt-1" data-validate-for="email"></span>
+                <div class="w-full text-start mt-2">
+                    <p class="text-sm text-neutral-500">
+                        'Egyetértek a felhasználási feltételekkel
+                    </p>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

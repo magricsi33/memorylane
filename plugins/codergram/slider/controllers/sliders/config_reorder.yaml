@@ -1,0 +1,4 @@
+title: Sliders
+modelClass: Codergram\Slider\Models\Slider
+toolbar:
+    buttons: reorder_toolbar

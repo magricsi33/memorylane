@@ -1,0 +1,14 @@
+columns:
+    created_at:
+        label: Létrehozás
+        type: datetime
+    title:
+        label: Cím
+        type: text
+        searchable: true
+    public:
+        label: Publikus
+        type: switch
+    public_start:
+        label: 'Publikálás kezdete'
+        type: datetime

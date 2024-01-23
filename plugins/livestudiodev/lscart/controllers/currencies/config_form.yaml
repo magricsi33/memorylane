@@ -1,0 +1,10 @@
+name: Currencies
+form: $/livestudiodev/lscart/models/currency/fields.yaml
+modelClass: LivestudioDev\Lscart\Models\Currency
+defaultRedirect: livestudiodev/lscart/currencies
+create:
+    redirect: 'livestudiodev/lscart/currencies/update/:id'
+    redirectClose: livestudiodev/lscart/currencies
+update:
+    redirect: livestudiodev/lscart/currencies
+    redirectClose: livestudiodev/lscart/currencies

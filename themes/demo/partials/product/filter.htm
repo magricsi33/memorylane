@@ -1,0 +1,75 @@
+<form onsubmit="retrieveOrderBy(event)" class="identifierFormClass relative">
+
+    <div class="fixed left-2 bottom-10 xl:hidden">
+        <button
+        type="submit"
+        class="h-[50px] w-[50px] bg-[#2B3990] hover:bg-opacity-50 transition-all ease-in-out px-10 text-white font-primary flex items-center justify-center clip-box">
+            <i class="fa-solid fa-magnifying-glass text-lg"></i>
+        </button>
+    </div>
+
+    <input type="hidden" name="orderBy" value="{{ sort_dir }}">
+
+    <div class="flex items-center justify-between px-6 py-5">
+        <h3 class="text-2xl font-primary text-white ">
+            Termékek szűrése
+        </h3>
+    </div>
+
+    <div class="toggleClose px-6 relative h-full xl:h-[500px] overflow-auto">
+
+
+        {% set properties = category.properties %}
+
+        {% if properties|length == 0 %}
+            <p class="text-neutral-500 italic text-sm mb-6">
+                A kategóriában nincs szűrhető tulajdonság.
+            </p>
+        {% endif %}
+
+        {% for property in properties %}
+
+            <div class="py-0 border-t border-neutral-800" x-data="{ dropdown: {{ dynamic_filters[property.id] ? 'true' : 'false' }} }">
+
+                <button type="button" class="font-bold mb-0 text-white text-sm justify-between w-full flex items-center py-5" 
+                @click="dropdown = dropdown == true ? false : true">
+                    <span>{{ property.name }}</span> 
+                    <i class="fa-regular fa-chevron-left" :class="{'!-rotate-90': dropdown == true }"></i>
+                </button>
+
+                <div class="selectList max-h-0 overflow-auto opacity-0" 
+                :class="{'!max-h-[300px] !opacity-100': dropdown == true }">
+                    {% for key,item in property.extra %}
+
+                        <div class="form-check flex items-center my-3">
+                            <input class="form-check-input appearance-none border border-neutral-500 h-[20px] w-[20px] min-h-[20px] min-w-[20px] rounded-md bg-transparent 
+                            checked:!bg-[#26bc5f] checked:border-[#26bc5f] focus:outline-none transition duration-200 align-top bg-no-repeat bg-center bg-contain 
+                            float-left mr-2 cursor-pointer"
+                            type="checkbox"
+                            value="{{ item.item }}"
+                            id="filter_check_{{ key }}_{{ item.item }}"
+                            name="filter_{{ property.id }}_{{ key }}[]"
+                            {{ item.item in dynamic_filters[property.id]  ? 'checked' : '' }}>
+                            <label class="form-check-label inline-block text-sm cursor-pointer text-white" for="filter_check_{{ key }}_{{ value }}">
+                                {{ item.item }}
+                            </label>
+                        </div>
+
+                    {% endfor %}
+                </div>
+
+            </div>
+    
+        {% endfor %}
+
+    </div>
+
+    <div class="w-full h-max px-6 py-5 hidden xl:block">
+        <button
+        type="submit"
+        class="h-[50px] bg-[#2B3990] hover:bg-opacity-50 transition-all ease-in-out px-10 text-white font-primary flex items-center justify-center clip-box mt-6 w-full">
+            Szűrés
+        </button>
+    </div>
+
+</form>

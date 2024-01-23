@@ -1,0 +1,18 @@
+scopes:
+  created_at:
+    label: Hozzáadás dátum
+    type: daterange
+    conditions: created_at >= ':after' AND created_at <= ':before'
+  status:
+    label: Státusz
+    type: group
+    conditions: status in (:filtered)
+    options:
+      0: Inaktív
+      1: Aktív
+      2: Aktív, de nem elérhető
+  category:
+    label: Kategória
+    modelClass: LivestudioDev\Lscart\Models\Category
+    conditions: category_id in (:filtered)
+    nameFrom: name

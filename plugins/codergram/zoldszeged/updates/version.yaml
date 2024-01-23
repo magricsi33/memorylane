@@ -1,0 +1,17 @@
+1.0.1:
+    - 'Initialize plugin.'
+1.0.2:
+    - 'Created table codergram_zoldszeged_pages'
+    - builder_table_create_codergram_zoldszeged_pages.php
+1.0.3:
+    - 'Created table codergram_zoldszeged_blogs'
+    - builder_table_create_codergram_zoldszeged_blogs.php
+1.0.4:
+    - 'Updated table codergram_zoldszeged_blogs'
+    - builder_table_update_codergram_zoldszeged_blogs.php
+1.0.5:
+    - 'Updated table codergram_zoldszeged_pages'
+    - builder_table_update_codergram_zoldszeged_pages.php
+1.0.6:
+    - 'Updated table codergram_zoldszeged_pages'
+    - builder_table_update_codergram_zoldszeged_pages_2.php

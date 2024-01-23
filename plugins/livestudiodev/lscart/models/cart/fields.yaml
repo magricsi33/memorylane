@@ -1,0 +1,6 @@
+fields:
+    session_id:
+        label: 'Session ID'
+        span: full
+        readOnly: 1
+        type: text

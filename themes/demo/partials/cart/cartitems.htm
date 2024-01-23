@@ -1,0 +1,28 @@
+<div class="border border-neutral-200 bg-white p-5 relative w-full mb-5 rounded-lg">
+	<p class="text-lg mb-3">
+		Kosár
+	</p>
+	{% for item in cart.cart.items %}
+	{% set product = item.product %}
+	<div class="w-full border-b border-neutral-200 bg-opacity-40 p-3 mb-2 flex items-center">
+		<div class="xl:w-[60px] [60px] xl:min-w-[806] min-w-[60px] xl:h-[60px] h-[60px] bg-white p-2 mr-3 clip-box overflow-hidden">
+			<img src="{{ product.image.path }}" class="w-full h-full object-contain" alt="{{ product.name }}">
+		</div>
+		<div class="">
+			<a href="{{ 'termek'|page({slug: product.slug}) }}" target="_blank" class="font-medium w-full text-xs">
+				<p>
+					{{ product.name }}
+					{% if item.variant %}
+						( {{ item.variant.name }} )
+					{% endif %}
+				</p>
+			</a>
+			<p class="text-xs text-neutral-800">
+				{{ item.quantity }} x
+				{{ product.getItemPrice(item.variant_id, null, true, false, user ? user.discounts : null)|number_format(0, ',', ' ') }}
+				{{ cart.cart.currency.shortcode }}
+			</p>
+		</div>
+	</div>
+	{% endfor %}
+</div>

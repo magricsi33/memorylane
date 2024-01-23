@@ -1,0 +1,71 @@
+title = "Regisztráció"
+url = "/regisztracio"
+layout = "default"
+is_hidden = 0
+
+[account]
+paramCode = "code"
+forceSecure = 0
+requirePassword = 0
+
+[session]
+security = "guest"
+redirect = "profile"
+==
+<?php
+use RainLab\User\Facades\Auth;
+use RainLab\User\Models\User;
+
+function onStart() {
+
+}
+?>
+==
+<div class="xl:w-3/12 md:w-9/12 lg:w-10/12 w-11/12 flex flex-col justify-center mx-auto relative z-10 xl:mt-36 mt-20 bg-white rounded-xl xl:shadow-xl xl:p-10 xl:border border-neutral-200">
+    <h1 class="xl:text-4xl text-3xl font-medium mb-5">
+        Regisztráció
+    </h1>
+    <div class="text-zinc-500 mb-10 flex flex-wrap items-center">
+        <p class="mr-2">
+            Van már felhasználód? 
+        </p>
+        <a href="{{ 'login'|page }}" class="font-medium">
+            Belépés
+        </a>
+    </div>
+    <div class="flex flex-wrap w-full text-white">
+        <form data-request="onRegister" data-request-flash class="w-full">
+            <div class="w-full form-floating mb-3">
+                <input type="text" required class="form-control w-full px-3 py-1.5 bg-transparent border border-neutral-200 rounded-xl focus:outline-none text-black
+                focus:border-[#2B3990] focus:shadow-none" 
+                name="name" id="name" placeholder="Teljes név">
+                <label for="name" class="text-zinc-500 ml-2" required>Teljes név</label>
+            </div>
+            <div class="w-full form-floating mb-3">
+                <input type="text" required class="form-control w-full px-3 py-1.5 bg-transparent border border-neutral-200 rounded-xl focus:outline-none text-black
+                focus:border-[#2B3990] focus:shadow-none" 
+                name="email" id="email" placeholder="E-mail cím">
+                <label for="email" class="text-zinc-500 ml-2" required>E-mail cím</label>
+            </div>
+            <div class="w-full form-floating mb-3">
+                <input type="password" required class="form-control w-full px-3 py-1.5 bg-transparent border border-neutral-200 rounded-xl focus:outline-none text-black
+                focus:border-[#2B3990] focus:shadow-none" 
+                name="password" id="password" placeholder="Jelszó">
+                <label for="password" class="text-zinc-500 ml-2" required>Jelszó</label>
+            </div>
+            <div class="w-full form-floating mb-3">
+                <input type="password" required class="form-control w-full px-3 py-1.5 bg-transparent border border-neutral-200 rounded-xl focus:outline-none text-black
+                focus:border-[#2B3990] focus:shadow-none" 
+                name="password_confirmation" id="password_confirmation" placeholder="Jelszó megerősítése">
+                <label for="password_confirmation" class="text-zinc-500 ml-2" required>Jelszó megerősítése</label>
+            </div>
+
+            <button 
+            type="submit"
+            class="bg-[#2B3990] text-white hover:text-white flex items-center justify-center w-full transition-all ease-in-out rounded-xl 
+            py-4 font-medium oswald hover:brightness-110 uppercase disabled:opacity-40 disabled:cursor-not-allowed text-sm">
+                Belépés
+            </button>
+        </form>
+    </div>
+</div>

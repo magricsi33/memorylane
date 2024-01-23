@@ -1,0 +1,10 @@
+name: VatKeys
+form: $/livestudiodev/lscart/models/vatkey/fields.yaml
+modelClass: LivestudioDev\Lscart\Models\VatKey
+defaultRedirect: livestudiodev/lscart/vatkeys
+create:
+    redirect: 'livestudiodev/lscart/vatkeys/update/:id'
+    redirectClose: livestudiodev/lscart/vatkeys
+update:
+    redirect: livestudiodev/lscart/vatkeys
+    redirectClose: livestudiodev/lscart/vatkeys

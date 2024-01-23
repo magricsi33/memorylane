@@ -1,0 +1,14 @@
+<div class="signBox px-4 pb-4">
+    <h2 class="fw-normal">Elfelejtett jelszó</h2>
+    <p class="fw-light des">Kérjük add meg az e-mail címedet, hogy a jelszómódosító linket ki tudjuk küldeni neked</p>
+    <form
+    data-request="{{ __SELF__ }}::onRestorePassword"
+    data-request-update="'{{ __SELF__ }}::reset': '#partialUserResetForm'">
+        <div class="form-floating mb-3">
+            <input type="email" class="form-control btn-border" id="userRestoreEmail" name="email" placeholder="Email">
+            <label for="userRestoreEmail">E-mail cím*</label>
+        </div>
+        <button type="submit" class="btn btn-prim px-4 py-2 text-white fw-bold btn-border effect col-12">Új jelszó</button>
+        <p class="fw-light des mt-3">A *-gal jelölt mezők kitöltése kötelező!</p>
+    </form>
+</div>

@@ -1,0 +1,34 @@
+columns:
+    id:
+        label: Azonosító
+        type: number
+        invisible: true
+        sortable: true
+    active:
+        label: Aktív
+        type: switch
+    name:
+        label: Megnevezés
+        type: text
+        searchable: true
+        sortable: true
+    slug:
+        label: 'Keresőbarát név'
+        type: text
+        searchable: true
+        sortable: true
+    created_at:
+        label: 'Hozzáadás Dátuma'
+        type: datetime
+        sortable: true
+    updated_at:
+        label: 'Frissítés dátuma'
+        type: datetime
+        invisible: true
+        sortable: true
+    parent_id:
+        label: 'Szülő kategória'
+        type: text
+        sortable: true
+        select: name
+        relation: parent

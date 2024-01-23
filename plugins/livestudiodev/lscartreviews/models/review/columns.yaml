@@ -1,0 +1,36 @@
+columns:
+    id:
+        label: Azonosító
+        type: number
+        searchable: true
+        invisible: true
+        sortable: true
+    star:
+        label: Értékelés
+        type: number
+        searchable: true
+        sortable: true
+    comment:
+        label: 'Vélemény szövege'
+        type: text
+        invisible: false
+    accepted:
+        label: 'Jóváhagyási státusz'
+        type: switch
+        sortable: true
+    showtext:
+        label: 'Szöveges értékelés'
+        type: switch
+        searchable: false
+        sortable: true
+    order_id:
+        label: 'Rendelés azonosító'
+        type: text
+        searchable: true
+        sortable: true
+        select: order_number
+        relation: order
+    created_at:
+        label: 'Beküldés dátuma'
+        type: datetime
+        sortable: true

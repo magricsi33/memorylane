@@ -1,0 +1,10 @@
+name: Partners
+form: $/livestudiodev/partners/models/partner/fields.yaml
+modelClass: LivestudioDev\Partners\Models\Partner
+defaultRedirect: livestudiodev/partners/partners
+create:
+    redirect: 'livestudiodev/partners/partners/update/:id'
+    redirectClose: livestudiodev/partners/partners
+update:
+    redirect: livestudiodev/partners/partners
+    redirectClose: livestudiodev/partners/partners

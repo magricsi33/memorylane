@@ -1,0 +1,10 @@
+name: Coupons
+form: $/livestudiodev/lscart/models/coupon/fields.yaml
+modelClass: LivestudioDev\Lscart\Models\Coupon
+defaultRedirect: livestudiodev/lscart/coupons
+create:
+    redirect: 'livestudiodev/lscart/coupons/update/:id'
+    redirectClose: livestudiodev/lscart/coupons
+update:
+    redirect: livestudiodev/lscart/coupons
+    redirectClose: livestudiodev/lscart/coupons

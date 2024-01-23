@@ -1,0 +1,35 @@
+fields:
+    name:
+        label: 'Beküldő neve'
+        span: auto
+        disabled: 0
+        type: text
+    star:
+        label: 'Csillag értékelés'
+        span: auto
+        required: 1
+        type: number
+    accepted:
+        label: Jóváhagyva
+        span: auto
+        type: switch
+    trimmable:
+        label: 'Név trimmelése'
+        span: auto
+        default: 1
+        type: switch
+        comment: 'pl.: Foo Bar -> F. Bar vagy Foo Foo Bar -> F. F. Bar'
+    comment:
+        label: 'Szöveges Vélemény'
+        size: huge
+        span: auto
+        type: textarea
+    'order[order_number]':
+        label: 'Rendelés azonosító'
+        span: auto
+        disabled: 1
+        type: text
+    showtext:
+        label: 'Szöveges értékelés megjelenik'
+        span: auto
+        type: switch

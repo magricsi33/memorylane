@@ -1,0 +1,21 @@
+import:
+    title: Termékek importálása
+    modelClass: LivestudioDev\Lscart\Models\ProductImport
+    list: $/livestudiodev/lscart/models/importexport/export_columns.yaml
+    redirect: livestudiodev/lscart/products
+    defaultFormatOptions:
+        delimiter: ';'
+        enclosure: '"'
+        escape: '\'
+        encoding: 'utf-8'
+
+export:
+    title: Termékek exportálása
+    modelClass: LivestudioDev\Lscart\Models\ProductExport
+    list: $/livestudiodev/lscart/models/importexport/export_columns.yaml
+    redirect: livestudiodev/lscart/products
+    defaultFormatOptions:
+        delimiter: ';'
+        enclosure: '"'
+        escape: '\'
+        encoding: 'utf-8'

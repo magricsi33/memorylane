@@ -1,0 +1,10 @@
+name: StorageItems
+form: $/livestudiodev/lscart/models/storageitem/fields.yaml
+modelClass: LivestudioDev\Lscart\Models\StorageItem
+defaultRedirect: livestudiodev/lscart/storageitems
+create:
+    redirect: 'livestudiodev/lscart/storageitems/update/:id'
+    redirectClose: livestudiodev/lscart/storageitems
+update:
+    redirect: livestudiodev/lscart/storageitems
+    redirectClose: livestudiodev/lscart/storageitems

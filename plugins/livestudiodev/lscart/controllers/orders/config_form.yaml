@@ -1,0 +1,10 @@
+name: Orders
+form: $/livestudiodev/lscart/models/order/fields.yaml
+modelClass: LivestudioDev\Lscart\Models\Order
+defaultRedirect: livestudiodev/lscart/orders
+create:
+    redirect: 'livestudiodev/lscart/orders/update/:id'
+    redirectClose: livestudiodev/lscart/orders
+update:
+    redirect: livestudiodev/lscart/orders
+    redirectClose: livestudiodev/lscart/orders

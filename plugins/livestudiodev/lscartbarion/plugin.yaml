@@ -1,0 +1,6 @@
+plugin:
+    name: 'livestudiodev.lscartbarion::lang.plugin.name'
+    description: 'livestudiodev.lscartbarion::lang.plugin.description'
+    author: LivestudioDev
+    icon: oc-icon-credit-card
+    homepage: ''

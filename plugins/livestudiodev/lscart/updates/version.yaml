@@ -1,0 +1,218 @@
+1.0.1:
+    - 'Initialize plugin.'
+1.0.2:
+    - 'Created Cart Table'
+    - builder_table_create_livestudiodev_lscart_carts.php
+1.0.3:
+    - 'Created CartItem Table'
+    - builder_table_create_livestudiodev_lscart_cartitems.php
+1.0.4:
+    - 'Created Category Table'
+    - builder_table_create_livestudiodev_lscart_categories.php
+1.0.5:
+    - 'Created Coupon Table'
+    - builder_table_create_livestudiodev_lscart_coupons.php
+1.0.6:
+    - 'Created Currency Table'
+    - builder_table_create_livestudiodev_lscart_currencies.php
+1.0.7:
+    - 'Created Discount Table'
+    - builder_table_create_livestudiodev_lscart_discounts.php
+1.0.8:
+    - 'Created Measure Table'
+    - builder_table_create_livestudiodev_lscart_measures.php
+1.0.9:
+    - 'Created Order Table'
+    - builder_table_create_livestudiodev_lscart_orders.php
+1.0.10:
+    - 'Created OrderItem Table'
+    - builder_table_create_livestudiodev_lscart_orderitems.php
+1.0.11:
+    - 'Created PaymentMethod Table'
+    - builder_table_create_livestudiodev_lscart_payment_methods.php
+1.0.12:
+    - 'Created Product Table'
+    - builder_table_create_livestudiodev_lscart_products.php
+1.0.13:
+    - 'Created ShippingMethod Table'
+    - builder_table_create_livestudiodev_lscart_shipping_methods.php
+1.0.14:
+    - 'Created UserDiscount Table'
+    - builder_table_create_livestudiodev_lscart_user_discounts.php
+1.0.15:
+    - 'Created ShipDetail Table'
+    - builder_table_create_livestudiodev_lscart_user_shipdetails.php
+1.0.16:
+    - 'Created User - UserDiscount PivotTable'
+    - builder_table_create_livestudiodev_lscart_user_user_discounts.php
+1.0.17:
+    - 'Created VatKey Table'
+    - builder_table_create_livestudiodev_lscart_vatkeys.php
+1.0.18:
+    - 'Updated table livestudiodev_lscart_carts'
+    - builder_table_update_livestudiodev_lscart_carts.php
+1.0.19:
+    - 'Updated table livestudiodev_lscart_products'
+    - builder_table_update_livestudiodev_lscart_products.php
+1.0.20:
+    - 'Updated table livestudiodev_lscart_shipping_methods'
+    - builder_table_update_livestudiodev_lscart_shipping_methods.php
+1.0.21:
+    - 'Updated table livestudiodev_lscart_orders'
+    - builder_table_update_livestudiodev_lscart_orders.php
+1.0.22:
+    - 'Created table livestudiodev_lscart_product_variants'
+    - builder_table_create_livestudiodev_lscart_product_variants.php
+1.0.23:
+    - 'Updated table livestudiodev_lscart_products'
+    - builder_table_update_livestudiodev_lscart_products_2.php
+1.0.24:
+    - 'Updated table livestudiodev_lscart_cartitems'
+    - builder_table_update_livestudiodev_lscart_cartitems.php
+1.0.25:
+    - 'Updated table livestudiodev_lscart_orderitems'
+    - builder_table_update_livestudiodev_lscart_orderitems.php
+1.0.26:
+    - 'Updated table livestudiodev_lscart_cartitems'
+1.0.27:
+    - 'Updated table livestudiodev_lscart_orderitems'
+1.0.28:
+    - 'Updated table livestudiodev_lscart_payment_methods'
+    - builder_table_update_livestudiodev_lscart_payment_methods.php
+1.0.29:
+    - 'Updated table livestudiodev_lscart_products'
+1.0.30:
+    - 'Fixing issues'
+1.0.31:
+    - 'Fixing issues'
+1.0.32:
+    - 'Fixing issues'
+1.0.33:
+    - 'Updated table livestudiodev_lscart_products'
+    - builder_table_update_livestudiodev_lscart_products_3.php
+1.0.34:
+    - 'Updated table livestudiodev_lscart_shipping_methods'
+    - builder_table_update_livestudiodev_lscart_shipping_methods_2.php
+1.0.35:
+    - 'Updated table livestudiodev_lscart_currencies'
+    - builder_table_update_livestudiodev_lscart_currencies.php
+1.0.36:
+    - 'Updated table livestudiodev_lscart_products'
+    - builder_table_update_livestudiodev_lscart_products_4.php
+1.0.37:
+    - 'Updated table livestudiodev_lscart_carts'
+    - builder_table_update_livestudiodev_lscart_carts_2.php
+1.0.38:
+    - 'Updated table livestudiodev_lscart_orders'
+    - builder_table_update_livestudiodev_lscart_orders_2.php
+1.0.39:
+    - 'Updated table livestudiodev_lscart_products'
+    - builder_table_update_livestudiodev_lscart_products_5.php
+1.0.40:
+    - 'Fixed issues, added functions'
+1.0.41:
+    - 'Updated table livestudiodev_lscart_cartitems'
+    - builder_table_update_livestudiodev_lscart_cartitems_2.php
+1.0.42:
+    - 'Updated table livestudiodev_lscart_orderitems'
+    - builder_table_update_livestudiodev_lscart_orderitems_2.php
+1.0.43:
+    - 'Updated table livestudiodev_lscart_discounts'
+    - builder_table_update_livestudiodev_lscart_discounts.php
+1.0.44:
+    - 'Fixed issues, added functions for variants, added seeder'
+    - seeder_default_seeder.php
+1.0.45:
+    - 'Updated table livestudiodev_lscart_product_variants'
+    - builder_table_update_livestudiodev_lscart_product_variants.php
+1.0.46:
+    - 'Fixed issues with variants'
+1.0.47:
+    - 'Updated table livestudiodev_lscart_product_variants'
+    - builder_table_update_livestudiodev_lscart_product_variants_2.php
+1.0.48:
+    - 'Updated table livestudiodev_lscart_products'
+    - builder_table_update_livestudiodev_lscart_products_6.php
+1.0.49:
+    - 'Added optional stock'
+1.0.50:
+    - 'Fixed minor issues'
+1.0.51:
+    - 'Updated table livestudiodev_lscart_orders'
+    - builder_table_update_livestudiodev_lscart_orders_3.php
+1.0.52:
+    - 'Updated table livestudiodev_lscart_orderitems'
+    - builder_table_update_livestudiodev_lscart_orderitems_3.php
+1.0.53:
+    - 'Updated table livestudiodev_lscart_shipping_methods'
+    - builder_table_update_livestudiodev_lscart_shipping_methods_3.php
+1.0.54:
+    - 'Updated table livestudiodev_lscart_payment_methods'
+    - builder_table_update_livestudiodev_lscart_payment_methods_2.php
+1.0.55:
+    - 'Updated functions with currency and netto values and parameters'
+1.0.56:
+    - 'Fixed issues with relationships'
+1.0.57:
+    - 'Compatible with Borgun from now on'
+1.0.58:
+    - 'Updated table livestudiodev_lscart_payment_methods'
+    - builder_table_update_livestudiodev_lscart_payment_methods_3.php
+1.0.59:
+    - 'Updated to be completely dynamic regarding payment gates'
+1.0.60:
+    - 'Updated table livestudiodev_lscart_payment_methods'
+    - builder_table_update_livestudiodev_lscart_payment_methods_4.php
+1.1.0:
+    - 'Added short documentation and fixed issues'
+1.1.1:
+    - 'Created table livestudiodev_lscart_related_products'
+    - builder_table_create_livestudiodev_lscart_related_products.php
+1.1.2:
+    - 'Created table livestudiodev_lscart_properties'
+    - builder_table_create_livestudiodev_lscart_properties.php
+1.1.3:
+    - 'Created table livestudiodev_lscart_propertables'
+    - builder_table_create_livestudiodev_lscart_propertables.php
+1.1.4:
+    - 'Updated table livestudiodev_lscart_products'
+    - builder_table_update_livestudiodev_lscart_products_7.php
+1.1.5:
+    - 'Updated table livestudiodev_lscart_products'
+    - builder_table_update_livestudiodev_lscart_products_8.php
+1.1.6:
+    - 'Updated table livestudiodev_lscart_products'
+    - builder_table_update_livestudiodev_lscart_products_9.php
+1.1.7:
+    - 'Created table livestudiodev_lscart_storage_items'
+    - builder_table_create_livestudiodev_lscart_storage_items.php
+1.1.8:
+    - 'Updated table livestudiodev_lscart_storage_items'
+    - builder_table_update_livestudiodev_lscart_storage_items.php
+1.1.9:
+    - 'Updated table livestudiodev_lscart_storage_items'
+    - builder_table_update_livestudiodev_lscart_storage_items_2.php
+1.1.10:
+    - 'Updated table livestudiodev_lscart_storage_items'
+    - builder_table_update_livestudiodev_lscart_storage_items_3.php
+1.1.11:
+    - 'Updated table livestudiodev_lscart_storage_items'
+    - builder_table_update_livestudiodev_lscart_storage_items_4.php
+1.1.12:
+    - 'Updated table livestudiodev_lscart_storage_items'
+    - builder_table_update_livestudiodev_lscart_storage_items_5.php
+1.1.13:
+    - 'Updated table livestudiodev_lscart_storage_items'
+    - builder_table_update_livestudiodev_lscart_storage_items_6.php
+1.1.14:
+    - 'Updated table livestudiodev_lscart_storage_items'
+    - builder_table_update_livestudiodev_lscart_storage_items_7.php
+1.1.15:
+    - 'Updated table livestudiodev_lscart_products'
+    - builder_table_update_livestudiodev_lscart_products_10.php
+1.1.16:
+    - 'Updated table livestudiodev_lscart_products'
+    - builder_table_update_livestudiodev_lscart_products_11.php
+1.1.17:
+    - 'Updated table livestudiodev_lscart_products'
+    - builder_table_update_livestudiodev_lscart_products_12.php

@@ -1,0 +1,107 @@
+title = "Rendeléskövetés"
+url = "/rendeleskovetes"
+layout = "default"
+meta_title = "Online Zerocity Rendeléskövetés"
+is_hidden = 0
+robot_index = "index"
+robot_follow = "follow"
+==
+<?php
+use LivestudioDev\Lscart\Models\Order;
+use RainLab\User\Facades\Auth;
+
+function onStart() {
+    $filter = Input::get('filter');
+
+    if ($filter) {
+        $order = Order::where('order_number', $filter['order_number'])->first();
+        $this['filter'] = $filter;
+        $this['order'] = $order;
+    }
+
+
+}
+
+?>
+==
+<div id="rendeleskovetes" class="xl:mt-28 container w-11/12 xl:w-full mx-auto">
+    <div class="xl:w-6/12 mx-auto text-center py-10">
+        <h1 class="text-3xl text-white font-bold">
+            <span class="text-[#2B3990]">Online</span> rendeléskövetés
+        </h1>
+    
+        <form class="group relative h-full xl:py-3 flex flex-wrap items-center" action="/rendeleskovetes">
+            <div class="xl:w-8/12 w-full px-3 mt-4 xl:mt-0">
+                <div class="py-4 rounded-xl border-zinc-800 overflow-hidden items-center flex border transition-all ease-in-out duration-200">
+                    <i class="fa-light fa-magnifying-glass px-3 text-neutral-500"></i>
+                    <input 
+                    type="text" 
+                    autocomplete="off" 
+                    value="{{ filter.order_number }}" 
+                    name="filter[order_number]" 
+                    class="w-full h-full bg-transparent placeholder:text-neutral-500 focus:border-0 focus:outline-none text-white text-sm" 
+                    placeholder="Rendelés azonosító...">
+                </div>
+            </div>
+            <div class="xl:w-4/12 w-full px-3 mt-4 xl:mt-0">
+                <button 
+                type="submit" 
+                class="py-4 w-full text-white btn-primary bg-[#2B3990] hover:!text-white bg-clip-padding
+                shadow-lg rounded-lg transition ease-in-out disabled:opacity-50 uppercase font-bold text-sm">
+                    Keresés
+                </button>
+            </div>
+        </form> 
+    </div>
+    
+    <div class="xl:w-6/12 w-full mx-auto mt-5 border-t border-zinc-900 text-white">
+        {% if filter %}  
+            <p class="text-center text-2xl mt-5 font-bold
+                {{ order.status == 0 ? 'Beérkezett' }}
+                {{ order.status == 1 ? 'text-yellow-600' }}
+                {{ order.status == 2 ? 'text-yellow-600' }}
+                {{ order.status == 3 ? 'text-red-600' }}
+                {{ order.status == 4 ? 'text-yellow-600' }}
+                {{ order.status == 5 ? 'text-green-600' }}
+                {{ order.status == 6 ? 'text-yellow-600' }}
+                {{ order.status == 7 ? 'text-green-600' }}
+                {{ order.status == 8 ? 'text-green-600' }}">
+                {{ order.status == 0 ? 'Beérkezett' }}
+                {{ order.status == 1 ? 'Feldolgozott' }}
+                {{ order.status == 2 ? 'Számlázás' }}
+                {{ order.status == 3 ? 'Elutasítva' }}
+                {{ order.status == 4 ? 'Folyamatban' }}
+                {{ order.status == 5 ? 'Beérkezett és fizetve' }}
+                {{ order.status == 6 ? 'Véleményezés' }}
+                {{ order.status == 7 ? 'Kész' }}
+                {{ order.status == 8 ? 'Szállítva' }}
+            </p>
+            <p class="text-sm text-neutral-500 text-center">Rendelés állapota</p>
+            <p class="font-bold mt-5">Ön által rendelt termékek:</p>
+            {% for item in order.items %}
+            {% set product = item.product %}
+            <div class="flex items-center mb-20 border-b border-zinc-900 py-5 w-full">
+                <div class="w-20 h-20 overflow-hidden rounded-xl">
+                    {% if product.image %}
+                    <img src="{{ product.image.path }}" class="w-full h-full object-contain" alt="{{ product.name }}" />
+                    {% else %}
+                    <img src="{{ 'assets/images/imgnotfound.png'|theme }}" class="w-full h-full object-contain" alt="{{ product.name }}" />
+                    {% endif %}
+                </div>
+                <div class="px-2">
+                    <p class="font-bold">
+                        {{ product.name }}
+                    </p>
+                    {% if item.variant %}
+                    <p class="text-sm text-neutral-500">{{ item.variant.name }} |</p>
+                    {% endif %}
+                    <p class="text-sm text-neutral-500">{{ item.quantity }} {{ product.unit.name }}</p>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <p class="text-center text-2xl mt-5 font-bold">Nem találtunk rendelést</p>       
+        {% endif %}
+    </div>
+    
+</div>

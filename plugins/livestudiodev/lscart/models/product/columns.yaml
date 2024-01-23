@@ -1,0 +1,28 @@
+columns:
+    id:
+        label: Azonosító
+        type: number
+        invisible: true
+    name:
+        label: Megnevezés
+        type: text
+        searchable: true
+        sortable: true
+    price:
+        label: Ár
+        type: text
+        invisible: true
+        sortable: true
+    statusName:
+        label: Státusz
+        type: text
+    category_id:
+        label: Kategória
+        type: number
+        invisible: false
+        select: name
+        relation: category
+    b_sku:
+        label: 'Gyári cikksz.'
+        type: text
+        searchable: true

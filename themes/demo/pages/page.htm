@@ -1,0 +1,30 @@
+title = "Oldal"
+url = "/hu/:slug"
+layout = "default"
+meta_title = ""
+is_hidden = 0
+==
+<?php
+use Codergram\Zoldszeged\Models\Page;
+use Codergram\Zoldszeged\Models\Blog;
+use Carbon\Carbon;
+
+function onStart() {
+
+    $page = Page::where('slug', $this->param('slug'))->first();
+
+    if (!$page) {
+        return redirect('404');
+    }
+    
+    $this['page'] = $page;
+
+    $this['blogs'] = Blog::where('public', 1)->where('public_start', '<', Carbon::now())->get();
+ 
+}
+
+?>
+==
+<div class="flex flex-col relative z-50 min-h-screen">
+    {% partial 'elements/pageContainer' section=section %}
+</div>

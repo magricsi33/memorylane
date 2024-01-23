@@ -1,0 +1,10 @@
+name: Sliders
+form: $/codergram/slider/models/slider/fields.yaml
+modelClass: Codergram\Slider\Models\Slider
+defaultRedirect: codergram/slider/sliders
+create:
+    redirect: 'codergram/slider/sliders/update/:id'
+    redirectClose: codergram/slider/sliders
+update:
+    redirect: codergram/slider/sliders
+    redirectClose: codergram/slider/sliders

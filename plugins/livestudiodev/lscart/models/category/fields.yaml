@@ -1,0 +1,71 @@
+fields:
+    name:
+        label: 'Kategória neve'
+        span: auto
+        type: text
+    slug:
+        label: 'Keresőbarát név'
+        span: auto
+        type: text
+        comment: 'Hagyja üresen az automatikus generáláshoz'
+    active:
+        label: 'Aktív kategória'
+        span: auto
+        default: 1
+        type: switch
+    description:
+        label: Leírás
+        size: large
+        span: full
+        type: richeditor
+tabs:
+    fields:
+        meta_description:
+            label: 'Meta leírás'
+            size: ''
+            span: auto
+            type: textarea
+            tab: Seo
+        meta_title:
+            label: 'Meta cím'
+            span: auto
+            type: text
+            tab: Seo
+        meta_keywords:
+            label: 'Meta keresőszavak'
+            span: auto
+            type: text
+            tab: Seo
+        image:
+            label: 'Kategória képe'
+            mode: image
+            useCaption: true
+            thumbOptions:
+                mode: crop
+                extension: auto
+            span: auto
+            type: fileupload
+            commentAbove: '(opcionális, ha nincs megadva, az első termék képét használjuk)'
+            tab: Seo
+        id:
+            label: id
+            span: auto
+            type: number
+            tab: Seo
+        parent_id:
+            label: parent_id
+            span: auto
+            type: number
+            tab: Seo
+        properties:
+            label: Tulajdonságok
+            nameFrom: name
+            descriptionFrom: description
+            span: auto
+            type: relation
+            tab: Tulajdonságok
+        products:
+            span: full
+            path: products
+            type: partial
+            tab: Termékek

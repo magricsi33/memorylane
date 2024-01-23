@@ -1,0 +1,19 @@
+columns:
+    id:
+        label: id
+        type: number
+    cart_id:
+        label: cart_id
+        type: number
+    quantity:
+        label: quantity
+        type: number
+    product_id:
+        label: product_id
+        type: number
+    created_at:
+        label: created_at
+        type: datetime
+    updated_at:
+        label: updated_at
+        type: datetime

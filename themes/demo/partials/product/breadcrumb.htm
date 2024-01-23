@@ -1,0 +1,12 @@
+{% if breadcrumbs %}
+    <div class="flex flex-wrap text-sm font-medium text-neutral-800">
+        <a href="/" class="hover:text-white transition-all ease-in-out">Főoldal</a>
+        <span class="mx-1">/</span>
+        {% for breadcrumb in breadcrumbs %}
+            <a href="/termekek/{{ breadcrumb.url }}" class="hover:text-white transition-all ease-in-out {{ loop.last ? 'text-primary' }}">{{ breadcrumb.name }}</a>
+            {% if not loop.last %}
+            <span class="mx-1">/</span>
+            {% endif %}
+        {% endfor %}
+    </div>
+{% endif %}

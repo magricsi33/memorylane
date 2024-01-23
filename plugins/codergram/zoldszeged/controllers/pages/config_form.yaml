@@ -1,0 +1,10 @@
+name: Pages
+form: $/codergram/zoldszeged/models/page/fields.yaml
+modelClass: Codergram\Zoldszeged\Models\Page
+defaultRedirect: codergram/zoldszeged/pages
+create:
+    redirect: 'codergram/zoldszeged/pages/update/:id'
+    redirectClose: codergram/zoldszeged/pages
+update:
+    redirect: codergram/zoldszeged/pages
+    redirectClose: codergram/zoldszeged/pages

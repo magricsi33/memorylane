@@ -1,0 +1,46 @@
+{% if product.variants|length > 0 %} 
+
+    {% for variant in product.variants.sortBy('id') if variant.id == variant_id %} 
+        {% if variant.stock == 0 %}
+            <div class="text-red-600 w-max uppercase font-bold">
+                <i class="fa-light fa-xmark mr-1"></i> Nincs raktáron
+            </div>
+        {% elseif variant.stock == 1 %}
+            <div class="text-yellow-600 w-max uppercase font-bold">
+                <i class="fa-light fa-triangle-exclamation mr-1"></i> Utolsó darab!
+            </div>
+        {% else %}
+            <div class="text-primary w-max uppercase font-bold">
+                <i class="fa-solid fa-check mr-1"></i>  {{ variant.stock }} {{ product.unit.name }} raktáron!
+            </div>
+        {% endif %}
+    {% endfor %}
+    
+    {% if not variant_id %}
+        {% set variantTotalStock = 0 %}
+
+        {% for item in product.variants %}
+            {% set variantTotalStock = variantTotalStock + item.stock %}
+        {% endfor %}
+
+        <div class="text-primary w-max uppercase font-bold">
+            <i class="fa-solid fa-check mr-1"></i>  Összesen {{ variantTotalStock }} {{ product.unit.name }} raktáron!
+        </div>
+    {% endif %}
+
+{% else %}
+    {% if product.stock == 0 %}
+        <div class="text-red-600 w-max uppercase font-bold">
+            <i class="fa-light fa-xmark mr-1"></i> Nincs raktáron
+        </div>
+    {% elseif product.stock == 1 %}
+        <div class="text-yellow-600 w-max uppercase font-bold">
+            <i class="fa-light fa-triangle-exclamation mr-1"></i> Utolsó darab!
+        </div>
+    {% else %}
+        <div class="text-primary w-max uppercase font-bold">
+            <i class="fa-solid fa-check mr-1"></i> {{ product.stock }} {{ product.unit.name }} raktáron!
+        </div>
+    {% endif %}
+
+{% endif %}

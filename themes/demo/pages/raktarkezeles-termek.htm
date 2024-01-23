@@ -1,0 +1,335 @@
+title = "Raktárkezelés"
+url = "/raktarkezeles/:slug"
+layout = "default"
+meta_title = "Online Zerocity Rendeléskövetés"
+is_hidden = 0
+
+[session]
+security = "user"
+allowedUserGroups[] = "raktarkezelo"
+==
+<?php
+use LivestudioDev\Lscart\Models\Category;
+use LivestudioDev\Lscart\Models\Product;
+use LivestudioDev\Lscartreviews\Models\ProductReview;
+use RainLab\User\Facades\Auth;
+
+function onStart()
+{
+    $product = Product::whereSlug($this->param('slug'))->first();
+
+    if (!$product) {
+        return Redirect::to("/404");
+    }
+
+    $avg = 0;
+
+    $this['avg'] = $avg;
+
+    $json_product = new StdClass;
+    $json_product->id = $product->id;
+    $json_product->name = $product->name;
+    $json_product->category = $product->category->name;
+    $json_product->price = $product->getItemPrice();
+
+    $this['json_product'] = json_encode($json_product);
+
+    if (!$product) {
+        return Redirect::to("404");
+    }
+
+    $this['product'] = $product;
+    $this['category'] = $this['product']->category;
+    $this->page->meta_title = $this['product']->meta_title;
+    $this->page->meta_description = $this['product']->meta_description;
+    $this['discount'] = null;
+    $this['related_products'] = Product::where('slug', '!=', $this->param('slug'))->inRandomOrder()->limit(3)->get();
+
+    $user = Auth::user();
+
+    if ($user && isset($user->discounts[0])) {
+        $temp = [];
+        foreach ($user->discounts[0]->discounts as $discount) {
+            if ($product->category->id == $discount['category']) {
+                $temp['value'] = $discount['value'];
+                $temp['name'] = $user->discounts[0]->name;
+                break;
+            }
+        }
+
+        $this['empDiscount'] = $temp;
+    }
+
+    if ($product->isDiscounted()) {
+        $id = $product->getDiscount()->id;
+        $discount = Discount::find($id);
+        $this['discount'] = $discount;
+    }
+
+    $product_reviews = ProductReview::where('product_id', $product->id)->where('accepted', 1)->get();
+    $this['product_reviews'] = $product_reviews;
+    $sum = 0;
+
+    if(count($product_reviews) > 0) {
+        foreach($product_reviews as $review) {
+            $sum += floatval($review->star);
+        }
+
+        $avg_review = floatval($sum / count($product_reviews));
+    } else {
+        $avg_review = 0;
+    }
+
+    $this['avg_review'] = $avg_review;
+    $this['related_products'] = Product::inRandomOrder()->where([['status', 1],['id','<>',$product->id], ['category_id','<>', null],])->limit(3)->get();
+
+    $product->inputs = [
+        [
+            'field' => 'name', 
+            'label' => 'Termék neve',
+            'type' => 'text',
+            'value' => $product->name, 
+        ], 
+        [
+            'field' => 'supplier_price_netto', 
+            'label' => 'Termék Nettó ára',
+            'type' => 'text',
+            'value' => $product->supplier_price_netto, 
+        ], 
+        [
+            'field' => 'category', 
+            'label' => 'Kategória',
+            'type' => 'select',
+            'value' => $product->category_id, 
+        ], 
+        [
+            'field' => 'stock', 
+            'label' => 'Raktárkészlet',
+            'type' => 'number',
+            'value' => $product->stock, 
+        ], 
+    ];
+    //dd($inputs);
+}
+
+function onUpdateProduct() {
+    $product = Product::whereSlug($this->param('slug'))->first();
+
+    $product->name = post('name');
+
+    $supplier_price_netto = post('supplier_price_netto');
+    $supplier_price_brutto = $supplier_price_netto * 1.27;
+
+    $product->supplier_price_netto = $supplier_price_netto;
+    $product->supplier_price_brutto = $supplier_price_brutto;
+
+    $product->price_brutto = $supplier_price_brutto * 1.10;
+    $product->price = $supplier_price_brutto * 1.10;
+
+    $product->category = post('category');
+    $product->stock = post('stock');
+
+    if ($product->save()) {
+        return Redirect::to("/raktarkezeles");
+    } else {
+        Flash::error("Valami hiba törént");
+    }
+
+}
+?>
+==
+<div id="raktarkezeles" class="xl:mt-28 container w-11/12 xl:w-full mx-auto">    
+    <div class="w-full mx-auto border-t border-zinc-900 text-white pb-10">
+        <div class="flex items-center border-b border-zinc-900 bg-zinc-900 py-3 w-full">
+            <div class="px-2 xl:w-7/12 w-full">
+                <p class="font-bold">
+                    {{ product.name }}
+                </p>
+                {% if item.variant %}
+                <p class="text-sm text-neutral-500">{{ item.variant.name }} |</p>
+                {% endif %}
+                <p class="text-sm text-neutral-500
+                {{ product.stock == 0 ? 'text-red-600' }}
+                {{ product.stock == 1 ? 'text-yellow-600' }}
+                {{ product.stock > 1 ? 'text-green-600' }}">
+                    {{ product.stock == 0 ? 'Nincs raktáron' }}
+                    {{ product.stock == 1 ? 'Utolsó darab' }}
+                    {{ product.stock > 1 ? 'Raktáron' }}
+                </p>
+            </div>
+        </div>
+
+        <form data-request="onUpdateProduct" data-request-flash>
+            <div class="mt-5 flex flex-wrap">
+                {% for input in product.inputs %}
+                    <div class="xl:w-3/12 w-full px-2 mb-3">
+    
+                        {% if input.type == 'select' %}
+                            <div class="w-full form-floating mb-3">
+                                {% if input.field == 'category' %}
+                                    <select required class="form-control custom" name="{{ input.field }}" id="{{ input.field }}"  placeholder="{{ input.label }}">
+                                        {% for category in categories %}
+                                            <optgroup class="text-primary bg-zinc-900" label="{{ category.name }}">
+                                                
+                                                {% for child in category.children %}
+    
+                                                    {% if child.children|length == 0 %}
+                                                        <option {{ child.id == product.category.id ? 'selected' }} class="text-white bg-zinc-900" value="{{ child.id }}">{{ child.name }}</option>
+                                                    {% else %}
+                                                    
+                                                    <optgroup class="text-white bg-zinc-900" label="▸ {{ child.name }}">
+                                                        {% for sChild in child.children %}
+                                                            <option {{ sChild.id == product.category.id ? 'selected' }} class="text-white bg-zinc-900" value="{{ sChild.id }}">▸ {{ sChild.name }}</option>
+                                                        {% endfor %}
+                                                    </optgroup>
+                                                    {% endif %}
+    
+                                                {% endfor %} 
+                                                
+                                            </optgroup>
+                                        {% endfor %} 
+                                    </select>
+                                    <label for="{{ input.field }}" class="text-zinc-500 text-lg" required>{{ input.label }}</label>
+                                {% elseif input.field == 'status' %}
+                                    <select required class="form-control custom" name="{{ input.field }}" id="{{ input.field }}"  placeholder="{{ input.label }}">
+                                        {% for i in 0..2 %}
+                                            <option {{ loop.index-1 == product.status ? 'selected' }}  class="text-white bg-zinc-900" value="{{ loop.index-1 }}">
+                                                {{ loop.index-1 == 0 ? 'Inaktív' }}    
+                                                {{ loop.index-1 == 1 ? 'Aktív' }}
+                                                {{ loop.index-1 == 2 ? 'Aktív, de nem elérhető' }}
+                                            </option>
+                                        {% endfor %} 
+                                    </select>
+                                    <label for="{{ input.field }}" class="text-zinc-500 text-lg" required>{{ input.label }}</label>
+                                {% endif %}
+                            </div>
+                        {% else %}
+                            <div class="w-full form-floating mb-3">
+                                <input type="{{ input.type }}" required class="form-control custom" name="{{ input.field }}" id="{{ input.field }}" value="{{ input.value }}" placeholder="{{ input.label }}">
+                                <label for="{{ input.field }}" class="text-zinc-500 text-lg mt-1" required>{{ input.label }}</label>
+                            </div>
+                        {% endif %}
+    
+                    </div>
+                {% endfor %}
+            </div>
+
+
+            <!-- <div class="px-2 flex items-center justify-between jus border-b border-zinc-900 bg-zinc-900 py-3 w-full">
+                <p class="font-bold">
+                    Termék változatok
+                </p>
+            </div>
+
+            <div class="border border-zinc-900 p-3">
+                <div class="mt-5 flex flex-wrap">
+                    <div class="xl:w-4/12 w-full form-floating mb-3 px-2">
+                        <input type="{{ input.type }}" class="form-control custom" name="variant_name" id="variant_name" placeholder="Megnevezés">
+                        <label for="variant_name" class="text-zinc-500 text-lg mt-1">
+                            Megnevezés
+                        </label>
+                    </div>
+                    <div class="xl:w-4/12 w-full form-floating mb-3 px-2">
+                        <input type="{{ input.type }}" class="form-control custom" name="variant_name" id="variant_name" placeholder="Megnevezés">
+                        <label for="variant_name" class="text-zinc-500 text-lg mt-1">
+                            Cikkszám
+                        </label>
+                    </div>
+                    <div class="xl:w-4/12 w-full form-floating mb-3 px-2">
+                        <input type="{{ input.type }}" class="form-control custom" name="variant_name" id="variant_name" placeholder="Megnevezés">
+                        <label for="variant_name" class="text-zinc-500 text-lg mt-1">
+                            Árdifferencia
+                        </label>
+                    </div>
+                    <div class="xl:w-4/12 w-full form-floating mb-3 px-2">
+                        <input type="{{ input.type }}" class="form-control custom" name="variant_name" id="variant_name" placeholder="Megnevezés">
+                        <label for="variant_name" class="text-zinc-500 text-lg mt-1">
+                            Raktár
+                        </label>
+                    </div>
+                </div> 
+                <div class="w-full flex justify-end">
+                    <button
+                    type="submit"
+                    class="w-max py-4 mt-5 px-8 text-white border border-[#2B3990] hover:bg-[#2B3990] bg-clip-padding shadow-lg rounded-lg transition ease-in-out
+                    disabled:opacity-50 uppercase font-bold">
+                        Hozzáadás
+                    </button>
+                </div>
+            </div>
+            {% for variant in product.variants %}
+            <div class="border border-zinc-900 p-3 flex items-center">
+                <div class="xl:w-3/12 w-full">
+                    {{ variant.name }}
+                </div>
+                <div class="xl:w-3/12 w-full">
+                    {{ variant.status == 0 ? 'Inaktív' }}
+                    {{ variant.status == 1 ? 'Aktív' }}
+                    {{ variant.status == 2 ? 'Inaktív' }}
+                </div>
+                <div class="xl:w-3/12 w-full">
+                    {{ variant.stock }} {{ product.unit.name }}
+                </div>
+                <div class="xl:w-3/12 w-full text-end">
+                    <a href="" class="font-bold text-green-600 mr-5">
+                        Módosítás
+                    </a>
+                    <a href="" class="font-bold text-red-600">
+                        Törlés
+                    </a>
+                </div>
+            </div>
+            {% endfor %} -->
+
+
+            <div class="w-full flex justify-end">
+                <a
+                href="/raktarkezeles"
+                class="w-max py-4 mt-5 mr-5 px-8 text-white border border-red-600 hover:bg-red-600 bg-clip-padding shadow-lg rounded-lg transition ease-in-out
+                disabled:opacity-50 uppercase font-bold">
+                    Mégse
+                </a>
+                <button
+                type="submit"
+                class="w-max py-4 mt-5 px-8 text-white border border-[#2B3990] hover:bg-[#2B3990] bg-clip-padding shadow-lg rounded-lg transition ease-in-out
+                disabled:opacity-50 uppercase font-bold">
+                    Mentés
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% put scripts %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/inputmask/4.0.9/jquery.inputmask.bundle.min.js" integrity="sha512-VpQwrlvKqJHKtIvpL8Zv6819FkTJyE1DoVNH0L2RLn8hUPjRjkS/bCYurZs0DX9Ybwu9oHRHdBZR9fESaq8Z8A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+        $(document).ready(() => {
+        Inputmask.extendAliases({
+            huf: {
+                suffix: " Ft",
+                groupSeparator: " ",
+                alias: "numeric",
+                placeholder: "0",
+                autoGroup: true,
+                digits: 0,
+                digitsOptional: false,
+                clearMaskOnLostFocus: true,
+				rightAlign: false
+            },
+
+            tel: {
+                mask: '+36 (99) 999-9999',
+                clearMaskOnLostFocus: true,
+                showMaskOnHover: false,
+            },
+        });
+
+        Inputmask.extendDefaults({
+            'removeMaskOnSubmit': true
+        });
+
+        $("#supplier_price_netto").inputmask({ alias : "huf" });
+		$("#phone").inputmask({ alias : "tel" });
+    })
+</script>
+{% endput %}

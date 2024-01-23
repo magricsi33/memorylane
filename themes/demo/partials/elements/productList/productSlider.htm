@@ -1,0 +1,67 @@
+<div class="productSliderFull relative overflow-hidden py-20">
+    <div class="container w-11/12 xl:w-full mx-auto relative z-10 flex items-center">
+        <div class="owl-carousel owl-theme owl-products dotsWhite">
+            {% for product in products|slice(0, 4) %}
+                {% partial 'elements/product/productBox' product=product %}
+            {% endfor %}
+        </div> 
+    </div>
+
+    <!-- {% if gradientUp %}
+        <div class="absolute -top-64 -left-5 w-[120%] h-[350px] bg-[#ccc] -rotate-6"></div>
+    {% endif %}
+    {% if gradientDown %}
+        <div class="absolute -bottom-48 -left-5 w-[120%] h-[350px] bg-[#ccc] -rotate-6"></div>
+    {% endif %} -->
+    
+</div>
+
+<style>
+
+
+    .productSliderFull button.owl-prev,
+    .productSliderFull button.owl-next {
+        background: #fff !important;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.10);
+    }
+
+    .productSliderFull button.owl-prev {
+        left: 40px;
+        top: 170px;
+    }
+
+    .productSliderFull button.owl-next {
+        right: 40px;
+        top: 170px;
+    }
+
+</style>
+
+{% put scripts %}
+<script>
+    $('.owl-products').owlCarousel({
+        loop:false,
+        margin:5,
+        nav:true,
+        dots:true,
+        navText: [
+            previcon,
+            nexticon    
+        ],
+        responsive:{
+            0:{
+                items:1
+            },
+            990:{
+                items:2
+            },
+            1280:{
+                items:4
+            },
+            2000:{
+                items:4
+            }
+        }
+    })
+</script>
+{% endput %}

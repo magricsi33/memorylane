@@ -1,0 +1,466 @@
+<div class="h-[80px] bg-[#fff] z-[9999] sticky top-0">
+    <div class="flex items-center justify-between h-full mx-auto relative container w-11/12 xl:w-full">
+        <div class="flex items-center gap-3 h-full">
+
+            <div class="h-full flex items-center justify-start select-none">
+                <a @click="openModal = 'mobileMenu'" class="xl:hidden mr-3">
+                    <i class="fa-light fa-bars-staggered text-2xl"></i>
+                </a>
+                <a href="/" class="h-full py-2">
+                    <div class="w-20 h-full">
+                        <img src="{{ 'assets/images/logo.svg'|theme }}" class="w-full h-full object-contain object-left" alt="Chiply">
+                    </div>
+                </a>
+            </div>
+
+            <div class="flex items-center gap-12">
+                <div class="xl:flex items-center gap-3 hidden">
+                    <i class="fa-light fa-paper-plane text-3xl"></i>
+                    <div>
+                        <p class="text-xs uppercase font-bold">
+                            Információ
+                        </p>
+                        <a href="mailto:info@memorylane.hu" class="font-primary text-lg">
+                            info@memorylane.hu
+                        </a>
+                    </div>
+                </div>
+                <div class="flex items-center gap-6">
+                    {% for item in menu_items %}
+                    <a href="/hu{{ item.slug == '/' ? '/' : '/'~item.slug }}" class="font-bold transition-all ease-in-out hidden xl:block hover:text-[#2B3990]">
+                        {{ item.menu_name }}
+                    </a>
+                    {% endfor %}
+                </div>
+            </div>
+
+        </div>
+        <div class="flex items-center gap-1">
+
+            <!-- <button type="button" class="group rounded-full bg-[#2B3990] hover:bg-opacity-85 xl:w-12 w-10 xl:h-12 h-10 flex items-center justify-center" 
+            @click="openModal = 'search'">
+                <i class="fa-light fa-magnifying-glass xl:text-xl text-lg text-white"></i>
+            </button>  -->
+
+            {% if user %}
+            <a href="{{ 'profile'|page }}">
+                <div class="group rounded-full bg-[#2B3990] hover:bg-opacity-85 xl:w-12 w-10 xl:h-12 h-10 flex items-center justify-center">
+                    <i class="fa-light fa-user xl:text-xl text-lg text-white"></i>
+                </div>
+            </a>
+            {% else %}
+        
+            <button type="button" class="group rounded-full bg-[#2B3990] hover:bg-opacity-85 xl:w-12 w-10 xl:h-12 h-10 flex items-center justify-center" 
+            @click="openModal = 'login'">
+                <i class="fa-light fa-user xl:text-xl text-lg text-white"></i>
+            </button>
+
+            {% endif %}                
+            <div id="counter">
+                {% partial 'cart/counter' %}
+            </div>
+
+            <!-- <button type="button" class="group rounded-full bg-[#2B3990] hover:bg-opacity-85 xl:w-12 w-10 xl:h-12 h-10 flex items-center justify-center xl:hidden" 
+            @click="openModal = 'search'">
+                <i class="fa-light fa-magnifying-glass xl:text-xl text-lg text-white"></i>
+            </button> -->
+
+        </div>
+    </div>
+</div>
+
+{% if this.page.baseFileName != 'penztar' and this.page.baseFileName != 'kosar' %}
+<div class="h-[45px] bg-[#2B3990] z-[999] sticky top-[80px] transition-all ease-in-out" 
+x-bind:class="scrollDirection === 'up' ? 'translate-y-0' : '-translate-y-[100%]'">
+    <button type="button" @click="openModal = 'mobileMenu'" class="text-lg uppercase font-primary w-full h-full flex items-center justify-center xl:hidden">
+        Termék kategóriák megtekintése
+    </button>
+
+    <div class="justify-between items-center h-full container mx-auto px-3 xl:px-0 relative hidden xl:flex">
+        <div class="h-full w-full flex items-center select-none mr-8">
+            <div x-data="{ dropdownOpen: 'null' }" class="flex items-center h-full w-full">
+                <div class="h-full border border-white border-opacity-25">
+                    <button 
+                        @mouseover="buttonHover = 'more'"
+                        @mouseout="buttonHover = 'null'"
+                        x-on:click="categoryOpen === 'more' ? categoryOpen = 'null' : categoryOpen = 'more'"
+                        :class="{
+                            'bg-[#2B3990] !border-[#2B3990]': categoryOpen === 'more',
+                            'text-white': categoryOpen !== 'more',
+
+                        }"
+                        class="py-1 h-full w-max px-3 flex items-center font-primary cursor-pointer transition-all ease-in-out relative uppercase !text-white"
+                    >   
+                            <i class="fa-light fa-bars-staggered text-2xl mr-2 text-white"></i> Minden kategória
+                        <div 
+                        :class="{
+                            '!block': categoryOpen === 'more',
+                        }"
+                        class="w-5 h-5 hidden bg-[#fff] absolute left-[50%] -translate-x-[50%] bottom-0 translate-y-[100%]" style="clip-path: polygon(50% 0%, 0% 100%, 100% 100%);"></div>
+                    </button>
+                    <div 
+                        :class="{
+                            'block h-[450px] opacity-100': categoryOpen === 'more',
+                            'hidden max-h-0 opacity-0': categoryOpen !== 'more'
+                        }"
+                        class="dropdown overflow-hidden w-full hidden absolute top-[63px] left-0 rounded-2xl shadow-lg transition-opacity ease-in-out duration-300 bg-white"
+                    >
+                        <div class="flex h-full" x-data="{ openSide: 'null' }" >
+                            <div class="flex flex-col w-3/12 h-full overflow-y-auto overflow-x-hidden bg-[#fff] scrollbar-hide" >
+                                {% for category in categories %}
+                                <div class="relative !h-12">
+                                    
+                                    <button 
+                                        x-on:click="openSide === {{ category.id }} ? openSide = 'null' : openSide = {{ category.id }}"
+                                        :class="{
+                                            'border-[#ffffff10]': openSide === {{ category.id }},
+                                            '': openSide !== {{ category.id }},
+                                        }"
+                                        class="border-y border-transparent py-2 h-full px-3 flex items-center  cursor-pointer transition-all ease-in-out relative w-full group"
+                                    >
+                                        
+                                        <span class="font-primary text-start relative z-10 group-hover:text-[#2B3990]">{{ category.name }}</span>
+                                        <div 
+                                        :class="{
+                                            '!block': openSide === {{ category.id }},
+                                        }"
+                                        class="w-14 h-full hidden bg-[#fff] absolute -right-1 top-0"></div>
+                                    </button>
+                                    
+                                </div>
+                                {% endfor %}
+                            </div>
+                            <div class="w-9/12 h-full overflow-y-auto overflow-x-hidden bg-[#fff] p-4" style="box-shadow: -10px 0 20px #00000025;"
+                            :class="{
+                                '!bg-transparent': openSide === 'null',
+                            }">
+                                
+                                {% for category in categories %} 
+                                    {% if category.children|length > 0 %}
+                                        <div
+                                            :class="{
+                                                'block h-[450px] opacity-100': openSide === {{ category.id }},
+                                                'hidden max-h-0 opacity-0': openSide !== {{ category.id }}
+                                            }"
+                                            class="dropdown overflow-hidden w-full hidden transition-opacity ease-in-out duration-300"
+                                        >
+                                            <p class="mb-3 font-primary text-lg pb-3 border-b border-white border-opacity-30">
+                                                {{ category.name }}
+                                            </p>
+                                            <div class="flex flex-wrap h-full">
+                                                <div
+                                                    class="w-full grid grid-cols-3 h-full items-start gap-x-3 gap-y-6 overflow-auto "
+                                                >
+                                                    {% for child in category.children %}
+                                                    <div
+                                                        class="flex gap-2 hover:bg-[#00000010] transition-all ease-in-out p-1"
+                                                    >
+                                                        <img
+                                                            src="{{ child.image.path|resize(250)  }}"
+                                                            class="object-contain w-[40px] min-w-[40px] h-[40px] min-h-[40px]"
+                                                            alt="{{ child.name }}"
+                                                        />
+                                                        <div class="">
+                                                            {% if child.children|length > 0 %}
+                                                            <div
+                                                                class="text-sm uppercase text-opacity-95 font-bold transition-all ease-in-out mb-2 overflow-hidden flex items-center pl-1"
+                                                            >
+                                                                {{ child.name }}
+                                                            </div>
+                                                            {% for childSec in child.children|slice(0, 5) %}
+                                                            <a
+                                                                href="{{ 'termekek'|page({category: category.slug, slug: child.slug, child: childSec.slug}) }}"
+                                                            >
+                                                                <div
+                                                                    class="font-medium pl-3 text-[13px] w-full transition-all ease-in-out py-[6px] overflow-hidden flex items-center px-2 hover:bg-[#2B3990] hover:text-white"
+                                                                >
+                                                                    {{ childSec.name }}
+                                                                </div>
+                                                            </a>
+                                                            {% endfor %} {% if child.children|length > 5 %}
+
+                                                            <div
+                                                                class="max-h-0 overflow-hidden opacity-0 transition-all ease-in-out duration-700"
+                                                                :class="{
+                                                                                                            '!max-h-[500px] !opacity-100': dropdownOpen === {{ child.id }},
+                                                                                                        }"
+                                                            >
+                                                                {% for childSec in child.children|slice(5, 50) %}
+                                                                <a
+                                                                    href="{{ 'termekek'|page({category: category.slug, slug: child.slug, child: childSec.slug}) }}"
+                                                                >
+                                                                    <div
+                                                                        class="font-medium pl-3 w-full text-[13px] transition-all ease-in-out py-[6px] overflow-hidden flex items-center px-2 hover:bg-[#2B3990] hover:text-white"
+                                                                    >
+                                                                        {{ childSec.name }}
+                                                                    </div>
+                                                                </a>
+                                                                {% endfor %}
+                                                            </div>
+
+                                                            <a
+                                                                href="#"
+                                                                x-on:click="dropdownOpen === {{ child.id }} ? dropdownOpen = 'null' : dropdownOpen = {{ child.id }}"
+                                                            >
+                                                                <div
+                                                                    class="font-medium pl-3 w-full text-[13px] transition-all ease-in-out py-[6px] overflow-hidden flex items-center px-2"
+                                                                >
+                                                                    <span
+                                                                        class="hidden text-xs font-bold text-[#26bc5f]"
+                                                                        :class="{
+                                                                                                                    '!block': dropdownOpen != {{ child.id }},
+                                                                                                                }"
+                                                                    >
+                                                                        További
+                                                                    </span>
+                                                                    <span
+                                                                        class="hidden text-xs font-bold text-[#2B3990]"
+                                                                        :class="{
+                                                                                                                    '!block': dropdownOpen === {{ child.id }},
+                                                                                                                }"
+                                                                    >
+                                                                        Kevesebb
+                                                                    </span>
+
+                                                                    <i
+                                                                        class="fa-solid fa-chevron-down hidden text-[13px] ml-2 text-[#26bc5f]"
+                                                                        :class="{ '!block': dropdownOpen != {{ child.id }} }"
+                                                                    ></i>
+
+                                                                    <i
+                                                                        class="fa-solid fa-chevron-up hidden text-[13px] ml-2 text-[#2B3990]"
+                                                                        :class="{ '!block': dropdownOpen === {{ child.id }} }"
+                                                                    ></i>
+                                                                </div>
+                                                            </a>
+                                                            {% else %} {% endif %} {% else %}
+                                                            <div
+                                                                class="text-sm uppercase text-white text-opacity-95 font-bold transition-all ease-in-out mb-2 overflow-hidden flex items-center px-2"
+                                                            >
+                                                                {{ child.name }}
+                                                            </div>
+                                                            <a
+                                                                href="{{ 'termekek'|page({category: category.slug, slug: child.slug, child: null}) }}"
+                                                            >
+                                                                <div
+                                                                    class="font-medium pl-3 w-full text-[13px] transition-all ease-in-out py-2 overflow-hidden flex items-center px-2 hover:bg-red-600"
+                                                                >
+                                                                    {{ child.name }}
+                                                                </div>
+                                                            </a>
+                                                            {% endif %}
+                                                        </div>
+                                                    </div>
+                                                    {% endfor %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% endif %} 
+                                {% endfor %}
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% for category in categories|slice(0, 5) %}
+                <div class="h-full">
+                    
+                    <button 
+                        @mouseover="buttonHover = {{ category.id }}"
+                        @mouseout="buttonHover = 'null'"
+                        x-on:click="categoryOpen === {{ category.id }} ? categoryOpen = 'null' : categoryOpen = {{ category.id }}"
+                        :class="{
+                            'bg-[#2B3990]': categoryOpen === {{ category.id }},
+                            'text-white': categoryOpen !== {{ category.id }},
+                            'bg-opacity-75': buttonHover === {{ category.id }},
+                            'text-opacity-50': buttonHover != {{ category.id }} && buttonHover != 'null'
+                        }"
+                        class="py-1 h-full w-max px-3 flex items-center font-primary cursor-pointer transition-all ease-in-out relative uppercase !text-white"
+                    >
+                        {{ category.name }}
+                        <div 
+                        :class="{
+                            '!block': categoryOpen === {{ category.id }},
+                        }"
+                        class="w-5 h-5 hidden bg-[#fff] absolute left-[50%] -translate-x-[50%] bottom-0 translate-y-[100%]" style="clip-path: polygon(50% 0%, 0% 100%, 100% 100%);"></div>
+                    </button>
+                    
+                    {% if category.children|length > 0 %}
+                    <div 
+                        :class="{
+                            'block h-[450px] opacity-100': categoryOpen === {{ category.id }},
+                            'hidden max-h-0 opacity-0': categoryOpen !== {{ category.id }}
+                        }"
+                        class="dropdown overflow-hidden w-full hidden absolute top-[63px] left-0 rounded-2xl shadow-lg bg-[#fff] transition-opacity ease-in-out duration-300"
+                    >
+                        <div class="container normal mx-auto py-8 flex flex-wrap px-4 h-full">
+                            <div class="xl:w-3/12 w-full px-10 h-full flex items-center justify-center">                
+                                <img src="{{ category.image.path|resize(500) }}" class="w-full h-[300px] object-contain" alt="{{ child.name }}">                         
+                            </div>
+                            <div class="xl:w-9/12 w-full grid grid-cols-3 h-full items-start gap-x-3 gap-y-6 overflow-auto">
+                                
+                                {% for child in category.children %}  
+                                <div class="flex gap-2 hover:bg-[#00000010] transition-all ease-in-out">
+                                    <img src="{{ child.image.path|resize(250)  }}" class="object-contain w-[40px] min-w-[40px] h-[40px] min-h-[40px]" alt="{{ child.name }}">
+                                    <div class="">
+                                        {% if child.children|length > 0 %}
+                                            <div class="text-sm uppercase text-opacity-50 font-bold transition-all ease-in-out mb-2 overflow-hidden flex items-center px-2">
+                                                {{ child.name }} 
+                                            </div>
+                                            {% for childSec in child.children|slice(0, 5) %}                   
+                                                <a href="{{ 'termekek'|page({category: category.slug, slug: child.slug, child: childSec.slug}) }}">
+                                                    <div class="font-medium pl-6 text-[13px] transition-all ease-in-out py-[6px] overflow-hidden flex items-center px-2 hover:bg-[#2B3990] hover:text-white">
+                                                        {{ childSec.name }} 
+                                                    </div>
+                                                </a>                             
+                                            {% endfor %}
+    
+                                            {% if child.children|length > 5 %}
+
+                                                <div class="max-h-0 overflow-hidden opacity-0 transition-all ease-in-out duration-700" :class="{
+                                                    '!max-h-[500px] !opacity-100': dropdownOpen === {{ child.id }},
+                                                }">
+                                                    {% for childSec in child.children|slice(5, 50) %}                   
+                                                        <a href="{{ 'termekek'|page({category: category.slug, slug: child.slug, child: childSec.slug}) }}">
+                                                            <div class="font-medium pl-6 text-[13px] transition-all ease-in-out py-[6px] overflow-hidden flex items-center px-2 hover:bg-[#2B3990] hover:text-white">
+                                                                {{ childSec.name }} 
+                                                            </div>
+                                                        </a>                             
+                                                    {% endfor %}
+                                                </div>
+
+                                                <a href="#" x-on:click="dropdownOpen === {{ child.id }} ? dropdownOpen = 'null' : dropdownOpen = {{ child.id }}">
+                                                    <div class="font-medium pl-6 text-[13px] transition-all ease-in-out py-[6px] overflow-hidden flex items-center px-2 ">
+
+                                                        <span class="hidden text-xs font-bold text-[#26bc5f]" :class="{
+                                                            '!block': dropdownOpen != {{ child.id }},
+                                                        }">
+                                                            További kategóriák
+                                                        </span>
+                                                        <span class="hidden text-xs font-bold text-[#2B3990]" :class="{
+                                                            '!block': dropdownOpen === {{ child.id }},
+                                                        }">
+                                                            Kevesebb kategória
+                                                        </span>
+
+                                                        <i class="fa-solid fa-chevron-down hidden text-[13px] ml-2 text-[#26bc5f]"
+                                                        :class="{ '!block': dropdownOpen != {{ child.id }} }"></i>
+                                                        
+                                                        <i class="fa-solid fa-chevron-up hidden text-[13px] ml-2 text-[#2B3990]"
+                                                        :class="{ '!block': dropdownOpen === {{ child.id }} }"></i>
+
+                                                    </div>
+                                                </a>  
+
+
+
+                                            <!-- <a href="#"
+                                                x-on:click="dropdownOpen === {{ child.id }} ? dropdownOpen = 'null' : dropdownOpen = {{ child.id }}"
+                                                :class="{
+                                                    'text-[#2B3990]': dropdownOpen === {{ child.id }},
+                                                }"
+                                                class="py-1 h-full w-max px-3 flex items-center text-sm font-medium cursor-pointer transition-all ease-in-out relative text-[#2B3990]"
+                                            >
+                                                
+                                            </a> --> 
+                                            {% else %}
+                                                <!-- <a href="{{ 'termekek'|page({category: category.slug, slug: child.slug, child: childSec[6].slug}) }}">
+                                                    <div class="font-medium pl-6 text-[13px] transition-all ease-in-out h-[30px] overflow-hidden flex items-center px-2 hover:bg-red-600">
+                                                        {{ childSec[6].name }} 
+                                                    </div>
+                                                </a>    -->
+                                            {% endif %}     
+                                        {% else %}
+                                            <div class="text-sm uppercase text-white text-opacity-50 font-bold transition-all ease-in-out mb-2 overflow-hidden flex items-center px-2">
+                                                {{ child.name }} 
+                                            </div>
+                                            <a href="{{ 'termekek'|page({category: category.slug, slug: child.slug, child: null}) }}">
+                                                <div class="font-medium pl-6 text-[13px] transition-all ease-in-out py-2 overflow-hidden flex items-center px-2 hover:bg-red-600">
+                                                    {{ child.name }} 
+                                                </div>
+                                            </a>      
+                                        {% endif %}      
+                                    </div>
+                                </div>
+                                {% endfor %}
+                                
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<div :class="{ '!opacity-100 !max-w-[90%]': openModal == 'mobileMenu' }" 
+class="fixed top-0 right-0 h-screen w-full max-w-[0%] overflow-auto opacity-0 transition-all ease-in-out duration-200 bg-[#161719] z-[999999]">
+    <div class="bg-[#000] flex items-center justify-between px-3 py-3">
+        <img src="{{ 'assets/images/logo.png'|theme }}" 
+        class="object-contain logo h-full w-[100px]" 
+        alt="">
+
+        <button @click="openModal = 'null'" class="w-8 h-8 min-w-[32px] min-h-[32px] bg-[#666] flex items-center justify-center text-white rounded-full"> 
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+    </div>
+
+    <!-- {{ 'termekek'|page({category: category.slug, slug: child.slug, child: childSec.slug}) }} -->
+
+    <div class="py-2 flex flex-col" x-data="{ dropdownFirst: 'null' }" >
+        {% for category in categories %}
+            {% if category.children|length > 0 %}
+                <div class="w-full">
+                    <button type="button" @click="dropdownFirst = dropdownFirst == '{{ category.id }}' ? 'null' : '{{ category.id }}'" 
+                    class="px-5 py-4 w-full transition-all text-start ease-in-out font-primary rounded-sm border-b border-neutral-800 text-white">
+                        <i class="fa-light fa-chevron-right mr-1 transition-all ease-in-out" 
+                        :class="{'!rotate-90': dropdownFirst === '{{ category.id }}' }"></i> {{ category.name }}
+                    </button>
+    
+                    <div x-data="{ dropdownSecondary: 'null' }" 
+                    class="hidden flex-col bg-black bg-opacity-40"
+                    :class="{'!flex': dropdownFirst === '{{ category.id }}' }">
+                        {% for child in category.children %}
+                            {% if child.children|length > 0 %}
+                                <button type="button" @click="dropdownSecondary = dropdownSecondary == '{{ child.id }}' ? 'null' : '{{ child.id }}'"
+                                class="pr-5 pl-9 py-4 w-full text-start transition-all ease-in-out font-primary rounded-sm border-b border-neutral-800 text-white">
+                                    <i class="fa-light fa-chevron-right mr-1 transition-all ease-in-out"
+                                    :class="{'!rotate-90': dropdownSecondary === '{{ child.id }}' }"></i> {{ child.name }}
+                                </button>
+
+                                <div
+                                class="hidden flex-col bg-black bg-opacity-50"
+                                :class="{'!flex': dropdownSecondary === '{{ child.id }}' }">
+                                    {% for childSec in child.children %}
+                                        <a href="{{ 'termekek'|page({category: category.slug, slug: child.slug, child: childSec.slug}) }}">
+                                            <div class="pr-5 pl-12 py-4 transition-all ease-in-out font-primary rounded-sm border-b border-neutral-800 text-white">
+                                                {{ childSec.name }}
+                                            </div>
+                                        </a>
+                                    {% endfor %}
+                                </div>
+
+                            {% else %}
+                                <a href="{{ 'termekek'|page({category: category.slug, slug: child.slug }) }}">
+                                    <div class="pr-5 pl-14 py-4 transition-all ease-in-out font-primary rounded-sm border-b border-neutral-800 text-white">
+                                        {{ child.name }}
+                                    </div>
+                                </a>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            {% else %}
+                <a href="{{ 'termekek'|page({category: category.slug}) }}">
+                    <div class="pr-5 pl-5 py-4 transition-all ease-in-out font-primary rounded-sm border-b border-neutral-800 text-white">
+                        {{ category.name }}
+                    </div>
+                </a>
+            {% endif %}
+        {% endfor %}
+    </div>
+</div>
+

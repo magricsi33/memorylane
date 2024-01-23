@@ -1,0 +1,53 @@
+plugin:
+    name: 'livestudiodev.lscart::lang.plugin.name'
+    description: 'livestudiodev.lscart::lang.plugin.description'
+    author: LivestudioDev
+    icon: oc-icon-shopping-cart
+    homepage: ''
+navigation:
+    main-menu-item:
+        label: Webshop
+        url: livestudiodev/lscart/products
+        icon: icon-shopping-cart
+        sideMenu:
+            altalanos:
+                label: 'Általános beállítások'
+                url: livestudiodev/lscart/groupcontroller/altalanos
+                icon: icon-sitemap
+            akciozas:
+                label: Akciózás
+                url: livestudiodev/lscart/groupcontroller/akciozas
+                icon: icon-sitemap
+            side-menu-item3:
+                label: Termékek
+                url: livestudiodev/lscart/products
+                icon: icon-dropbox
+            side-menu-item5:
+                label: Kategóriák
+                url: livestudiodev/lscart/categories
+                icon: icon-folder-open
+            side-menu-item8:
+                label: 'Szállítási módok'
+                url: livestudiodev/lscart/shippingmethods
+                icon: icon-truck
+            side-menu-item11:
+                label: 'Fizetési módok'
+                url: livestudiodev/lscart/paymentmethods
+                icon: icon-credit-card
+            side-menu-item:
+                label: Tulajdonságok
+                url: livestudiodev/lscart/properties
+                icon: icon-sort
+    main-menu-item2:
+        label: Rendelések
+        url: livestudiodev/lscart/orders
+        icon: icon-bell
+        sideMenu:
+            side-menu-item2:
+                label: Rendelések
+                url: livestudiodev/lscart/orders
+                icon: icon-bell
+permissions:
+    isDeveloper:
+        tab: 'livestudiodev.lscart::lang.plugin.name'
+        label: Fejlesztő-e

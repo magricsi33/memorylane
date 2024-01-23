@@ -1,0 +1,10 @@
+name: Blogs
+form: $/codergram/zoldszeged/models/blog/fields.yaml
+modelClass: Codergram\Zoldszeged\Models\Blog
+defaultRedirect: codergram/zoldszeged/blogs
+create:
+    redirect: 'codergram/zoldszeged/blogs/update/:id'
+    redirectClose: codergram/zoldszeged/blogs
+update:
+    redirect: codergram/zoldszeged/blogs
+    redirectClose: codergram/zoldszeged/blogs

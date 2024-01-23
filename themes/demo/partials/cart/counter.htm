@@ -1,0 +1,19 @@
+<a href="/kosar" class="group">
+    <div class="flex items-center w-max gap-3 group">
+        <div class="rounded-full bg-[#151C1C] group-hover:bg-opacity-85 xl:w-12 w-10 xl:h-12 h-10 flex items-center justify-center relative">
+            <i class="fa-light fa-cart-shopping xl:text-xl text-lg text-white"></i>
+            <div class="xl:hidden absolute -right-1 -top-1 text-xs font-bold flex items-center justify-center w-5 h-5 bg-[#38a093] rounded-full text-white">
+                {{ cart.totalQuantity }}
+            </div>
+        </div>
+        <div class="hidden xl:block">
+            <p class="text-xs uppercase font-bold">
+                {{ cart.totalQuantity }} termék
+            </p>
+            <p class="font-primary text-lg">
+                {{ cart.totalBrutto|number_format(0, ',', ' ') }} 
+                {{ cart.cart.currency.shortcode }}
+            </p>
+        </div>
+    </div>
+</a>

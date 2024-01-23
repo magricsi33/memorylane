@@ -1,0 +1,56 @@
+<div
+    :class="{ '!opacity-100 !visible !scale-100': openModal == 'search' }"
+    class="fixed top-6 left-[50%] -translate-x-[50%] h-auto scale-0 overflow-auto invisible xl:w-[700px] w-11/12 opacity-0 transition-all ease-in-out duration-200 bg-[#fff] z-[999999]"
+>
+    <div class="p-8">
+        <button
+            type="type"
+            @click="openModal = 'null'"
+            class="w-12 h-12 flex items-center justify-center bg-neutral-700 hover:bg-red-500 absolute right-0 top-0"
+        >
+            <i class="fa-thin fa-xmark text-white"></i>
+        </button>
+        <div>
+            <form
+                data-request="onSearch"
+                data-request-flash
+                data-request-loading
+            >
+                <h3 class="font-primary text-2xl">
+                    Keresés
+                </h3>
+                <div class="flex flex-col gap-3 my-6">
+
+                    <div class="w-full flex flex-col gap-1">
+                        <div class="relative">
+                            <div class="h-full w-10 flex items-center justify-center absolute left-0 top-0">
+                                <i class="fa-light fa-magnifying-glass text-lg"></i>
+                            </div>
+                            <input
+                                type="text"
+                                required
+                                oninput="checkInput(this)" 
+                                autocomplete="current-password"
+                                class="bg-[#eee] h-[55px] px-4 w-full focus:outline-0 pl-11 shadow-md"
+                                name="search"
+                                placeholder="Keresés a termékek között..."
+                            />
+                        </div>
+                    </div>
+                </div>
+                <div id="search" class="overflow-auto searchBox">
+                    <p class="text-xs text-neutral-800">
+                        Legtöbbet keresett
+                    </p>
+                    {% partial 'site/search' %}
+                </div>
+                <!-- <button
+                    type="submit"
+                    class=""
+                >
+                    Keresés
+                </button> -->
+            </form>
+        </div>
+    </div>
+</div>

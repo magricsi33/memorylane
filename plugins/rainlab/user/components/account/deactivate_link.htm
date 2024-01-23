@@ -1,0 +1,46 @@
+<a
+    href="javascript:;"
+    onclick="$('#accountDeactivateForm').toggle()"
+    class="h-[50px] bg-[#2B399010] hover:bg-opacity-50 mt-6 transition-all ease-in-out px-10 text-white font-primary flex items-center justify-center clip-box w-full"
+>
+    Profil inaktíválása
+</a>
+<div id="accountDeactivateForm" style="display: none" class="mt-3">
+    <form data-request="onDeactivate" data-request-complate="redirect: '/'">
+        <hr / class="mb-3">
+        <h3 class="text-lg font-bold mb-3">
+            Inaktívra szeretnéd állítani a profilod?
+        </h3>
+        <p>
+            Fiókját letiltjuk, adatait pedig eltávolítjuk az oldalról. Fiókját
+            bármikor újraaktiválhatja, ha újra bejelentkezik.
+        </p>
+        <div class="form-group mb-3">
+            <label for="accountDeletePassword"
+                >A folytatáshoz adja meg jelszavát:</label
+            >
+            <input
+                name="password"
+                type="password"
+                class="form-control btn-border upper p-2 rounded-lg"
+                placeholder="Jelszó"
+                id="accountDeletePassword"
+            />
+        </div>
+        <div class="flex items-center gap-5">
+            <button
+                type="submit"
+                class="bg-red-500 text-white w-full transition-all ease-in-out rounded-xl px-9 h-12 font-medium uppercase flex items-center justify-center oswald"
+            >
+                Profil inaktíválása
+            </button>
+            <a
+                href="javascript:;"
+                class="bg-gray-500 text-white w-full transition-all ease-in-out rounded-xl px-9 h-12 font-medium uppercase flex items-center justify-center oswald"
+                onclick="$('#accountDeactivateForm').toggle()"
+            >
+                Mégse
+            </a>
+        </div>
+    </form>
+</div>

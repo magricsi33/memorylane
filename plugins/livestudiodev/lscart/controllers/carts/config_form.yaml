@@ -1,0 +1,10 @@
+name: Carts
+form: $/livestudiodev/lscart/models/cart/fields.yaml
+modelClass: LivestudioDev\Lscart\Models\Cart
+defaultRedirect: livestudiodev/lscart/carts
+create:
+    redirect: 'livestudiodev/lscart/carts/update/:id'
+    redirectClose: livestudiodev/lscart/carts
+update:
+    redirect: livestudiodev/lscart/carts
+    redirectClose: livestudiodev/lscart/carts

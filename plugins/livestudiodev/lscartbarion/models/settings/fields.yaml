@@ -1,0 +1,23 @@
+fields:
+    pos_key:
+        label: 'POS Titkos kulcs'
+        span: auto
+        required: 1
+        type: text
+        comment: '(POS Key)'
+    payee:
+        label: 'Kedvezményezett e-mail címe'
+        span: auto
+        required: 1
+        type: text
+    environment:
+        label: 'Környezeti változó'
+        options:
+            - Teszt
+            - Éles
+        showSearch: true
+        span: auto
+        default: '0'
+        required: 1
+        type: dropdown
+        comment: '(Éles vagy nem a fizetés, alapból TESZT)'

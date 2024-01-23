@@ -1,0 +1,178 @@
+title = "Vélemények"
+url = "/velemenyek/:code"
+layout = "default"
+meta_title = "Köszönjük véleményét!"
+meta_description = "Köszönjük véleményét!"
+is_hidden = 0
+robot_index = "index"
+robot_follow = "follow"
+==
+<?php
+use LivestudioDev\Lscartreviews\Models\ReviewCode;
+use LivestudioDev\Lscartreviews\Models\Review;
+use LivestudioDev\Lscartreviews\Models\ProductReview;
+use LivestudioDev\Lscart\Models\Order;
+
+function onStart()
+{
+	$code = $this->param('code');
+	$reviewcode = ReviewCode::where('code',$code)->first();
+	if($reviewcode){
+		$this['order'] = $reviewcode->order;
+		$this['code'] = $reviewcode->code;
+	}
+}
+
+function onSendReview()
+{
+	$products = Input::get('products');
+	$code = Input::get('code');
+	$reviewcode = ReviewCode::where('code',$code)->first();
+
+	$order = Order::find($reviewcode->order_id);
+
+	$siteReview = new Review();
+	$siteReview->order_id = $order->id;
+	$siteReview->name = $order->name;
+	$siteReview->comment = Input::get('review');
+	$siteReview->star = Input::get('star');
+	$siteReview->save();
+
+	foreach($products as $product) {
+		$review = new ProductReview();
+		$review->name =  $order->name;
+		$review->order_id =  $order->id;
+		$review->variant_id =  $product['variant_id'] ? $product['variant_id'] : 0;
+		$review->product_id =  $product['product_id'];
+		$review->comment =  $product['review'];
+		$review->star =  $product['star'];
+		$review->save();
+	}
+
+	Flash::success('Köszönjük értékelését!');
+	return Redirect::to('/');
+}
+?>
+==
+{% if order %}
+{% put styles %}
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-star-rating/4.0.6/css/star-rating.min.css" />
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-star-rating/4.0.6/themes/krajee-fas/theme.min.css" />
+{% endput %}
+
+<div class="mt-28 container w-11/12 xl:w-6/12 mx-auto flex flex-col justify-center items-center text-white">
+
+    <span class="rounded-xl bg-[#2B3990] text-[#2B3990] bg-opacity-20 px-3 py-1.5 w-max">
+        Fontos a véleménye!
+    </span>
+    <h1 class="sm:text-4xl text-4xl text-white font-bold mt-10">
+		Köszönjük, hogy a <span class="text-[#2B3990]">HardwareHeaven</span> webáruházat választotta!
+    </h1>
+	<h4 class="mb-4 text-xl font-bold mt-10">Kedves {{ order.name }}!</h4>
+	<p class="text-lg">
+		Kérjük segítse munkánkat, írja meg véleményét és tapasztalatait a rendeléssel kapcsolatban! 
+	</p>
+
+	<form onsubmit="sendReview(this, event);" class="my-4 w-full" data-request-loading data-request-flash>
+		<input type="hidden" name="code" value="{{ code }}">
+		<div class="from-group">
+			<input id="input-id" name="star" type="text" class="kv-ltr-theme-fas-star rating-loading" value="5"
+				step="0.5" dir="ltr" data-size="sm" />
+		</div>
+		<div class="w-full form-floating px-2 mb-3">
+			<textarea type="text" class="form-control w-full !h-32 px-3 py-1.5 bg-transparent border border-zinc-800 rounded-xl focus:outline-none focus:border-[#2B3990]
+			focus:shadow-none" 
+			name="review" id="review" placeholder="Az Ön véleménye a webáruházról..."></textarea>
+			<label for="review" class="text-zinc-500 ml-2 text-lg" required>Az Ön véleménye a webáruházról...</label>
+		</div>
+	
+
+		<p class="font-bold">Ön által rendelt termékek:</p>
+		{% for item in order.items %}
+		{% set product = item.product %}
+		<input type="hidden" name="products[{{ loop.index }}][product_id]" value="{{ product.id }}" />
+		<input type="hidden" name="products[{{ loop.index }}][variant_id]" value="{{ item.variant_id }}" />
+
+		<div class="flex items-center mb-20 border-b border-zinc-900 py-5 w-full">
+			<div class="w-20 h-20 overflow-hidden rounded-xl">
+				{% if product.image %}
+				<img src="{{ product.image.path }}" class="w-full h-full object-contain" alt="{{ product.name }}" />
+				{% else %}
+				<img src="{{ 'assets/images/imgnotfound.png'|theme }}" class="w-full h-full object-contain" alt="{{ product.name }}" />
+				{% endif %}
+			</div>
+			<div class="xl:w-3/12 px-2">
+				<p class="font-bold">
+					{{ product.name }}
+				</p>
+				{% if item.variant %}
+				<p class="text-sm text-neutral-500">{{ item.variant.name }} |</p>
+				{% endif %}
+				<p class="text-sm text-neutral-500">{{ item.quantity }} {{ product.unit.name }}</p>
+			</div>
+			<div class="from-group xl:w-4/12">
+				<input id="input-id" name="products[{{ loop.index }}][star]" type="text"
+					class="kv-ltr-theme-fas-star rating-loading" value="5" step="0.5" dir="ltr"
+					data-size="sm" />
+			</div>
+			<div class="xl:w-4/12 form-floating px-2 mb-3">
+				<textarea type="text" class="form-control w-full !h-20 px-3 py-1.5 bg-transparent border border-zinc-800 rounded-xl focus:outline-none focus:border-[#2B3990]
+				focus:shadow-none" 
+				name="products[{{ loop.index }}][review]" id="products[{{ loop.index }}][review]" placeholder="Az Ön véleménye a termékről..."></textarea>
+				<label for="products[{{ loop.index }}][review]" class="text-zinc-500 ml-2 text-lg" required>Az Ön véleménye a termékről...</label>
+			</div>
+		</div>
+		{% endfor %}
+
+		<button type="submit" class="border-2 border-[#2B3990] hover:bg-[#0eae5623] text-white px-7 py-4 rounded-xl transition ease-in-out
+		duration-200 uppercase rt w-max mt-10 flex items-center">
+			Vélemény beküldése
+		</button>
+	</form>
+</div>
+
+{% put scripts %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-star-rating/4.0.6/js/star-rating.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-star-rating/4.0.6/themes/krajee-fas/theme.min.js"></script>
+<script>
+	$(document).ready(function () {
+		$('.kv-ltr-theme-fas-star').rating({
+			hoverOnClear: true,
+			theme: 'krajee-fas',
+			containerClass: 'is-star',
+			showCaption: false,
+			starCaptions: {
+				0.5: 'Fél csillag',
+				1: '1 csillag',
+				1.5: '1.5 csillag',
+				2: '2 csillag',
+				2.5: '2.5 csillag',
+				3: '3 csillag',
+				3.5: '3.5 csillag',
+				4: '4 csillag',
+				4.5: '4.5 csillag',
+				5: '5 csillag'
+			}
+		});
+	});
+
+	sendReview = (el, e) => {
+		e.preventDefault();
+
+		$(".loader-layout .content").text("Vélemény elküldése folyamatban...");
+		$(".loader-layout").show();
+
+		$(el).request("onSendReview", {
+			complete: () => {
+				$(".loader-layout").hide();
+			}
+		});
+	} 
+</script>
+{% endput %}
+{% else %}
+<h2>Sajnálom, ilyen véleményazonosító nem létezik.</h2>
+{% endif %}

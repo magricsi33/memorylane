@@ -1,0 +1,63 @@
+<div class="report-widget">
+	<h3>Adatbázisban levő adatok</h3>
+
+    <div class="table-container clickable">
+        <table class="table data" data-provides="rowlink">
+            <thead>
+                <tr>
+                    <th><span>Modell</span></th>
+                    <th><span>Mennyiség</span></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr onclick="window.open('<?= Backend::url('livestudiodev/lscart/products') ?>')">
+                    <td><i class="fab fa-dropbox mr-3"></i>Termékek</td>
+                    <td><?= count($vars["products"]) ?> db</td>
+				</tr>
+				<tr onclick="window.open('<?= Backend::url('livestudiodev/lscart/categories') ?>')">
+					<td><i class="fas fa-th-large mr-3"></i>Kategóriák</td>
+					<td><?= count($vars["categories"]) ?> db</td>
+				</tr>
+                <tr onclick="window.open('<?= Backend::url('livestudiodev/lscart/orders') ?>')">
+                    <td><i class="fas fa-shopping-cart mr-3"></i>Rendelések</td>
+                    <td><?= count($vars["orders"]) ?> db</td>
+                </tr>
+                <tr onclick="window.open('<?= Backend::url('livestudiodev/lscart/orderitems') ?>')">
+                    <td><i class="fas fa-th mr-3"></i>Megrendelt Termékek</td>
+                    <td><?= count($vars["orderitems"]) ?> db</td>
+                </tr>
+                <tr onclick="window.open('<?= Backend::url('rainlab/user/users') ?>')">
+                    <td><i class="fas fa-user mr-3"></i>Felhasználók</td>
+                    <td><?= count($vars["users"]) ?> db</td>
+                </tr>
+            </tbody>
+        </table>
+	</div>
+	<br>
+	<h5><i class="fas fa-globe"></i>Oldalbeállítások</h5>
+
+	<div class="table-container">
+		<table class="table data" data-provides="rowlink">
+			<thead>
+				<tr>
+					<th><span>Paraméter neve</span></th>
+					<th><span>Paraméter értéke</span></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td><i class="fas fa-info"></i>Alapértelmezett Pénznem</td>
+					<td><?= $vars["default"]->currency->code ?></td>
+				</tr>
+				<tr>
+					<td><i class="fas fa-info"></i>Alapértelmezett Adókulcs</td>
+					<td><?= $vars["default"]->vatkey->value ?>%</td>
+				</tr>
+				<tr>
+					<td><i class="fas fa-info"></i>Alapértelmezett Mértékegység</td>
+					<td><?= $vars["default"]->measure->name ?></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>

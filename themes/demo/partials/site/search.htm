@@ -1,0 +1,61 @@
+{% if user is defined and user.discounts[0] is defined %} {% set temp = {} %} {%
+for discount in user.discounts[0].discounts %} {% if product.category.id ==
+discount['category'] %} {% set temp = {'value': discount['value'], 'name':
+user.discounts[0].name} %} {% endif %} {% endfor %} {% set empDiscount = temp %}
+{% endif %} {% for sitesearch in sitesearchs %}
+<a
+    href="#"
+    data-request="onSearch"
+    data-request-data="search: '{{ sitesearch.name }}'"
+    class="group"
+>
+    <div
+        class="flex items-center py-3 border-b border-neutral-800 group-hover:text-[#2B3990]"
+    >
+        <i
+            class="fa-light fa-magnifying-glass text-lg text-neutral-400 mr-2"
+        ></i>
+        {{ sitesearch.name }}
+    </div>
+</a>
+{% endfor %} 
+
+{% for product in searchProducts %}
+<a
+    href="{{ 'termek'|page({category: product.category.slug, product: product.slug}) }}"
+    class="group"
+>
+    <div
+        class="flex items-center py-2 border-b border-neutral-800 group-hover:bg-neutral-500 group-hover:bg-opacity-5 px-3"
+    >
+        <div class="w-[70px] h-[70px] p-1 mr-2">
+            {% if product.image_link %}
+                <img
+                    src="{{ product.image_link }}"
+                    loading="lazy"
+                    class="object-contain object-center w-full h-full transition-all ease-in-out group-hover:scale-105"
+                    alt="{{ product.name }}"
+                />
+            {% else %}
+                <img
+                    src="{{ product.image.path }}"
+                    loading="lazy"
+                    class="object-contain object-center w-full h-full transition-all ease-in-out group-hover:scale-105"
+                    alt="{{ product.name }}"
+                />
+            {% endif %}
+        </div>
+        <div>
+            <p class="font-bold text-sm">
+                {{ product.name }}
+            </p>
+            <p class="text-xs text-neutral-800">
+                {{ product.category.name }}
+            </p>
+            <div>
+                {% partial 'product/priceSearch' empDiscount=empDiscount product=product user=user %}
+            </div>
+        </div>
+    </div>
+</a>
+{% endfor %}

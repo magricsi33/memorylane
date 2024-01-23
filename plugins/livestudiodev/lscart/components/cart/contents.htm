@@ -1,0 +1,8 @@
+<div id="contents">
+    <ul>
+        {% for item in __SELF__.cart.items %}
+        {% set product = item.product %}
+        <li>{{ product.name }} x {{item.quantity}}</li>
+        {% endfor %}
+    </ul>
+</div>

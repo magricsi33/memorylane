@@ -1,0 +1,527 @@
+title = "Termék" 
+url = "/:category/:product" 
+layout = "default" 
+==
+<?php
+use LivestudioDev\Lscart\Models\Category;
+use LivestudioDev\Lscart\Models\Product;
+use LivestudioDev\Lscart\Models\Discount;
+use LivestudioDev\Lscartreviews\Models\ProductReview;
+
+function onStart()
+{
+    $product = Product::whereSlug($this->param('product'))->first();
+
+    if (!$product) {
+        return Redirect::to("/404");
+    }
+
+    $avg = 0;
+
+    $this['avg'] = $avg;
+
+    $json_product = new StdClass;
+    $json_product->id = $product->id;
+    $json_product->name = $product->name;
+    $json_product->category = $product->category->name;
+    $json_product->price = $product->getItemPrice();
+
+    $this['json_product'] = json_encode($json_product);
+
+    if (!$product) {
+        return Redirect::to("404");
+    }
+
+    $this['product'] = $product;
+    $this['category'] = $this['product']->category;
+    $this->page->meta_title = $this['product']->meta_title;
+    $this->page->meta_description = $this['product']->meta_description;
+    $this['discount'] = null;
+    $this['related_products'] = Product::where('slug', '!=', $this->param('slug'))->inRandomOrder()->limit(3)->with('properties')->get();
+
+    $user = Auth::user();
+
+    if ($user && isset($user->discounts[0])) {
+        $temp = [];
+        foreach ($user->discounts[0]->discounts as $discount) {
+            if ($product->category->id == $discount['category']) {
+                $temp['value'] = $discount['value'];
+                $temp['name'] = $user->discounts[0]->name;
+                break;
+            }
+        }
+
+        $this['empDiscount'] = $temp;
+    }
+
+    if ($product->isDiscounted()) {
+        $id = $product->getDiscount()->id;
+        $discount = Discount::find($id);
+        $this['discount'] = $discount;
+    }
+
+    // $product_reviews = ProductReview::where('product_id', $product->id)->where('accepted', 1)->get();
+    // $this['product_reviews'] = $product_reviews;
+    // $sum = 0;
+
+    // if(count($product_reviews) > 0) {
+    //     foreach($product_reviews as $review) {
+    //         $sum += floatval($review->star);
+    //     }
+
+    //     $avg_review = floatval($sum / count($product_reviews));
+    // } else {
+    //     $avg_review = 0;
+    // }
+
+    // $this['avg_review'] = $avg_review;
+    $this['related_products'] = Product::inRandomOrder()->where([['status', 1],['id','<>',$product->id], ['category_id','<>', null],])->limit(4)->get();
+
+    $json_product = new StdClass;
+    $json_product->id = $product->id;
+    $json_product->name = $product->name;
+    $json_product->category = $product->category->name;
+    $json_product->price = $product->getItemPrice();
+
+    $this['json_product'] = json_encode($json_product);
+
+    $breadcrumbs = [];
+    $category = $this['category'];
+
+    while ($category) {
+        array_unshift($breadcrumbs, [
+            'name' => $category->name,
+            'url' => $category->slug
+        ]);
+        $category = $category->parent;
+    }
+
+    $this['breadcrumbs'] = $breadcrumbs;
+
+}
+
+function onChangeVariants()
+{
+    $id = Input::get('variant_id');
+    $product = Product::where('slug', $this->param('product'))->first();
+
+    return [
+        '#price' => $this->renderPartial('product/price', ["variant_id" => $id, "product" => $product]),
+        '#variant' => $this->renderPartial('product/variant', ["variant_id" => $id, "product" => $product]),
+        '#stock' => $this->renderPartial('product/stock', ["variant_id" => $id, "product" => $product]),
+        '#button' => $this->renderPartial('product/button', ["variant_id" => $id])
+    ];
+}
+?>
+==
+<div class="w-full bg-gradient-to-b from-[#00000020] to-transparent">
+    <div class="container w-11/12 mx-auto py-2">
+        {% partial "product/breadcrumb" breadcrumbs=breadcrumbs %}
+    </div>
+</div>
+<div class="xl:mt-16 pb-20 container mx-auto 2xl:w-8/12 w-11/12">
+    <div id="shippingCost" class="mb-5">
+        {% partial 'cart/shippingCost' %}
+    </div>
+
+    <div class="flex flex-wrap">
+        <div class="xl:w-7/12 w-full xl:px-3 mb-5 xl:mb-0 ">
+            <div x-data="{ activeImage: 0 }" class="flex flex-wrap xl:flex-nowrap flex-col-reverse xl:flex-row gap-3 sticky top-[90px]">
+                <div class="xl:w-2/12 w-full flex xl:flex-col gap-2 overflow-auto">
+                    <div @click="activeImage = 0" :class="{ 'border-[#2B3990]': activeImage === 0 }" 
+                    class="xl:w-[100px] w-[80px] xl:h-[100px] h-[80px] bg-white rounded-xl overflow-hidden border-2 border-transparent cursor-pointer">
+                        <img src="{{ product.image.path }}" class="w-full h-full object-contain" alt="{{ product.name }}">
+                    </div>
+                    {% for image in product.gallery %}
+                    <div @click="activeImage = {{ loop.index }}" :class="{ 'border-[#2B3990]': activeImage === {{ loop.index }} }" 
+                    class="xl:w-[100px] w-[80px] min-w-[80px] xl:h-[100px] h-[80px] bg-white rounded-xl overflow-hidden border-2 border-transparent cursor-pointer">
+                        <img src="{{ image.path }}" class="w-full h-full object-contain" alt="{{ product.name }}">
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="w-full tab-content mb-3 bg-white rounded-xl overflow-hidden" id="tabs-tabContent3">
+                    <div class="w-full xl:h-[600px] h-[350px] p-3 hidden" :class="{ '!block': activeImage === 0 }" >
+                        <img src="{{ product.image.path }}" class="w-full h-full object-contain" alt="{{ product.name }}">
+                    </div>
+                    {% for image in product.gallery %}
+                    <div class="w-full xl:h-[600px] h-[350px] p-3 hidden" :class="{ '!block': activeImage === {{ loop.index }} }">
+                        <img src="{{ image.path }}" class="w-full h-full object-contain" alt="{{ product.name }}">
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <div class="xl:w-5/12 xl:px-3 xl:min-h-full w-full relative">
+            <form 
+            data-request-complete="addToCart()" 
+            data-request="onAddCartItem" 
+            data-request-flash id="addToCartForm" class="flex flex-col xl:justify-between h-full">
+                <input type="hidden" name="product_id" value="{{ product.id }}" />
+                <div>
+                    <p class="xl:text-xs text-sm text-neutral-800 font-medium">
+                        {{ product.category.name }}
+                    </p>
+                    <h1 class="my-1 xl:text-4xl text-3xl font-primary">
+                        {{ product.name }}
+                    </h1>
+                    <p class="xl:text-xs text-sm text-neutral-500 font-medium">
+                        Cikkszám: 
+                        {{ product.cikkszam ? product.cikkszam : 'Nincs megadva' }}{{ product.id < 10 ? '00'~product.id : '' }}{{ product.id > 10 and product.id < 100 ? '0'~product.id : '' }}{{ product.id >= 100 ? product.id : '' }}
+                    </p>
+
+                    <div class="text-sm text-neutral-800 mt-6 italic">
+                        {% for prop in product.properties().get()|slice(0, 5) %}
+                            {{ prop.name }}: {{ prop.extra[prop.pivot.propertable_value].item }} {{ not loop.last ? ',' : '' }}
+                        {% endfor %}
+                        {% if product.properties().get()|length > 5 %}
+                            (...)
+                        {% endif %}
+                    </div>
+
+                    <div class="flex flex-col gap-2 mt-6">
+                        <div class="flex items-center text-[#26bc5f] font-medium text-sm">
+                            <div class="w-5 flex items-center justify-center h-auto mr-2">
+                                <i class="fa-solid fa-truck-fast text-[#26bc5f]"></i>
+                            </div> 1-2 munkanap szállítás
+                        </div>
+                        <div class="flex items-center  text-[#26bc5f] font-medium text-sm">
+                            <div class="w-5 flex items-center justify-center h-auto mr-2">
+                                <i class="fa-solid fa-pen-ruler text-[#26bc5f]"></i>
+                            </div> Személyreszabott
+                        </div>
+                        <div class="flex items-center  text-[#26bc5f] font-medium text-sm">
+                            <div class="w-5 flex items-center justify-center h-auto mr-2">
+                                <i class="fa-solid fa-user-tie text-[#26bc5f]"></i>
+                            </div> Személyes átvétel
+                        </div>
+                        <!-- <div class="flex items-center  text-[#26bc5f] font-medium text-sm">
+                            <div class="w-5 flex items-center justify-center h-auto mr-2">
+                                <i class="fa-solid fa-truck-fast text-[#26bc5f]"></i>
+                            </div> {{ carbon.create(product.getStorageItem().transport)|date_modify("+2 days")|date('Y. m. d.') }}
+                        </div> -->
+                    </div>
+                    <!-- <div class="flex items-center text-xs text-neutral-500">
+                        {% if avg_review == 0 %}
+                            {% for i in 0..4 %}
+                                <i class="fa-solid fa-star text-zinc-800 text-[10px]"></i>
+                            {% endfor %}
+                        {% elseif avg_review == 5 %}
+                            {% for i in 0..4 %}
+                                <i class="fa-solid fa-star text-yellow-500  text-[10px]"></i>
+                            {% endfor %}
+                        {% else %}
+                            {% for i in 0..avg_review-1 %}
+                                <i class="fa-solid fa-star text-yellow-500 text-[10px]"></i>
+                            {% endfor %}
+                            {% for i in 0..4-avg_review %}
+                                <i class="fa-solid fa-star text-zinc-800 text-[10px]"></i>
+                            {% endfor %}
+                        {% endif %}
+                        <p class="ml-1 mt-1">
+                            {{ product_reviews|length }} vélemény
+                        </p>
+                    </div> -->
+                </div>
+
+                <div class="font-medium my-5">
+                    {% if product.status == 0 %}
+                    <h2 class="font-medium text-4xl text-primary font-primary">
+                        {{ product.getItemPrice(variant_id, cart.cart.currency.id, false, false, false)|number_format(0, ',', ' ') }}
+                        {{ cart.cart.currency.shortcode }}
+                    </h2>
+                    <p class="text-neutral-800">
+                        A webáruházban megtalálható legutolsó ismert ár.
+                    </p>
+                    {% else %}
+                        <div id="price" class="my-10 xl:my-0 relative">
+                            {% partial 'product/price' %}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <!-- <div id="stock">
+                    {% partial 'product/stock' %}
+                </div> -->
+
+                <div class="text-neutral-800">
+                    {% if product.meta_description %}
+                        {{ product.meta_description|length > 150 ? product.meta_description|slice(0, 150) ~ '...' : product.meta_description }}
+                    {% endif %}
+                </div>
+                <div id="addToCart" class="border-t border-b border-neutral-300 py-5 my-3">
+                    <div id="variant">
+                        {% partial 'product/variant' %}
+                    </div>
+                    
+                    <div class="flex flex-wrap items-center w-full">
+                        {% if product.status == 1 %}
+                        
+                            <div class="lg:w-4/12 w-full lg:pr-2 mb-5 lg:mb-0">
+                                <div x-data="{ count: 1 }" class="flex items-center justify-between border border-neutral-200 py-2 px-3 rounded-lg">
+                                    <button @click="count = count != 1 ? count - 1 : 1" type="button" 
+                                    :class="{ 'opacity-25': count == 1 }"
+                                    class="text-2xl font-medium bg-[#151C1C] flex items-center justify-center w-8 h-8 min-w-[32px] hover:bg-opacity-80 rounded-full text-white">-</button>
+                                    <input                                         
+                                    id="numberPlace" 
+                                    type="number" 
+                                    name="quantity"
+                                    class="w-full p-0 m-0 text-center bg-transparent focus:outline-none" 
+                                    value="1" 
+                                    min="1" 
+                                    readonly x-model="count">
+                                    <button @click="count = count + 1" type="button" class="text-2xl font-medium bg-[#151C1C] flex items-center justify-center w-8 h-8 min-w-[32px] hover:bg-opacity-80 rounded-full text-white">+</button>
+                                  </div>
+                            </div>
+
+                        {% endif %}
+                        {% if product.getItemPrice(variant_id, cart.cart.currency.id, false, false, false) > 0 or product.getStorageItem().stock != 0 %}
+                        <div class="lg:w-8/12 {{ product.status != 1 ? 'lg:w-full' }} w-full lg:pl-2 flex justify-between">
+                            {% if product.status == 1 %}
+                                {% if product.variants|length > 0 %} 
+                                <div id="button" class="w-full">
+                                    {% partial 'product/button' %}
+                                </div>
+                                {% else %}
+                                    <button form="addToCartForm" type="submit" id="addCartBtn" 
+                                    class="h-[50px] bg-[#151C1C] hover:bg-opacity-50 transition-all ease-in-out px-10 text-white font-primary flex items-center justify-center clip-box w-full">
+                                        Kosárba
+                                    </button>
+                                {% endif %}
+                            {% elseif product.status == 2 %}
+                                <div class="h-[50px] bg-yellow-600 px-10 text-white font-primary flex items-center justify-center clip-box w-full">
+                                    A termék nem érhető el
+                                </div>
+                            {% elseif product.status == 0 %}
+                                <div class="h-[50px] bg-[#151C1C30] px-10 text-white font-primary flex items-center justify-center clip-box w-full">
+                                    A terméket jelenleg nem forgalmazzuk webáruházunkban
+                                </div>
+                            {% endif %}
+                            <!-- <a href="">
+                                <div class="hover:text-[#2B3990] transition-all ease-in-out rounded-full h-12 w-12 flex items-center justify-center">
+                                    <i class="fa-light fa-heart text-xl"></i>
+                                </div>
+                            </a> -->
+                        </div>
+                        {% else %}
+                        <div class="lg:w-8/12 {{ product.status != 1 ? 'lg:w-full' }} w-full lg:pl-2 flex justify-between">
+                            <div class="h-[50px] bg-[#2B399050] hover:bg-opacity-50 transition-all ease-in-out px-10 text-white font-primary 
+                            flex items-center justify-center clip-box w-full">
+                                {{ product.getStorageItem().stock == 0 ? 'Nincs raktáron' : 'Nem elérhető' }}
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div x-data="{ activeTab: 1 }" class="pb-20">
+
+    <div class="w-full mb-3 border-b border-neutral-700 px-4">
+        <div class="container mx-auto 2xl:w-8/12 w-11/12">
+            <button type="button" class="px-7 py-4 font-medium relative border border-neutral-700 xl:hover:bg-[#151C1C] xl:hover:text-white transition-all ease-in-out border-b-0
+            after:content-[''] after:absolute after:left-0 after:-bottom-1 after:w-full after:h-1
+            before:content-[''] before:absolute before:left-0 before:-top-[1px] before:w-full before:h-1 after:bg-transparent before:bg-transparent"
+            @click="activeTab = 1" :class="{ 'before:!bg-[#151C1C] after:!bg-[#f5f5f5]': activeTab === 1 }">
+                Leírás
+            </button>
+            <!-- <button type="button" class="px-7 py-4 font-medium relative border border-neutral-700 xl:hover:bg-[#151C1C] xl:hover:text-white transition-all ease-in-out border-b-0
+            after:content-[''] after:absolute after:left-0 after:-bottom-1 after:w-full after:h-1
+            before:content-[''] before:absolute before:left-0 before:top-0 before:w-full before:h-1 after:bg-transparent before:bg-transparent"
+            @click="activeTab = 2" :class="{ 'before:!bg-[#151C1C] after:!bg-[#f5f5f5]': activeTab === 2 }">
+                Tulajdonságok
+            </button> -->
+        </div>
+    </div>
+
+    <div class="container mx-auto 2xl:w-8/12 w-11/12">
+        <div class="w-full pt-6 hidden invisible opacity-0 max-h-0 overflow-hidden transition-opacity ease-in-out duration-300" 
+        :class="{ '!block !visible !opacity-100 !max-h-[999999px]': activeTab === 1 }">
+            <h2 class="text-3xl mb-12 font-primary">
+                {{ product.name }} leírása
+            </h2>
+            <div class="mb-5 description product-description">
+                {% if product.description|raw|slice(3,3) == 'URL' or not product.description %}
+                    - A termék nem tartalmaz leírást
+                {% else %}
+                    {{ product.description|raw }}
+                {% endif %}
+            </div>
+        </div>
+        <div class="w-full pt-6 hidden invisible opacity-0 max-h-0 overflow-hidden transition-opacity ease-in-out duration-300" 
+        :class="{ '!block !visible !opacity-100 !max-h-[999999px]': activeTab === 2 }">
+            <h2 class="text-3xl mb-12 font-primary">
+                {{ product.name }} tulajdonságai
+            </h2>
+            {% for prop in product.properties().get() %}
+                <div class="flex items-center justify-between py-4 px-2 border-b border-neutral-800 
+                {{ loop.index % 2 == 0 ? 'bg-neutral-300 bg-opacity-10' : 'bg-transparent'}}">
+                    <p class=" font-bold xl:w-3/12 w-6/12 text-sm xl:text-base pr-2 xl:p-0">
+                        {{ prop.name }}
+                    </p>
+                    <p class="xl:w-9/12 w-6/12 text-sm xl:text-base">
+                        {{ prop.extra[prop.pivot.propertable_value].item }}
+                    </p>
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="flex flex-wrap mt-20">
+            {% if product.related_products|length > 0 %}
+            <h3 class=" font-medium text-3xl w-full mb-5 text-center font-primary">
+                Kapcsolódó Termékek
+            </h3>
+            {% endif %}
+            {% for item in product.related_products %}
+            <div class="xl:w-3/12 w-full mb-3 px-2 xl:mb-0"> 
+                {% partial 'elements/product/productBox' product=item %}
+            </div>
+            {% endfor %}
+        </div>
+        <div class="flex flex-wrap mt-20">
+            <h3 class=" font-medium text-3xl w-full mb-5 text-center font-primary">
+                Hasonló Termékek
+            </h3>
+            {% for item in related_products %}
+            <div class="xl:w-3/12 w-full mb-3 px-2 xl:mb-0"> 
+                {% partial 'elements/product/productBox' product=item %}
+            </div>
+            {% endfor %}
+        </div>
+
+    </div>
+
+    <!-- <div class="xl:!w-4/12 w-full xl:px-3"> 
+
+        <div class="border border-zinc-800 p-5 rounded-xl">
+            <div class="flex items-center justify-between mb-3">
+                <div>
+                    <p class="text-3xl flex items-center font-medium">
+                        {{ avg_review|number_format(1) }} <i class="fa-solid fa-star text-lg text-yellow-500 ml-1"></i>
+                    </p>
+                    <p class="text-neutral-500 mt-1">
+                        {{ product_reviews|length }} vélemény
+                    </p>
+                </div>
+            </div>
+            {% if product_reviews|length > 0 %}
+            {% for review in product_reviews if review.showtext == 1 and review.comment|length > 0 and review.showtext == 1 %}
+            <div class="bg-[#222] bg-opacity-40 rounded-xl p-5 mb-3">
+                <p>
+                    {{ review.formattedName }}
+                </p>
+                <div class="flex items-center text-sm text-neutral-500 mb-5">
+                    {% if review.star == 0 %}
+                        {% for i in 0..4 %}
+                            <i class="fa-solid fa-star text-zinc-800 text-[10px]"></i>
+                        {% endfor %}
+                    {% elseif review.star == 5 %}
+                        {% for i in 0..4 %}
+                            <i class="fa-solid fa-star text-yellow-500  text-[10px]"></i>
+                        {% endfor %}
+                    {% else %}
+                        {% for i in 0..review.star-1 %}
+                            <i class="fa-solid fa-star text-yellow-500 text-[10px]"></i>
+                        {% endfor %}
+                        {% for i in 0..4-review.star %}
+                            <i class="fa-solid fa-star text-zinc-800 text-[10px]"></i>
+                        {% endfor %}
+                    {% endif %}
+                    <p class="ml-1">
+                        {{ review.star|number_format(1) }}
+                    </p>
+                </div>
+                <div class="text-sm">
+                    {{ review.comment }}
+                </div>
+            </div>
+            {% endfor %}
+            {% else %}
+            <p class="">Ehhez a termékhez még nem írtak véleményt!</p>
+            {% endif %}
+        </div>
+    </div> -->
+</div>
+
+{% put scripts %}
+<script>
+	const nexticon = '<i class="fa-regular fa-chevron-right"></i>';
+	const previcon = '<i class="fa-regular fa-chevron-left"></i>';
+
+    $('.owl-gallery').owlCarousel({
+        loop:false,
+        margin:35,
+        nav:true,
+        dots:false,
+        navText: [
+            previcon,
+            nexticon    
+        ],
+        responsive:{
+            0:{
+                items:4
+            },
+            990:{
+                items:4
+            },
+            1280:{
+                items:5
+            },
+            2000:{
+                items:5
+            }
+        }
+    })
+
+    function addToCart() {
+
+        let product = {{ json_product|raw }};
+
+        const clickProductProperties  = {
+        'contentType': 'Product',
+        'currency': 'HUF',
+        'id': product.id,
+        'name': product.name,
+        'quantity': $("input[name='quantity']").val(),
+        'unit': 'db',
+        'unitPrice': product.price / $("input[name='quantity']").val(),
+        }
+
+        console.log(clickProductProperties);
+
+        bp('track', 'clickProduct', clickProductProperties);
+
+    }
+
+ 
+        var minusBtn = document.getElementById("minus"),
+            plusBtn = document.getElementById("plus"),
+            numberPlace = document.getElementById("numberPlace"),
+            submitBtn = document.getElementById("submit"),
+            number = 1, /// number value
+            min = 1 /// min number
+            
+        minusBtn.onclick = function(){
+            if (number>min){
+            number = number-1; /// Minus 1 of the number
+            numberPlace.value = number.toFixed() ; /// Display the value in place of the number
+            }
+            if(number == min) {        
+                numberPlace.style.color= "red";
+                setTimeout(function(){numberPlace.style.color= "black"},500)
+            }
+            else {
+            numberPlace.style.color="black";            
+            }
+                    
+        }
+        plusBtn.onclick = function(){
+            number = number+1;
+            numberPlace.value = number.toFixed() ; /// Display the value in place of the number
+        }
+        
+    
+
+</script>
+{% endput %}

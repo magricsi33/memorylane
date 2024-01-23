@@ -1,0 +1,4 @@
+title: Categories
+modelClass: LivestudioDev\Lscart\Models\Category
+toolbar:
+    buttons: reorder_toolbar

@@ -1,0 +1,19 @@
+fields:
+    name:
+        label: Név
+        span: auto
+        type: text
+    image:
+        label: Partnerkép
+        mode: image
+        useCaption: true
+        thumbOptions:
+            mode: crop
+            extension: auto
+        span: auto
+        type: fileupload
+    description:
+        label: Leírás
+        size: large
+        span: auto
+        type: textarea

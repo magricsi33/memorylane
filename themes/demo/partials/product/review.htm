@@ -1,0 +1,42 @@
+{% if reviews|length > 0 %}
+<div class="d-flex justify-content-center align-items-center mt-5 mt-lg-4 mb-5">
+    <div class="h2 text-primary font-weight-bold mr-3">{{ avg|number_format(2) }}</div>
+    <div class="text-center">
+        <div class="align-top">
+            {% for i in 0..avg|number_format(0) %}
+            <i class="fas fa-star text-primary mr-1"></i>
+            {% endfor %}
+        </div>
+        <small>{{ reviews|length }} értékelés alapján!</small>
+    </div>
+</div>
+<div class="h2 text-primary font-weight-bold mb-3">Vélemények</div>
+<div class="owl-carousel owl-theme reviews">
+    {% for item in reviews %}
+    <div class="item p-2">
+        <div class="card p-3 border-0">
+            <div class="d-flex justify-content-between">
+                <div>
+                    <div class="h2 text-primary font-weight-bold d-inline-block mr-2">{{ item.star|number_format(1) }}</div>
+                    <div class="d-inline-block align-top">
+                        {% for i in 1..item.star %}
+                        <i class="fas fa-star text-primary mr-1"></i>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="text-right">
+                    <span class="text-primary h4">{{ item.name }}</span><br />
+                    <p class="mb-0">{{ item.created_at|date('Y.m.d') }}</p>
+                </div>
+            </div>
+            {% if item.showtext %}
+            <p class="mt-2">
+               {{ item.comment }}
+            </p>
+            {% endif %}
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+

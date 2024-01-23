@@ -1,0 +1,41 @@
+<div class="xl:border-t border-dashed border-neutral-600 xl:py-8 xl:px-8 relative w-full mb-20 xl:mb-10">
+	<div class="xl:absolute uppercase xl:left-10 xl:-top-3 text-primary bg-[#f5f5f5] font-primary xl:px-5 mb-2 xl:mb-0 flex items-center">
+        <div class="w-7 flex items-center justify-start">
+            <i class="fa-solid fa-truck-fast text-primary"></i>
+        </div> 
+        Szállítási mód
+	</div>
+    <input 
+    type="text" 
+    name="shipping_mode" 
+    class="bg-zinc-900 border" 
+    value="{{ cart.cart.shipping.id }}" hidden/>
+    <div class="flex flex-wrap">
+        {% for key, item in cart.shippingMethods() %}
+        <a data-request="onSetCartShipping" data-request-data="shipping_mode: {{ item.id }}, payment_mode: 1" data-request-loading class="w-full">
+            <div class="bg-[#fff] px-4 w-full rounded-lg border border-neutral-200 hover:border-[#151C1C] p-5 flex items-center justify-between cursor-pointer  
+            {{ not loop.last ? 'mb-5' }} w-full
+            {{ cart.cart.shipping.id == item.id ? '!border-[#151C1C] !bg-[#fff] !text-white bg-opacity-5' : '' }}">
+                <div class="flex flex-wrap items-center">
+                    <img src="{{ item.logo.path }}" class="h-full w-[80px] mr-3 hidden xl:block" alt="{{ item.name }}">
+                    <div>
+                        <p class="font-medium font-primary text-xl {{ cart.cart.shipping.id == item.id ? '' : '' }}">
+                            {{ item.name }}
+                        </p>   
+                        <div class="text-sm raw {{ cart.cart.shipping.id == item.id ? '' : '' }}">
+                            {{ item.description|raw }}
+                        </div>
+                    </div>
+                </div>
+                <p class="font-semibold text-sm">
+                    {% if item.getSelfCost(cart.cart) == 0 %}
+                        Ingyenes
+                    {% else %}
+                        +{{ item.getSelfCost(cart.cart) }} Ft
+                    {% endif %}
+                </p>
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+</div>

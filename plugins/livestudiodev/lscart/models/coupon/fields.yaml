@@ -1,0 +1,70 @@
+fields:
+    name:
+        label: 'Coupon neve'
+        span: auto
+        required: 1
+        type: text
+    code:
+        label: 'Kupon kód'
+        span: auto
+        placeholder: COUPONKÓD
+        required: 1
+        type: text
+    end_date:
+        label: 'Kupon lejárati ideje'
+        mode: datetime
+        span: full
+        type: datepicker
+    alluser:
+        label: 'Minden felhasználó felhasználhatja'
+        span: auto
+        default: 1
+        type: checkbox
+    allcategory:
+        label: 'Minden termékkategóriára érvényes'
+        span: auto
+        default: 1
+        type: checkbox
+    value:
+        label: 'Kedvezmény értéke'
+        span: auto
+        type: number
+    value_type:
+        label: 'Kedvezmény típusa'
+        showSearch: true
+        span: auto
+        type: dropdown
+    users:
+        label: Felhasználók
+        prompt: 'Adjon hozzá felhasználókat'
+        span: auto
+        trigger:
+            action: show
+            field: alluser
+            condition: unchecked
+        type: repeater
+        form:
+            fields:
+                user:
+                    label: Felhasználó
+                    nameFrom: name
+                    descriptionFrom: description
+                    span: full
+                    type: relation
+    categories:
+        label: Kategóriák
+        prompt: 'Adjon hozzá kategóriákat'
+        span: auto
+        trigger:
+            action: show
+            field: allcategory
+            condition: unchecked
+        type: repeater
+        form:
+            fields:
+                category:
+                    label: Kategória
+                    nameFrom: name
+                    descriptionFrom: description
+                    span: full
+                    type: relation

@@ -1,0 +1,19 @@
+<p class="lead">
+    A megadott e-mail címre elküldtük az aktiváló kódot.
+</p>
+
+<form
+    data-request="{{ __SELF__ }}::onResetPassword"
+    data-request-update="'{{ __SELF__ }}::complete': '#partialUserResetForm'">
+
+    <div class="form-floating mb-3">
+        <input type="text" class="form-control btn-border" id="resetCode" name="code" placeholder="Aktiváló kód" value="{{ __SELF__.code }}">
+        <label for="resetCode">Aktiváló kód*</label>
+    </div>
+    <div class="form-floating mb-3">
+        <input type="password" class="form-control btn-border" id="resetPassword" name="password" placeholder="Új jelszó">
+        <label for="resetPassword">Új jelszó*</label>
+    </div>
+
+    <button type="submit" class="btn btn-prim px-4 py-2 text-white fw-bold btn-border effect col-12">Jelszó átállítása</button>
+</form>

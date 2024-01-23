@@ -1,0 +1,11 @@
+plugin:
+    name: 'livestudiodev.partners::lang.plugin.name'
+    description: 'livestudiodev.partners::lang.plugin.description'
+    author: LivestudioDev
+    icon: oc-icon-users
+    homepage: ''
+navigation:
+    main-menu-item:
+        label: Partnerek
+        url: livestudiodev/partners/partners
+        icon: icon-users

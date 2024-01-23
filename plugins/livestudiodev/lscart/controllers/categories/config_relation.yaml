@@ -1,0 +1,14 @@
+properties:
+    label: Tulajdonságok
+    view:
+        list: $/livestudiodev/lscart/models/property/columns.yaml
+        toolbarButtons: add|remove|create|delete
+    manage:
+        form: $/livestudiodev/lscart/models/property/fields.yaml
+        recordsPerPage: 10
+products:
+    label: Termékek
+    view:
+        list: $/livestudiodev/lscart/models/product/columns.yaml
+        toolbarButtons: add|remove|create|delete
+        recordUrl: livestudiodev/lscart/products/update/:id

@@ -1,0 +1,40 @@
+title = "test payment page" 
+url = "/stest" 
+layout = "default" 
+is_hidden = 0 
+
+[viewBag] 
+redirectUrl = "/thankyou" 
+emailAddress = "user@domain.tld" 
+orderAmount = 1000 
+orderDescription = "Order Description from viewBag" 
+
+[stripe] 
+isTestMode = true 
+locale = "auto" 
+== 
+<?php
+use Event; 
+
+function onStart() 
+{    
+    // this is how you can dynamically set viewBag properties from within your PHP code block 
+
+    $this['viewBag']->setProperty('redirectUrl', '/koszonjuk'); 
+    $this['viewBag']->setProperty('orderAmount', '3000'); 
+
+} 
+?>
+== 
+<style> 
+  input,label { display:block; margin-bottom: 0.5em; } 
+  button { margin-top:1em; } 
+</style> 
+<h2>My Order</h2>
+<form>
+  <label>Item: {{viewBag.orderDescription}}</label>
+  <label>Price: {{viewBag.orderAmount}}</label>
+  <button id="stripeCheckout">Checkout</button>
+</form>
+<p>4242424242424242</p>
+{% component 'stripe' %}

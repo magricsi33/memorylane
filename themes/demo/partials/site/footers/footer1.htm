@@ -1,0 +1,46 @@
+<div class="bg-[#151C1C] py-10 border-t border-[#151C1C] text-white relative overflow-hidden">
+    <div class="container xl:w-7/12 mx-auto px-3 xl:px-0 relative z-10">
+        <div class="flex flex-wrap">
+            <div class="xl:w-4/12 w-full mt-5 xl:pr-10 xl:mt-0">
+                <div class="ease-in-out w-40 mb-2">
+                    <img src="{{ 'assets/images/logo_white.svg'|theme }}" class="w-full h-full object-contain" alt="Chiply">
+                </div>
+                <!-- <div class="flex flex-wrap">
+                    <i class="fa-brands fa-facebook mr-4 text-xl text-neutral-500 hover:text-[#2B3990]"></i>
+                    <i class="fa-brands fa-instagram mr-4 text-xl text-neutral-500 hover:text-[#2B3990]"></i>
+                </div> -->
+                <p>
+                    
+                </p>
+            </div>
+            <div class="xl:w-4/12 w-full mt-5 xl:pr-10 xl:mt-0 flex flex-col">
+                <p class="font-primary mb-5 uppercase">
+                    Információ
+                </p>
+                {% for item in footer_items %}
+                <a href="/hu{{ item.slug == '/' ? '/' : '/'~item.slug }}" class="mb-3 text-sm {{ link.name == 'Szállítás' or link.name == 'Fizetés' ? 'hidden' }}">
+                    {{ item.menu_name }}
+                </a>
+                {% endfor %}
+            </div>
+            <div class="xl:w-4/12 w-full mt-5 xl:pr-10 xl:mt-0 flex flex-col">
+                <p class="font-primary mb-5 uppercase">
+                    NAVIGÁCIÓ
+                </p>
+
+                <a href="/" class="mb-3 text-sm">
+                    Főoldal
+                </a>
+         
+            </div>
+        </div>
+    </div>
+</div>
+<div class="bg-[#000] text-white">
+    <div class="container xl:w-7/12 mx-auto px-3 xl:px-0 text-xs font-medium py-2">
+        <a href="https://codergram.hu/" target="_blank" class="hover:text-[#2B3990] flex items-center gap-3">
+            Weboldalkészítés
+            <img src="{{ 'assets/images/cg_logo_white.png'|theme }}" class="object-contain w-20 h-5" alt="Codergram">
+         </a>
+    </div>
+</div>

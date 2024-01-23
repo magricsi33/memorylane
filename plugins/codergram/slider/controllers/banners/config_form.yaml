@@ -1,0 +1,10 @@
+name: Banners
+form: $/codergram/slider/models/banner/fields.yaml
+modelClass: Codergram\Slider\Models\Banner
+defaultRedirect: codergram/slider/banners
+create:
+    redirect: 'codergram/slider/banners/update/:id'
+    redirectClose: codergram/slider/banners
+update:
+    redirect: codergram/slider/banners
+    redirectClose: codergram/slider/banners

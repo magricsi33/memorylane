@@ -1,0 +1,12 @@
+tabs:
+    fields:
+        head:
+            label: HEAD
+            size: large
+            span: full
+            type: textarea
+        body:
+            label: BODY
+            size: large
+            span: full
+            type: textarea

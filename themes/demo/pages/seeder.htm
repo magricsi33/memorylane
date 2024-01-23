@@ -1,0 +1,2666 @@
+title = "Page not found (404)"
+url = "/seeder"
+layout = "default"
+meta_title = "Az oldal nem található 404"
+is_hidden = 0
+robot_index = "index"
+robot_follow = "follow"
+==
+<?php
+
+use LivestudioDev\Lscart\Models\Category;
+use LivestudioDev\Lscart\Models\Product;
+use LivestudioDev\Lscart\Models\Measure;
+
+function onStart() {
+
+    //dd(Product::first());
+
+}
+
+function onSeedMainCategory() {
+
+    $categorires = [
+        [
+            'name' => 'Roller',
+            'parent_id' => null,
+        ],
+        [
+            'name' => 'Bluetooth Speaker and Buds',
+            'parent_id' => null,
+        ],
+        [
+            'name' => 'Robot Porszívó',
+            'parent_id' => null,
+        ],
+        [
+            'name' => 'Apple',
+            'parent_id' => null,
+        ],
+        [
+            'name' => 'Telefonok',
+            'parent_id' => null,
+        ],
+        [
+            'name' => 'Tv',
+            'parent_id' => null,
+        ],
+        [
+            'name' => 'Laptop',
+            'parent_id' => null,
+        ],
+        [
+            'name' => 'Other Products',
+            'parent_id' => null,
+        ],
+    ];
+
+    foreach ($categorires as $categ) {
+        $category = new Category();
+        $category->name = $categ['name'];
+        $category->active = 1;
+        $category->save();
+    }
+
+}
+
+function onSeedSecondaryCategory() {
+
+    $categorires = [
+        [
+            'name' => 'Huawei',
+            'parent_id' => Category::where('name', 'Telefonok')->first()->id,
+        ],
+        [
+            'name' => 'Samsung',
+            'parent_id' => Category::where('name', 'Telefonok')->first()->id,
+        ],
+
+    ];
+
+    foreach ($categorires as $categ) {
+        $category = new Category();
+        $category->name = $categ['name'];
+        $category->active = 1;
+        $category->parent_id = $categ['parent_id'];
+        $category->save();
+    }
+
+}
+
+function onSeedCategory() {
+    
+    $categorires = [
+        [
+            'name' => 'Google',
+            'parent_id' => Category::where('name', 'Telefonok')->first()->id,
+        ],
+        [
+            'name' => 'Nothing Phone ',
+            'parent_id' => Category::where('name', 'Telefonok')->first()->id,
+        ],
+        [
+            'name' => 'Nokia ',
+            'parent_id' => Category::where('name', 'Telefonok')->first()->id,
+        ],
+        [
+            'name' => 'Honor ',
+            'parent_id' => Category::where('name', 'Telefonok')->first()->id,
+        ],
+        [
+            'name' => 'Xiaomi',
+            'parent_id' => Category::where('name', 'Telefonok')->first()->id,
+        ],
+        [
+            'name' => 'Xiaomi Asai Spec',
+            'parent_id' => Category::where('name', 'Telefonok')->first()->id,
+        ],
+        [
+            'name' => 'One Plus',
+            'parent_id' => Category::where('name', 'Telefonok')->first()->id,
+        ],
+        [
+            'name' => 'Motorola ',
+            'parent_id' => Category::where('name', 'Telefonok')->first()->id,
+        ],
+        [
+            'name' => 'Cat',
+            'parent_id' => Category::where('name', 'Telefonok')->first()->id,
+        ],
+        [
+            'name' => 'Realme',
+            'parent_id' => Category::where('name', 'Telefonok')->first()->id,
+        ],
+        [
+            'name' => 'Oppo',
+            'parent_id' => Category::where('name', 'Telefonok')->first()->id,
+        ],
+        [
+            'name' => 'Alcatel',
+            'parent_id' => Category::where('name', 'Telefonok')->first()->id,
+        ],
+        [
+            'name' => 'Nokia',
+            'parent_id' => Category::where('name', 'Telefonok')->first()->id,
+        ],
+        [
+            'name' => 'Lg ',
+            'parent_id' => Category::where('name', 'Telefonok')->first()->id,
+        ],
+        [
+            'name' => 'Motorola Old Style',
+            'parent_id' => Category::where('name', 'Telefonok')->first()->id,
+        ],
+        [
+            'name' => 'Sony',
+            'parent_id' => Category::where('name', 'Telefonok')->first()->id,
+        ],
+        [
+            'name' => 'Felújított Készülékek',
+            'parent_id' => Category::where('name', 'Telefonok')->first()->id,
+        ],
+        [
+            'name' => 'Apple',
+            'parent_id' => Category::where('name', 'Telefonok')->first()->id,
+        ],
+        [
+            'name' => 'Television',
+            'parent_id' => Category::where('name', 'Tv')->first()->id,
+        ],
+        [
+            'name' => 'Tomtom Navigation',
+            'parent_id' => Category::where('name', 'Tv')->first()->id,
+        ],
+
+        [
+            'name' => 'Apple iPhone',
+            'parent_id' => Category::where('name', 'Apple')->first()->id,
+        ],
+        [
+            'name' => 'Apple Ipad',
+            'parent_id' => Category::where('name', 'Apple')->first()->id,
+        ],
+        [
+            'name' => 'Apple Watch',
+            'parent_id' => Category::where('name', 'Apple')->first()->id,
+        ],
+        [
+            'name' => 'Samsung Eu Spec',
+            'parent_id' => Category::where('name', 'Samsung')->first()->id,
+        ],
+        [
+            'name' => 'Samsung Smart Watch',
+            'parent_id' => Category::where('name', 'Samsung')->first()->id,
+        ],
+        [
+            'name' => 'Samsung Buds',
+            'parent_id' => Category::where('name', 'Samsung')->first()->id,
+        ],
+        [
+            'name' => 'Samsung Asia Spec',
+            'parent_id' => Category::where('name', 'Samsung')->first()->id,
+        ],
+        [
+            'name' => 'Samsung Tab',
+            'parent_id' => Category::where('name', 'Samsung')->first()->id,
+        ],
+        [
+            'name' => 'Huawei',
+            'parent_id' => Category::where('name', 'Huawei')->first()->id,
+        ],
+        [
+            'name' => 'Huawei Buds',
+            'parent_id' => Category::where('name', 'Huawei')->first()->id,
+        ],
+    ];
+
+    foreach ($categorires as $categ) {
+        $category = new Category();
+        $category->name = $categ['name'];
+        $category->active = 1;
+        $category->parent_id = $categ['parent_id'];
+        $category->save();
+    }
+
+}
+
+function onSeedProduct() {
+
+    $products = [
+        [
+            'name' => 'Segway Ninebot Es4',
+            'category_id' => Category::where('name', 'Roller')->first()->id,
+            'price_brutto' => '175 000',
+        ],
+        [
+            'name' => 'Jbl Essential ',
+            'category_id' => Category::where('name', 'Bluetooth Speaker and Buds')->first()->id,
+            'price_brutto' => '    34 000',
+        ],
+        [
+            'name' => 'Jbl Flip 5',
+            'category_id' => Category::where('name', 'Bluetooth Speaker and Buds')->first()->id,
+            'price_brutto' => '34 000',
+        ],
+        [
+            'name' => 'Jbl Flip 6 ',
+            'category_id' => Category::where('name', 'Bluetooth Speaker and Buds')->first()->id,
+            'price_brutto' => '45 000',
+        ],
+        [
+            'name' => 'Jbl Flip 6 ',
+            'category_id' => Category::where('name', 'Bluetooth Speaker and Buds')->first()->id,
+            'price_brutto' => '45 000',
+        ],
+        [
+            'name' => 'Jbl Quantum Duo ',
+            'category_id' => Category::where('name', 'Bluetooth Speaker and Buds')->first()->id,
+            'price_brutto' => '50 000',
+        ],
+        [
+            'name' => 'Bang&olufsen Beoplay H8i',
+            'category_id' => Category::where('name', 'Bluetooth Speaker and Buds')->first()->id,
+            'price_brutto' => '70 000',
+        ],
+        [
+            'name' => 'Bose Soundsport Wireless',
+            'category_id' => Category::where('name', 'Bluetooth Speaker and Buds')->first()->id,
+            'price_brutto' => '40 000',
+        ],
+        [
+            'name' => 'Bose Sleepbuds Ii',
+            'category_id' => Category::where('name', 'Bluetooth Speaker and Buds')->first()->id,
+            'price_brutto' => '90 000',
+        ],
+        [
+            'name' => 'Beats Studio Buds ',
+            'category_id' => Category::where('name', 'Bluetooth Speaker and Buds')->first()->id,
+            'price_brutto' => '55 000',
+        ],
+        [
+            'name' => 'Beats Studio Buds ',
+            'category_id' => Category::where('name', 'Bluetooth Speaker and Buds')->first()->id,
+            'price_brutto' => '55 000',
+        ],
+        [
+            'name' => 'Beats Flex ',
+            'category_id' => Category::where('name', 'Bluetooth Speaker and Buds')->first()->id,
+            'price_brutto' => '19 000',
+        ],
+        [
+            'name' => 'Panasonic Rz-b100w',
+            'category_id' => Category::where('name', 'Bluetooth Speaker and Buds')->first()->id,
+            'price_brutto' => '19 000',
+        ],
+        [
+            'name' => 'Panasonic Rz-s300w',
+            'category_id' => Category::where('name', 'Bluetooth Speaker and Buds')->first()->id,
+            'price_brutto' => '17 000',
+        ],
+        [
+            'name' => 'Panasonic Rz-s500w',
+            'category_id' => Category::where('name', 'Bluetooth Speaker and Buds')->first()->id,
+            'price_brutto' => '29 000',
+        ],
+        [
+            'name' => 'Sennheiser Cx 400 True Wireless',
+            'category_id' => Category::where('name', 'Bluetooth Speaker and Buds')->first()->id,
+            'price_brutto' => '45 000',
+        ],
+        [
+            'name' => 'Soundcore Liberty 2 Pro ',
+            'category_id' => Category::where('name', 'Bluetooth Speaker and Buds')->first()->id,
+            'price_brutto' => '24 000',
+        ],
+        [
+            'name' => 'Soundcore Liberty Air 2 Pro ',
+            'category_id' => Category::where('name', 'Bluetooth Speaker and Buds')->first()->id,
+            'price_brutto' => '35 000',
+        ],
+        [
+            'name' => 'Sony Wf-c500 ',
+            'category_id' => Category::where('name', 'Bluetooth Speaker and Buds')->first()->id,
+            'price_brutto' => '23 000',
+        ],
+        [
+            'name' => 'Sony Wf-c500',
+            'category_id' => Category::where('name', 'Bluetooth Speaker and Buds')->first()->id,
+            'price_brutto' => '23 000',
+        ],
+        [
+            'name' => 'Sony Wf-c500',
+            'category_id' => Category::where('name', 'Bluetooth Speaker and Buds')->first()->id,
+            'price_brutto' => '23 000',
+        ],
+        [
+            'name' => 'Sony Wf-xb700',
+            'category_id' => Category::where('name', 'Bluetooth Speaker and Buds')->first()->id,
+            'price_brutto' => '29 000',
+        ],
+        [
+            'name' => 'Sony Wf-sp800n',
+            'category_id' => Category::where('name', 'Bluetooth Speaker and Buds')->first()->id,
+            'price_brutto' => '40 000',
+        ],
+        [
+            'name' => 'Sony Wf-1000xm4',
+            'category_id' => Category::where('name', 'Bluetooth Speaker and Buds')->first()->id,
+            'price_brutto' => '76 000',
+        ],
+        [
+            'name' => 'Sony Wh-1000xm3',
+            'category_id' => Category::where('name', 'Bluetooth Speaker and Buds')->first()->id,
+            'price_brutto' => '88 000',
+        ],
+        [
+            'name' => 'Sony Link Buds Wf-l900/wm',
+            'category_id' => Category::where('name', 'Bluetooth Speaker and Buds')->first()->id,
+            'price_brutto' => '68 000',
+        ],
+        [
+            'name' => 'Sony +a1:a38link Buds Wf-l900/wm',
+            'category_id' => Category::where('name', 'Bluetooth Speaker and Buds')->first()->id,
+            'price_brutto' => '68 000',
+        ],
+        [
+            'name' => 'Skullcandy S2tvw-n741 ',
+            'category_id' => Category::where('name', 'Bluetooth Speaker and Buds')->first()->id,
+            'price_brutto' => '20 000',
+        ],
+        [
+            'name' => 'Skullcandy S2iyw-n740',
+            'category_id' => Category::where('name', 'Bluetooth Speaker and Buds')->first()->id,
+            'price_brutto' => '29 000',
+        ],
+        [
+            'name' => 'Skullcandy S2gfw-p740',
+            'category_id' => Category::where('name', 'Bluetooth Speaker and Buds')->first()->id,
+            'price_brutto' => '27 000',
+        ],
+        [
+            'name' => 'Skullcandy S2jtw-p749',
+            'category_id' => Category::where('name', 'Bluetooth Speaker and Buds')->first()->id,
+            'price_brutto' => '15 000',
+        ],
+        [
+            'name' => 'Jbl Live Pro+ ',
+            'category_id' => Category::where('name', 'Bluetooth Speaker and Buds')->first()->id,
+            'price_brutto' => '33 000',
+        ],
+        [
+            'name' => 'Jbl Live Pro+ ',
+            'category_id' => Category::where('name', 'Bluetooth Speaker and Buds')->first()->id,
+            'price_brutto' => '33 000',
+        ],
+        [
+            'name' => 'Jbl Live Pro+ ',
+            'category_id' => Category::where('name', 'Bluetooth Speaker and Buds')->first()->id,
+            'price_brutto' => '33 000',
+        ],
+        [
+            'name' => 'Jbl Live Pro+ ',
+            'category_id' => Category::where('name', 'Bluetooth Speaker and Buds')->first()->id,
+            'price_brutto' => '33 000',
+        ],
+        [
+            'name' => 'Jbl Livefree Nc+',
+            'category_id' => Category::where('name', 'Bluetooth Speaker and Buds')->first()->id,
+            'price_brutto' => '30 000',
+        ],
+        [
+            'name' => 'Jbl Reflect Mini ',
+            'category_id' => Category::where('name', 'Bluetooth Speaker and Buds')->first()->id,
+            'price_brutto' => '35 000',
+        ],
+        [
+            'name' => 'Jbl Endurance Peak Ii',
+            'category_id' => Category::where('name', 'Bluetooth Speaker and Buds')->first()->id,
+            'price_brutto' => '28 000',
+        ],
+        [
+            'name' => 'Jbl Wave 300',
+            'category_id' => Category::where('name', 'Bluetooth Speaker and Buds')->first()->id,
+            'price_brutto' => '24 000',
+        ],
+        [
+            'name' => 'Jbl Wave 300',
+            'category_id' => Category::where('name', 'Bluetooth Speaker and Buds')->first()->id,
+            'price_brutto' => '24 000',
+        ],
+        [
+            'name' => 'Jbl Tune 110',
+            'category_id' => Category::where('name', 'Bluetooth Speaker and Buds')->first()->id,
+            'price_brutto' => '4 000',
+        ],
+        [
+            'name' => 'Jbl Tune 125',
+            'category_id' => Category::where('name', 'Bluetooth Speaker and Buds')->first()->id,
+            'price_brutto' => '19 000',
+        ],
+        [
+            'name' => 'Jbl Tune 130nc ',
+            'category_id' => Category::where('name', 'Bluetooth Speaker and Buds')->first()->id,
+            'price_brutto' => '30 000',
+        ],
+        [
+            'name' => 'Jbl Tune 215 ',
+            'category_id' => Category::where('name', 'Bluetooth Speaker and Buds')->first()->id,
+            'price_brutto' => '34 000',
+        ],
+        [
+            'name' => 'Jbl Tune 230nc',
+            'category_id' => Category::where('name', 'Bluetooth Speaker and Buds')->first()->id,
+            'price_brutto' => '30 000',
+        ],
+        [
+            'name' => 'Jbl Tune 230nc',
+            'category_id' => Category::where('name', 'Bluetooth Speaker and Buds')->first()->id,
+            'price_brutto' => '30 000',
+        ],
+        [
+            'name' => 'Jbl Tune 500',
+            'category_id' => Category::where('name', 'Bluetooth Speaker and Buds')->first()->id,
+            'price_brutto' => '8 000',
+        ],
+        [
+            'name' => 'Jbl Tune 500',
+            'category_id' => Category::where('name', 'Bluetooth Speaker and Buds')->first()->id,
+            'price_brutto' => '8 000',
+        ],
+        [
+            'name' => 'Jbl Tune 500',
+            'category_id' => Category::where('name', 'Bluetooth Speaker and Buds')->first()->id,
+            'price_brutto' => '8 000',
+        ],
+        [
+            'name' => 'Lg Tone Free',
+            'category_id' => Category::where('name', 'Bluetooth Speaker and Buds')->first()->id,
+            'price_brutto' => '14 000',
+        ],
+        [
+            'name' => 'Lg Tone Free',
+            'category_id' => Category::where('name', 'Bluetooth Speaker and Buds')->first()->id,
+            'price_brutto' => '14 000',
+        ],
+        [
+            'name' => 'Roborock S5 Max ',
+            'category_id' => Category::where('name', 'Robot Porszívó')->first()->id,
+            'price_brutto' => '    145 000',
+        ],
+        [
+            'name' => 'Mi Robomop Pro ',
+            'category_id' => Category::where('name', 'Robot Porszívó')->first()->id,
+            'price_brutto' => '90 000',
+        ],
+        [
+            'name' => 'Airpods Pro 2 Magsafe ',
+            'category_id' => Category::where('name', 'Apple')->first()->id,
+            'price_brutto' => '    98 000',
+        ],
+        [
+            'name' => 'Airpods Max ',
+            'category_id' => Category::where('name', 'Apple')->first()->id,
+            'price_brutto' => '170 000',
+        ],
+        [
+            'name' => 'Airtag 4pack ',
+            'category_id' => Category::where('name', 'Apple')->first()->id,
+            'price_brutto' => '42 000',
+        ],
+        [
+            'name' => 'Magic Mouse 3',
+            'category_id' => Category::where('name', 'Apple')->first()->id,
+            'price_brutto' => '26 000',
+        ],
+        [
+            'name' => 'Macbook M1 Air 2020 8/256gb Qwerty',
+            'category_id' => Category::where('name', 'Apple')->first()->id,
+            'price_brutto' => '381 000',
+        ],
+        [
+            'name' => 'Macbook M1 Air 2020 8/256gb Qwerty',
+            'category_id' => Category::where('name', 'Apple')->first()->id,
+            'price_brutto' => '381 000',
+        ],
+        [
+            'name' => 'Series 8gps 41mm',
+            'category_id' => Category::where('name', 'Apple Watch')->first()->id,
+            'price_brutto' => '    174 000',
+        ],
+        [
+            'name' => 'Series 8gps 45mm ',
+            'category_id' => Category::where('name', 'Apple Watch')->first()->id,
+            'price_brutto' => '178 000',
+        ],
+        [
+            'name' => 'Series 8gps 45mm ',
+            'category_id' => Category::where('name', 'Apple Watch')->first()->id,
+            'price_brutto' => '185 000',
+        ],
+        [
+            'name' => 'Series 8gps 45mm ',
+            'category_id' => Category::where('name', 'Apple Watch')->first()->id,
+            'price_brutto' => '182 000',
+        ],
+        [
+            'name' => 'Ipad Air 4 2020 64gb Wifi ',
+            'category_id' => Category::where('name', 'Apple Ipad')->first()->id,
+            'price_brutto' => '    195 000',
+        ],
+        [
+            'name' => 'Ipad Air 5 2022 256gb Wifi ',
+            'category_id' => Category::where('name', 'Apple Ipad')->first()->id,
+            'price_brutto' => '329 000',
+        ],
+        [
+            'name' => 'Ipad 9 10.2 2021 64gb Wifi ',
+            'category_id' => Category::where('name', 'Apple Ipad')->first()->id,
+            'price_brutto' => '133 000',
+        ],
+        [
+            'name' => 'Ipad 9 10.2 2021 64gb Wifi ',
+            'category_id' => Category::where('name', 'Apple Ipad')->first()->id,
+            'price_brutto' => '136 000',
+        ],
+        [
+            'name' => 'Ipad 9 10.2 2021 64gb Lte',
+            'category_id' => Category::where('name', 'Apple Ipad')->first()->id,
+            'price_brutto' => '172 000',
+        ],
+        [
+            'name' => 'Ipad 9 10.2 2021 64gb Lte',
+            'category_id' => Category::where('name', 'Apple Ipad')->first()->id,
+            'price_brutto' => '172 000',
+        ],
+        [
+            'name' => 'Ipad 10 10.9 64gb Cellular ',
+            'category_id' => Category::where('name', 'Apple Ipad')->first()->id,
+            'price_brutto' => '255 000',
+        ],
+        [
+            'name' => 'Ipad 10 10.9 64gb Cellular ',
+            'category_id' => Category::where('name', 'Apple Ipad')->first()->id,
+            'price_brutto' => '255 000',
+        ],
+        [
+            'name' => 'Ipad 10 10.9 64gb Cellular ',
+            'category_id' => Category::where('name', 'Apple Ipad')->first()->id,
+            'price_brutto' => '256 000',
+        ],
+        [
+            'name' => 'Ipad Pro 12.9 2022 128gb Cellular ',
+            'category_id' => Category::where('name', 'Apple Ipad')->first()->id,
+            'price_brutto' => '540 000',
+        ],
+        [
+            'name' => '11 64gb ',
+            'category_id' => Category::where('name', 'Apple iPhone')->first()->id,
+            'price_brutto' => '    183 000',
+        ],
+        [
+            'name' => '11 64gb ',
+            'category_id' => Category::where('name', 'Apple iPhone')->first()->id,
+            'price_brutto' => '183 000',
+        ],
+        [
+            'name' => '11 128gb ',
+            'category_id' => Category::where('name', 'Apple iPhone')->first()->id,
+            'price_brutto' => '208 000',
+        ],
+        [
+            'name' => '11 128gb ',
+            'category_id' => Category::where('name', 'Apple iPhone')->first()->id,
+            'price_brutto' => '208 000',
+        ],
+        [
+            'name' => '12 64gb ',
+            'category_id' => Category::where('name', 'Apple iPhone')->first()->id,
+            'price_brutto' => '257 000',
+        ],
+        [
+            'name' => '12 64gb ',
+            'category_id' => Category::where('name', 'Apple iPhone')->first()->id,
+            'price_brutto' => '257 000',
+        ],
+        [
+            'name' => '12 64gb ',
+            'category_id' => Category::where('name', 'Apple iPhone')->first()->id,
+            'price_brutto' => '257 000',
+        ],
+        [
+            'name' => '12 64gb ',
+            'category_id' => Category::where('name', 'Apple iPhone')->first()->id,
+            'price_brutto' => '262 000',
+        ],
+        [
+            'name' => '12 64gb ',
+            'category_id' => Category::where('name', 'Apple iPhone')->first()->id,
+            'price_brutto' => '260 000',
+        ],
+        [
+            'name' => '12 64gb ',
+            'category_id' => Category::where('name', 'Apple iPhone')->first()->id,
+            'price_brutto' => '254 000',
+        ],
+        [
+            'name' => '12 128gb ',
+            'category_id' => Category::where('name', 'Apple iPhone')->first()->id,
+            'price_brutto' => '276 000',
+        ],
+        [
+            'name' => '12 128gb ',
+            'category_id' => Category::where('name', 'Apple iPhone')->first()->id,
+            'price_brutto' => '284 000',
+        ],
+        [
+            'name' => '12 128gb ',
+            'category_id' => Category::where('name', 'Apple iPhone')->first()->id,
+            'price_brutto' => '280 000',
+        ],
+        [
+            'name' => '13 128gb ',
+            'category_id' => Category::where('name', 'Apple iPhone')->first()->id,
+            'price_brutto' => '300 000',
+        ],
+        [
+            'name' => '13 128gb ',
+            'category_id' => Category::where('name', 'Apple iPhone')->first()->id,
+            'price_brutto' => '300 000',
+        ],
+        [
+            'name' => '13 128gb ',
+            'category_id' => Category::where('name', 'Apple iPhone')->first()->id,
+            'price_brutto' => '300 000',
+        ],
+        [
+            'name' => '13 128gb ',
+            'category_id' => Category::where('name', 'Apple iPhone')->first()->id,
+            'price_brutto' => '300 000',
+        ],
+        [
+            'name' => '13 128gb ',
+            'category_id' => Category::where('name', 'Apple iPhone')->first()->id,
+            'price_brutto' => '300 000',
+        ],
+        [
+            'name' => '13 256gb ',
+            'category_id' => Category::where('name', 'Apple iPhone')->first()->id,
+            'price_brutto' => '335 000',
+        ],
+        [
+            'name' => '13 256gb ',
+            'category_id' => Category::where('name', 'Apple iPhone')->first()->id,
+            'price_brutto' => '333 000',
+        ],
+        [
+            'name' => '13 256gb ',
+            'category_id' => Category::where('name', 'Apple iPhone')->first()->id,
+            'price_brutto' => '337 000',
+        ],
+        [
+            'name' => '13 256gb ',
+            'category_id' => Category::where('name', 'Apple iPhone')->first()->id,
+            'price_brutto' => '336 000',
+        ],
+        [
+            'name' => '13 256gb ',
+            'category_id' => Category::where('name', 'Apple iPhone')->first()->id,
+            'price_brutto' => '335 000',
+        ],
+        [
+            'name' => '13 Mini 128gb ',
+            'category_id' => Category::where('name', 'Apple iPhone')->first()->id,
+            'price_brutto' => '269 000',
+        ],
+        [
+            'name' => '13 Mini 128gb ',
+            'category_id' => Category::where('name', 'Apple iPhone')->first()->id,
+            'price_brutto' => '272 000',
+        ],
+        [
+            'name' => '13 Mini 128gb ',
+            'category_id' => Category::where('name', 'Apple iPhone')->first()->id,
+            'price_brutto' => '272 000',
+        ],
+        [
+            'name' => '13 Mini 128gb ',
+            'category_id' => Category::where('name', 'Apple iPhone')->first()->id,
+            'price_brutto' => '274 000',
+        ],
+        [
+            'name' => '13 Pro 256gb ',
+            'category_id' => Category::where('name', 'Apple iPhone')->first()->id,
+            'price_brutto' => '473 000',
+        ],
+        [
+            'name' => '13 Pro 256gb ',
+            'category_id' => Category::where('name', 'Apple iPhone')->first()->id,
+            'price_brutto' => '473 000',
+        ],
+        [
+            'name' => '13 Pro 256gb ',
+            'category_id' => Category::where('name', 'Apple iPhone')->first()->id,
+            'price_brutto' => '473 000',
+        ],
+        [
+            'name' => '13 Pro 512gb ',
+            'category_id' => Category::where('name', 'Apple iPhone')->first()->id,
+            'price_brutto' => '494 000',
+        ],
+        [
+            'name' => '13 Pro 1tb ',
+            'category_id' => Category::where('name', 'Apple iPhone')->first()->id,
+            'price_brutto' => '505 000',
+        ],
+        [
+            'name' => '13 Pro 1tb ',
+            'category_id' => Category::where('name', 'Apple iPhone')->first()->id,
+            'price_brutto' => '505 000',
+        ],
+        [
+            'name' => '13 Pro 1tb ',
+            'category_id' => Category::where('name', 'Apple iPhone')->first()->id,
+            'price_brutto' => '505 000',
+        ],
+        [
+            'name' => '13 Pro 1tb ',
+            'category_id' => Category::where('name', 'Apple iPhone')->first()->id,
+            'price_brutto' => '505 000',
+        ],
+        [
+            'name' => '13 Pro Max 1tb ',
+            'category_id' => Category::where('name', 'Apple iPhone')->first()->id,
+            'price_brutto' => '554 000',
+        ],
+        [
+            'name' => '13 Pro Max 1tb ',
+            'category_id' => Category::where('name', 'Apple iPhone')->first()->id,
+            'price_brutto' => '554 000',
+        ],
+        [
+            'name' => '13 Pro Max 1tb ',
+            'category_id' => Category::where('name', 'Apple iPhone')->first()->id,
+            'price_brutto' => '554 000',
+        ],
+        [
+            'name' => '14 128gb ',
+            'category_id' => Category::where('name', 'Apple iPhone')->first()->id,
+            'price_brutto' => '340 000',
+        ],
+        [
+            'name' => '14 128gb ',
+            'category_id' => Category::where('name', 'Apple iPhone')->first()->id,
+            'price_brutto' => '340 000',
+        ],
+        [
+            'name' => '14 128gb ',
+            'category_id' => Category::where('name', 'Apple iPhone')->first()->id,
+            'price_brutto' => '336 000',
+        ],
+        [
+            'name' => '14 256gb ',
+            'category_id' => Category::where('name', 'Apple iPhone')->first()->id,
+            'price_brutto' => '385 000',
+        ],
+        [
+            'name' => '14 256gb ',
+            'category_id' => Category::where('name', 'Apple iPhone')->first()->id,
+            'price_brutto' => '377 000',
+        ],
+        [
+            'name' => '14 256gb ',
+            'category_id' => Category::where('name', 'Apple iPhone')->first()->id,
+            'price_brutto' => '379 000',
+        ],
+        [
+            'name' => '14 Plus 128gb ',
+            'category_id' => Category::where('name', 'Apple iPhone')->first()->id,
+            'price_brutto' => '376 000',
+        ],
+        [
+            'name' => '14 Pro 128gb ',
+            'category_id' => Category::where('name', 'Apple iPhone')->first()->id,
+            'price_brutto' => '540 000',
+        ],
+        [
+            'name' => '14 Pro 128gb ',
+            'category_id' => Category::where('name', 'Apple iPhone')->first()->id,
+            'price_brutto' => '540 000',
+        ],
+        [
+            'name' => '14 Pro 128gb ',
+            'category_id' => Category::where('name', 'Apple iPhone')->first()->id,
+            'price_brutto' => '540 000',
+        ],
+        [
+            'name' => '14 Pro 128gb ',
+            'category_id' => Category::where('name', 'Apple iPhone')->first()->id,
+            'price_brutto' => '540 000',
+        ],
+        [
+            'name' => '14 Pro 256gb ',
+            'category_id' => Category::where('name', 'Apple iPhone')->first()->id,
+            'price_brutto' => '583 000',
+        ],
+        [
+            'name' => '14 Pro 256gb ',
+            'category_id' => Category::where('name', 'Apple iPhone')->first()->id,
+            'price_brutto' => '573 000',
+        ],
+        [
+            'name' => '14 Pro 256gb ',
+            'category_id' => Category::where('name', 'Apple iPhone')->first()->id,
+            'price_brutto' => '582 000',
+        ],
+        [
+            'name' => '14 Pro Max 128gb ',
+            'category_id' => Category::where('name', 'Apple iPhone')->first()->id,
+            'price_brutto' => '611 000',
+        ],
+        [
+            'name' => '14 Pro Max 128gb ',
+            'category_id' => Category::where('name', 'Apple iPhone')->first()->id,
+            'price_brutto' => '607 000',
+        ],
+        [
+            'name' => '14 Pro Max 128gb ',
+            'category_id' => Category::where('name', 'Apple iPhone')->first()->id,
+            'price_brutto' => '606 000',
+        ],
+        [
+            'name' => '14 Pro Max 128gb ',
+            'category_id' => Category::where('name', 'Apple iPhone')->first()->id,
+            'price_brutto' => '610 000',
+        ],
+        [
+            'name' => '14 Pro Max 256gb ',
+            'category_id' => Category::where('name', 'Apple iPhone')->first()->id,
+            'price_brutto' => '640 000',
+        ],
+        [
+            'name' => '14 Pro Max 256gb ',
+            'category_id' => Category::where('name', 'Apple iPhone')->first()->id,
+            'price_brutto' => '637 000',
+        ],
+        [
+            'name' => '14 Pro Max 256gb ',
+            'category_id' => Category::where('name', 'Apple iPhone')->first()->id,
+            'price_brutto' => '637 000',
+        ],
+        [
+            'name' => '14 Pro Max 256gb ',
+            'category_id' => Category::where('name', 'Apple iPhone')->first()->id,
+            'price_brutto' => '640 000',
+        ],
+        [
+            'name' => 'Se 2022 64gb ',
+            'category_id' => Category::where('name', 'Apple iPhone')->first()->id,
+            'price_brutto' => '192 000',
+        ],
+        [
+            'name' => 'Se 2022 64gb ',
+            'category_id' => Category::where('name', 'Apple iPhone')->first()->id,
+            'price_brutto' => '192 000',
+        ],
+        [
+            'name' => 'Se 2022 128gb ',
+            'category_id' => Category::where('name', 'Apple iPhone')->first()->id,
+            'price_brutto' => '220 000',
+        ],
+        [
+            'name' => 'Se 2022 128gb ',
+            'category_id' => Category::where('name', 'Apple iPhone')->first()->id,
+            'price_brutto' => '223 000',
+        ],
+        [
+            'name' => 'Se 2020 128gb ',
+            'category_id' => Category::where('name', 'Apple iPhone')->first()->id,
+            'price_brutto' => '178 000',
+        ],
+        [
+            'name' => 'Xs 64gb ',
+            'category_id' => Category::where('name', 'Apple iPhone')->first()->id,
+            'price_brutto' => '202 000',
+        ],
+        [
+            'name' => 'Xs 64gb ',
+            'category_id' => Category::where('name', 'Apple iPhone')->first()->id,
+            'price_brutto' => '202 000',
+        ],
+        [
+            'name' => 'Xs 256gb ',
+            'category_id' => Category::where('name', 'Apple iPhone')->first()->id,
+            'price_brutto' => '210 000',
+        ],
+        [
+            'name' => 'Xs 256gb ',
+            'category_id' => Category::where('name', 'Apple iPhone')->first()->id,
+            'price_brutto' => '210 000',
+        ],
+        [
+            'name' => 'Xs 256gb ',
+            'category_id' => Category::where('name', 'Apple iPhone')->first()->id,
+            'price_brutto' => '210 000',
+        ],
+        [
+            'name' => 'Xr 64gb',
+            'category_id' => Category::where('name', 'Apple iPhone')->first()->id,
+            'price_brutto' => '160 000',
+        ],
+        [
+            'name' => 'Xr 64gb',
+            'category_id' => Category::where('name', 'Apple iPhone')->first()->id,
+            'price_brutto' => '160 000',
+        ],
+        [
+            'name' => 'Xr 64gb',
+            'category_id' => Category::where('name', 'Apple iPhone')->first()->id,
+            'price_brutto' => '169 000',
+        ],
+        [
+            'name' => '4s 8gb ',
+            'category_id' => Category::where('name', 'Apple iPhone')->first()->id,
+            'price_brutto' => '25 000',
+        ],
+        [
+            'name' => 'Samsung Book 2 Pro 360 950qed-ka3',
+            'category_id' => Category::where('name', 'Samsung Eu Spec')->first()->id,
+            'price_brutto' => '    530 000',
+        ],
+        [
+            'name' => 'Samsung S Pen S22 Ultra ',
+            'category_id' => Category::where('name', 'Samsung Eu Spec')->first()->id,
+            'price_brutto' => '12 000',
+        ],
+        [
+            'name' => 'Samsung S Pen Pro ',
+            'category_id' => Category::where('name', 'Samsung Eu Spec')->first()->id,
+            'price_brutto' => '20 000',
+        ],
+        [
+            'name' => 'A037f/ds A03s 3/32gb ',
+            'category_id' => Category::where('name', 'Samsung Eu Spec')->first()->id,
+            'price_brutto' => '55 000',
+        ],
+        [
+            'name' => 'A037f/ds A03s 3/32gb ',
+            'category_id' => Category::where('name', 'Samsung Eu Spec')->first()->id,
+            'price_brutto' => '55 000',
+        ],
+        [
+            'name' => 'A047f/ds A04s 3/32gb ',
+            'category_id' => Category::where('name', 'Samsung Eu Spec')->first()->id,
+            'price_brutto' => '49 000',
+        ],
+        [
+            'name' => 'A047f/ds A04s 3/32gb ',
+            'category_id' => Category::where('name', 'Samsung Eu Spec')->first()->id,
+            'price_brutto' => '49 000',
+        ],
+        [
+            'name' => 'A125f/ds A12 3/32gb',
+            'category_id' => Category::where('name', 'Samsung Eu Spec')->first()->id,
+            'price_brutto' => '52 000',
+        ],
+        [
+            'name' => 'A125f/ds A12 3/32gb',
+            'category_id' => Category::where('name', 'Samsung Eu Spec')->first()->id,
+            'price_brutto' => '52 000',
+        ],
+        [
+            'name' => 'A127f/ds A12 3/32gb',
+            'category_id' => Category::where('name', 'Samsung Eu Spec')->first()->id,
+            'price_brutto' => '52 000',
+        ],
+        [
+            'name' => 'A127f/ds A12 3/32gb',
+            'category_id' => Category::where('name', 'Samsung Eu Spec')->first()->id,
+            'price_brutto' => '52 000',
+        ],
+        [
+            'name' => 'A127f/ds A12 3/32gb',
+            'category_id' => Category::where('name', 'Samsung Eu Spec')->first()->id,
+            'price_brutto' => '52 000',
+        ],
+        [
+            'name' => 'A127f/ds A12 4/64gb',
+            'category_id' => Category::where('name', 'Samsung Eu Spec')->first()->id,
+            'price_brutto' => '58 000',
+        ],
+        [
+            'name' => 'A127f/ds A12 4/64gb',
+            'category_id' => Category::where('name', 'Samsung Eu Spec')->first()->id,
+            'price_brutto' => '58 000',
+        ],
+        [
+            'name' => 'A127f/ds A12 4/128gb ',
+            'category_id' => Category::where('name', 'Samsung Eu Spec')->first()->id,
+            'price_brutto' => '64 000',
+        ],
+        [
+            'name' => 'A135f/ds A13 4/128gb ',
+            'category_id' => Category::where('name', 'Samsung Eu Spec')->first()->id,
+            'price_brutto' => '68 000',
+        ],
+        [
+            'name' => 'A137f/ds A13 4/64gb ',
+            'category_id' => Category::where('name', 'Samsung Eu Spec')->first()->id,
+            'price_brutto' => '62 000',
+        ],
+        [
+            'name' => 'A236b/ds A23 5g 4/128gb ',
+            'category_id' => Category::where('name', 'Samsung Eu Spec')->first()->id,
+            'price_brutto' => '85 000',
+        ],
+        [
+            'name' => 'A325f/ds A32 4/128gb',
+            'category_id' => Category::where('name', 'Samsung Eu Spec')->first()->id,
+            'price_brutto' => '84 000',
+        ],
+        [
+            'name' => 'A336b/ds A33 5g 6/128gb ',
+            'category_id' => Category::where('name', 'Samsung Eu Spec')->first()->id,
+            'price_brutto' => '109 000',
+        ],
+        [
+            'name' => 'A536b/ds A53 5g 6/128gb ',
+            'category_id' => Category::where('name', 'Samsung Eu Spec')->first()->id,
+            'price_brutto' => '132 000',
+        ],
+        [
+            'name' => 'A536b/ds A53 5g 6/128gb ',
+            'category_id' => Category::where('name', 'Samsung Eu Spec')->first()->id,
+            'price_brutto' => '132 000',
+        ],
+        [
+            'name' => 'A536b/ds A53 5g 6/128gb ',
+            'category_id' => Category::where('name', 'Samsung Eu Spec')->first()->id,
+            'price_brutto' => '132 000',
+        ],
+        [
+            'name' => 'F721b/ds Flip 4 5g 8/128gb ',
+            'category_id' => Category::where('name', 'Samsung Eu Spec')->first()->id,
+            'price_brutto' => '283 000',
+        ],
+        [
+            'name' => 'F721b/ds Flip 4 5g 8/128gb ',
+            'category_id' => Category::where('name', 'Samsung Eu Spec')->first()->id,
+            'price_brutto' => '283 000',
+        ],
+        [
+            'name' => 'F721b/ds Flip 4 5g 8/128gb ',
+            'category_id' => Category::where('name', 'Samsung Eu Spec')->first()->id,
+            'price_brutto' => '283 000',
+        ],
+        [
+            'name' => 'F926b/ds Z Fold 3 5g 12/256gb',
+            'category_id' => Category::where('name', 'Samsung Eu Spec')->first()->id,
+            'price_brutto' => '398 000',
+        ],
+        [
+            'name' => 'F926b/ds Z Fold 3 5g 12/512gb',
+            'category_id' => Category::where('name', 'Samsung Eu Spec')->first()->id,
+            'price_brutto' => '407 000',
+        ],
+        [
+            'name' => 'G715f/ds X Cover Pro 64gb ',
+            'category_id' => Category::where('name', 'Samsung Eu Spec')->first()->id,
+            'price_brutto' => '123 000',
+        ],
+        [
+            'name' => 'G736f/ds X Cover 6 Pro 128gb ',
+            'category_id' => Category::where('name', 'Samsung Eu Spec')->first()->id,
+            'price_brutto' => '155 000',
+        ],
+        [
+            'name' => 'G780g/ds S20fe 6/128gb',
+            'category_id' => Category::where('name', 'Samsung Eu Spec')->first()->id,
+            'price_brutto' => '145 000',
+        ],
+        [
+            'name' => 'G781b/ds S20 Fe 5g 6/128gb ',
+            'category_id' => Category::where('name', 'Samsung Eu Spec')->first()->id,
+            'price_brutto' => '150 000',
+        ],
+        [
+            'name' => 'G975f/ds S10+ 8/128gb',
+            'category_id' => Category::where('name', 'Samsung Eu Spec')->first()->id,
+            'price_brutto' => '160 000',
+        ],
+        [
+            'name' => 'G975f/ds S10+ 8/128gb',
+            'category_id' => Category::where('name', 'Samsung Eu Spec')->first()->id,
+            'price_brutto' => '160 000',
+        ],
+        [
+            'name' => 'G975f/ds S10+ 8/512gb',
+            'category_id' => Category::where('name', 'Samsung Eu Spec')->first()->id,
+            'price_brutto' => '165 000',
+        ],
+        [
+            'name' => 'G985f/ds S20+ Lte 8/128gb ',
+            'category_id' => Category::where('name', 'Samsung Eu Spec')->first()->id,
+            'price_brutto' => '169 000',
+        ],
+        [
+            'name' => 'G990b/ds S21fe 5g 6/128gb',
+            'category_id' => Category::where('name', 'Samsung Eu Spec')->first()->id,
+            'price_brutto' => '182 000',
+        ],
+        [
+            'name' => 'G990b/ds S21fe 5g 6/128gb',
+            'category_id' => Category::where('name', 'Samsung Eu Spec')->first()->id,
+            'price_brutto' => '182 000',
+        ],
+        [
+            'name' => 'G990b/ds S21fe 5g 6/128gb',
+            'category_id' => Category::where('name', 'Samsung Eu Spec')->first()->id,
+            'price_brutto' => '182 000',
+        ],
+        [
+            'name' => 'S901b/ds S22 5g 8/128gb ',
+            'category_id' => Category::where('name', 'Samsung Eu Spec')->first()->id,
+            'price_brutto' => '230 000',
+        ],
+        [
+            'name' => 'S901b/ds S22 5g 8/128gb ',
+            'category_id' => Category::where('name', 'Samsung Eu Spec')->first()->id,
+            'price_brutto' => '230 000',
+        ],
+        [
+            'name' => 'S901b/ds S22 5g 8/128gb ',
+            'category_id' => Category::where('name', 'Samsung Eu Spec')->first()->id,
+            'price_brutto' => '230 000',
+        ],
+        [
+            'name' => 'S901b/ds S22 5g 8/128gb ',
+            'category_id' => Category::where('name', 'Samsung Eu Spec')->first()->id,
+            'price_brutto' => '230 000',
+        ],
+        [
+            'name' => 'S901b/ds S22 5g 8/256gb ',
+            'category_id' => Category::where('name', 'Samsung Eu Spec')->first()->id,
+            'price_brutto' => '245 000',
+        ],
+        [
+            'name' => 'S901b/ds S22 5g 8/256gb ',
+            'category_id' => Category::where('name', 'Samsung Eu Spec')->first()->id,
+            'price_brutto' => '245 000',
+        ],
+        [
+            'name' => 'S901b/ds S22 5g 8/256gb ',
+            'category_id' => Category::where('name', 'Samsung Eu Spec')->first()->id,
+            'price_brutto' => '245 000',
+        ],
+        [
+            'name' => 'S906b/ds S22+ 5g 8/128gb ',
+            'category_id' => Category::where('name', 'Samsung Eu Spec')->first()->id,
+            'price_brutto' => '280 000',
+        ],
+        [
+            'name' => 'S906b/ds S22+ 5g 8/128gb ',
+            'category_id' => Category::where('name', 'Samsung Eu Spec')->first()->id,
+            'price_brutto' => '280 000',
+        ],
+        [
+            'name' => 'S906b/ds S22+ 5g 8/128gb ',
+            'category_id' => Category::where('name', 'Samsung Eu Spec')->first()->id,
+            'price_brutto' => '280 000',
+        ],
+        [
+            'name' => 'S908b/ds S22 Ultra 5g 8/128gb ',
+            'category_id' => Category::where('name', 'Samsung Eu Spec')->first()->id,
+            'price_brutto' => '334 000',
+        ],
+        [
+            'name' => 'S908b/ds S22 Ultra 5g 8/128gb ',
+            'category_id' => Category::where('name', 'Samsung Eu Spec')->first()->id,
+            'price_brutto' => '334 000',
+        ],
+        [
+            'name' => 'S908b/ds S22 Ultra 5g 8/128gb ',
+            'category_id' => Category::where('name', 'Samsung Eu Spec')->first()->id,
+            'price_brutto' => '334 000',
+        ],
+        [
+            'name' => 'S908b/ds S22 Ultra 5g 12/256gb ',
+            'category_id' => Category::where('name', 'Samsung Eu Spec')->first()->id,
+            'price_brutto' => '369 000',
+        ],
+        [
+            'name' => 'S908b/ds S22 Ultra 5g 12/256gb ',
+            'category_id' => Category::where('name', 'Samsung Eu Spec')->first()->id,
+            'price_brutto' => '369 000',
+        ],
+        [
+            'name' => 'S908b/ds S22 Ultra 5g 12/256gb ',
+            'category_id' => Category::where('name', 'Samsung Eu Spec')->first()->id,
+            'price_brutto' => '369 000',
+        ],
+        [
+            'name' => 'S908b/ds S22 Ultra 5g 12/256gb ',
+            'category_id' => Category::where('name', 'Samsung Eu Spec')->first()->id,
+            'price_brutto' => '369 000',
+        ],
+        [
+            'name' => 'S908b/ds S22 Ultra 5g 12/256gb ',
+            'category_id' => Category::where('name', 'Samsung Eu Spec')->first()->id,
+            'price_brutto' => '369 000',
+        ],
+        [
+            'name' => 'R850 Watch 3 41mm ',
+            'category_id' => Category::where('name', 'Samsung Smart Watch')->first()->id,
+            'price_brutto' => '    63 000',
+        ],
+        [
+            'name' => 'R855 Watch 3 41mm Lte ',
+            'category_id' => Category::where('name', 'Samsung Smart Watch')->first()->id,
+            'price_brutto' => '66 000',
+        ],
+        [
+            'name' => 'R860 Watch 4 40mm Bt',
+            'category_id' => Category::where('name', 'Samsung Smart Watch')->first()->id,
+            'price_brutto' => '60 000',
+        ],
+        [
+            'name' => 'R865 Watch 4 40mm Lte ',
+            'category_id' => Category::where('name', 'Samsung Smart Watch')->first()->id,
+            'price_brutto' => '60 000',
+        ],
+        [
+            'name' => 'R870 Watch 4 44mm Bt',
+            'category_id' => Category::where('name', 'Samsung Smart Watch')->first()->id,
+            'price_brutto' => '60 000',
+        ],
+        [
+            'name' => 'R870 Watch 4 44mm Bt',
+            'category_id' => Category::where('name', 'Samsung Smart Watch')->first()->id,
+            'price_brutto' => '60 000',
+        ],
+        [
+            'name' => 'R880 Watch 4 44mm Bt ',
+            'category_id' => Category::where('name', 'Samsung Smart Watch')->first()->id,
+            'price_brutto' => '69 000',
+        ],
+        [
+            'name' => 'R890 Watch 4 46mm Bt',
+            'category_id' => Category::where('name', 'Samsung Smart Watch')->first()->id,
+            'price_brutto' => '74 000',
+        ],
+        [
+            'name' => 'R890 Watch 4 46mm Bt',
+            'category_id' => Category::where('name', 'Samsung Smart Watch')->first()->id,
+            'price_brutto' => '80 000',
+        ],
+        [
+            'name' => 'R900 Watch 5 40mm Bt ',
+            'category_id' => Category::where('name', 'Samsung Smart Watch')->first()->id,
+            'price_brutto' => '79 000',
+        ],
+        [
+            'name' => 'R905 Watch 5 40mm Lte ',
+            'category_id' => Category::where('name', 'Samsung Smart Watch')->first()->id,
+            'price_brutto' => '85 000',
+        ],
+        [
+            'name' => 'R910 Watch 5 44mm Bt',
+            'category_id' => Category::where('name', 'Samsung Smart Watch')->first()->id,
+            'price_brutto' => '82 000',
+        ],
+        [
+            'name' => 'R910 Watch 5 44mm Bt',
+            'category_id' => Category::where('name', 'Samsung Smart Watch')->first()->id,
+            'price_brutto' => '82 000',
+        ],
+        [
+            'name' => 'R915 Watch 5 44mm Lte ',
+            'category_id' => Category::where('name', 'Samsung Smart Watch')->first()->id,
+            'price_brutto' => '85 000',
+        ],
+        [
+            'name' => 'R920 Watch 5 Pro 45mm Bt',
+            'category_id' => Category::where('name', 'Samsung Smart Watch')->first()->id,
+            'price_brutto' => '121 000',
+        ],
+        [
+            'name' => 'R920 Watch 5 Pro 45mm Bt',
+            'category_id' => Category::where('name', 'Samsung Smart Watch')->first()->id,
+            'price_brutto' => '126 000',
+        ],
+        [
+            'name' => 'R925 Watch 5 Pro 45mm Lte ',
+            'category_id' => Category::where('name', 'Samsung Smart Watch')->first()->id,
+            'price_brutto' => '136 000',
+        ],
+        [
+            'name' => 'R925 Watch 5 Pro 45mm Lte ',
+            'category_id' => Category::where('name', 'Samsung Smart Watch')->first()->id,
+            'price_brutto' => '130 000',
+        ],
+        [
+            'name' => 'R180 Buds Live',
+            'category_id' => Category::where('name', 'Samsung Buds ')->first()->id,
+            'price_brutto' => '    25 000',
+        ],
+        [
+            'name' => 'R190 Buds Pro ',
+            'category_id' => Category::where('name', 'Samsung Buds ')->first()->id,
+            'price_brutto' => '44 000',
+        ],
+        [
+            'name' => 'R190 Buds Pro ',
+            'category_id' => Category::where('name', 'Samsung Buds ')->first()->id,
+            'price_brutto' => '44 000',
+        ],
+        [
+            'name' => 'P613 Tab S6 Lite 2022 10.4 64gb Wifi ',
+            'category_id' => Category::where('name', 'Samsung Tab')->first()->id,
+            'price_brutto' => '    107 000',
+        ],
+        [
+            'name' => 'P613 Tab S6 Lite 2022 10.4 64gb Wifi ',
+            'category_id' => Category::where('name', 'Samsung Tab')->first()->id,
+            'price_brutto' => '107 000',
+        ],
+        [
+            'name' => 'T220 Tab A7 Lite 8.7 32gb Wifi ',
+            'category_id' => Category::where('name', 'Samsung Tab')->first()->id,
+            'price_brutto' => '52 000',
+        ],
+        [
+            'name' => 'T575 Tab Active 3 8.0 Lte 64gb ',
+            'category_id' => Category::where('name', 'Samsung Tab')->first()->id,
+            'price_brutto' => '148 000',
+        ],
+        [
+            'name' => 'T970n Tab S7+ 12.4 256gb Wifi ',
+            'category_id' => Category::where('name', 'Samsung Tab')->first()->id,
+            'price_brutto' => '280 000',
+        ],
+        [
+            'name' => 'X200 Tab A8 10.5 4/64gb Wifi ',
+            'category_id' => Category::where('name', 'Samsung Tab')->first()->id,
+            'price_brutto' => '79 000',
+        ],
+        [
+            'name' => 'X200 Tab A8 10.5 4/128gb Wifi ',
+            'category_id' => Category::where('name', 'Samsung Tab')->first()->id,
+            'price_brutto' => '88 000',
+        ],
+        [
+            'name' => 'X205 Tab A8 10.5 3/32gb Lte ',
+            'category_id' => Category::where('name', 'Samsung Tab')->first()->id,
+            'price_brutto' => '84 000',
+        ],
+        [
+            'name' => 'X205 Tab A8 10.5 3/32gb Lte ',
+            'category_id' => Category::where('name', 'Samsung Tab')->first()->id,
+            'price_brutto' => '84 000',
+        ],
+        [
+            'name' => 'X205 Tab A8 10.5 3/32gb Lte ',
+            'category_id' => Category::where('name', 'Samsung Tab')->first()->id,
+            'price_brutto' => '84 000',
+        ],
+        [
+            'name' => 'X205 Tab A8 10.5 4/64gb Lte ',
+            'category_id' => Category::where('name', 'Samsung Tab')->first()->id,
+            'price_brutto' => '92 000',
+        ],
+        [
+            'name' => 'X700 Tab S8 11.0 8/128gb Wifi ',
+            'category_id' => Category::where('name', 'Samsung Tab')->first()->id,
+            'price_brutto' => '235 000',
+        ],
+        [
+            'name' => 'X700 Tab S8 11.0 8/256gb Wifi ',
+            'category_id' => Category::where('name', 'Samsung Tab')->first()->id,
+            'price_brutto' => '245 000',
+        ],
+        [
+            'name' => 'A022f/ds A02 2/32gb ',
+            'category_id' => Category::where('name', 'Samsung Asia Spec')->first()->id,
+            'price_brutto' => '    43 000',
+        ],
+        [
+            'name' => 'A022f/ds A02 2/32gb ',
+            'category_id' => Category::where('name', 'Samsung Asia Spec')->first()->id,
+            'price_brutto' => '43 000',
+        ],
+        [
+            'name' => 'A032f/ds A03 Core 2/32gb ',
+            'category_id' => Category::where('name', 'Samsung Asia Spec')->first()->id,
+            'price_brutto' => '37 000',
+        ],
+        [
+            'name' => 'A035f/ds A03 3/32gb ',
+            'category_id' => Category::where('name', 'Samsung Asia Spec')->first()->id,
+            'price_brutto' => '43 000',
+        ],
+        [
+            'name' => 'A035f/ds A03 3/32gb ',
+            'category_id' => Category::where('name', 'Samsung Asia Spec')->first()->id,
+            'price_brutto' => '43 000',
+        ],
+        [
+            'name' => 'A035f/ds A03 4/64gb ',
+            'category_id' => Category::where('name', 'Samsung Asia Spec')->first()->id,
+            'price_brutto' => '45 000',
+        ],
+        [
+            'name' => 'A035f/ds A03 4/64gb ',
+            'category_id' => Category::where('name', 'Samsung Asia Spec')->first()->id,
+            'price_brutto' => '45 000',
+        ],
+        [
+            'name' => 'A037f/ds A03s 3/32gb ',
+            'category_id' => Category::where('name', 'Samsung Asia Spec')->first()->id,
+            'price_brutto' => '45 000',
+        ],
+        [
+            'name' => 'A037f/ds A03s 4/64gb ',
+            'category_id' => Category::where('name', 'Samsung Asia Spec')->first()->id,
+            'price_brutto' => '50 000',
+        ],
+        [
+            'name' => 'A115f/ds A11 2/32gb',
+            'category_id' => Category::where('name', 'Samsung Asia Spec')->first()->id,
+            'price_brutto' => '44 000',
+        ],
+        [
+            'name' => 'A115f/ds A11 2/32gb',
+            'category_id' => Category::where('name', 'Samsung Asia Spec')->first()->id,
+            'price_brutto' => '44 000',
+        ],
+        [
+            'name' => 'A125f/ds A12 4/64gb',
+            'category_id' => Category::where('name', 'Samsung Asia Spec')->first()->id,
+            'price_brutto' => '56 000',
+        ],
+        [
+            'name' => 'A125f/ds A12 4/64gb',
+            'category_id' => Category::where('name', 'Samsung Asia Spec')->first()->id,
+            'price_brutto' => '56 000',
+        ],
+        [
+            'name' => 'A125f/ds A12 4/64gb',
+            'category_id' => Category::where('name', 'Samsung Asia Spec')->first()->id,
+            'price_brutto' => '56 000',
+        ],
+        [
+            'name' => 'A127f/ds A12 3/32gb',
+            'category_id' => Category::where('name', 'Samsung Asia Spec')->first()->id,
+            'price_brutto' => '50 000',
+        ],
+        [
+            'name' => 'A127f/ds A12 3/32gb',
+            'category_id' => Category::where('name', 'Samsung Asia Spec')->first()->id,
+            'price_brutto' => '50 000',
+        ],
+        [
+            'name' => 'A127f/ds A12 3/32gb',
+            'category_id' => Category::where('name', 'Samsung Asia Spec')->first()->id,
+            'price_brutto' => '50 000',
+        ],
+        [
+            'name' => 'A127f/ds A12 4/64gb',
+            'category_id' => Category::where('name', 'Samsung Asia Spec')->first()->id,
+            'price_brutto' => '56 000',
+        ],
+        [
+            'name' => 'A217f/ds A21s 6/64gb',
+            'category_id' => Category::where('name', 'Samsung Asia Spec')->first()->id,
+            'price_brutto' => '63 000',
+        ],
+        [
+            'name' => 'A226b/ds A22 5g 4/64gb',
+            'category_id' => Category::where('name', 'Samsung Asia Spec')->first()->id,
+            'price_brutto' => '75 000',
+        ],
+        [
+            'name' => 'Y6s 3/32gb',
+            'category_id' => Category::where('name', 'Huawei')->first()->id,
+            'price_brutto' => '    48 000',
+        ],
+        [
+            'name' => 'Y90 6/128gb ',
+            'category_id' => Category::where('name', 'Huawei')->first()->id,
+            'price_brutto' => '72 000',
+        ],
+        [
+            'name' => 'Y90 6/128gb ',
+            'category_id' => Category::where('name', 'Huawei')->first()->id,
+            'price_brutto' => '72 000',
+        ],
+        [
+            'name' => 'Nova 8i 6/128gb ',
+            'category_id' => Category::where('name', 'Huawei')->first()->id,
+            'price_brutto' => '68 000',
+        ],
+        [
+            'name' => 'Nova 9 Se 8/128gb ',
+            'category_id' => Category::where('name', 'Huawei')->first()->id,
+            'price_brutto' => '82 000',
+        ],
+        [
+            'name' => 'Nova 9 Se 8/128gb ',
+            'category_id' => Category::where('name', 'Huawei')->first()->id,
+            'price_brutto' => '82 000',
+        ],
+        [
+            'name' => 'Nova 10 8/128gb ',
+            'category_id' => Category::where('name', 'Huawei')->first()->id,
+            'price_brutto' => '159 000',
+        ],
+        [
+            'name' => 'P30 Pro 8/256gb ',
+            'category_id' => Category::where('name', 'Huawei')->first()->id,
+            'price_brutto' => '220 000',
+        ],
+        [
+            'name' => 'Freebuds 4',
+            'category_id' => Category::where('name', 'Huawei Buds')->first()->id,
+            'price_brutto' => '    30 000',
+        ],
+        [
+            'name' => 'Freebuds 4',
+            'category_id' => Category::where('name', 'Huawei Buds')->first()->id,
+            'price_brutto' => '30 000',
+        ],
+        [
+            'name' => 'Freebuds 3i',
+            'category_id' => Category::where('name', 'Huawei Buds')->first()->id,
+            'price_brutto' => '17 000',
+        ],
+        [
+            'name' => 'Freebuds 3i',
+            'category_id' => Category::where('name', 'Huawei Buds')->first()->id,
+            'price_brutto' => '17 000',
+        ],
+        [
+            'name' => 'Freebuds 4i',
+            'category_id' => Category::where('name', 'Huawei Buds')->first()->id,
+            'price_brutto' => '19 000',
+        ],
+        [
+            'name' => 'Freebuds 4i',
+            'category_id' => Category::where('name', 'Huawei Buds')->first()->id,
+            'price_brutto' => '19 000',
+        ],
+        [
+            'name' => 'Freebuds Pro',
+            'category_id' => Category::where('name', 'Huawei Buds')->first()->id,
+            'price_brutto' => '31 000',
+        ],
+        [
+            'name' => 'Freebuds Pro',
+            'category_id' => Category::where('name', 'Huawei Buds')->first()->id,
+            'price_brutto' => '31 000',
+        ],
+        [
+            'name' => 'Freebuds Pro',
+            'category_id' => Category::where('name', 'Huawei Buds')->first()->id,
+            'price_brutto' => '31 000',
+        ],
+        [
+            'name' => 'Freebuds Lipstick',
+            'category_id' => Category::where('name', 'Huawei Buds')->first()->id,
+            'price_brutto' => '42 000',
+        ],
+        [
+            'name' => 'Pixel 6a 5g 128gb ',
+            'category_id' => Category::where('name', 'Google')->first()->id,
+            'price_brutto' => '    130 000',
+        ],
+        [
+            'name' => 'Pixel 6 5g 128gb',
+            'category_id' => Category::where('name', 'Google')->first()->id,
+            'price_brutto' => '180 000',
+        ],
+        [
+            'name' => 'Pixel 6 5g 128gb',
+            'category_id' => Category::where('name', 'Google')->first()->id,
+            'price_brutto' => '177 000',
+        ],
+        [
+            'name' => 'Pixel 6 Pro 5g 128gb ',
+            'category_id' => Category::where('name', 'Google')->first()->id,
+            'price_brutto' => '234 000',
+        ],
+        [
+            'name' => 'Pixel 6 Pro 5g 128gb ',
+            'category_id' => Category::where('name', 'Google')->first()->id,
+            'price_brutto' => '234 000',
+        ],
+        [
+            'name' => 'Pixel 7 5g 128gb ',
+            'category_id' => Category::where('name', 'Google')->first()->id,
+            'price_brutto' => '218 000',
+        ],
+        [
+            'name' => 'Pixel 7 5g 128gb ',
+            'category_id' => Category::where('name', 'Google')->first()->id,
+            'price_brutto' => '218 000',
+        ],
+        [
+            'name' => 'Pixel 7 Pro 5g 12/128gb ',
+            'category_id' => Category::where('name', 'Google')->first()->id,
+            'price_brutto' => '304 000',
+        ],
+        [
+            'name' => 'Pixel 7 Pro 5g 12/128gb ',
+            'category_id' => Category::where('name', 'Google')->first()->id,
+            'price_brutto' => '304 000',
+        ],
+        [
+            'name' => 'Google Glass',
+            'category_id' => Category::where('name', 'Google')->first()->id,
+            'price_brutto' => '100 000',
+        ],
+        [
+            'name' => 'Phone 1 5g 8/128gb ',
+            'category_id' => Category::where('name', 'Nothing Phone ')->first()->id,
+            'price_brutto' => '    155 000',
+        ],
+        [
+            'name' => 'Phone 1 5g 12/256gb ',
+            'category_id' => Category::where('name', 'Nothing Phone ')->first()->id,
+            'price_brutto' => '185 000',
+        ],
+        [
+            'name' => 'X10 5g 6/64gb ',
+            'category_id' => Category::where('name', 'Nokia ')->first()->id,
+            'price_brutto' => '    68 000',
+        ],
+        [
+            'name' => 'X10 5g 4/128gb ',
+            'category_id' => Category::where('name', 'Nokia ')->first()->id,
+            'price_brutto' => '70 000',
+        ],
+        [
+            'name' => 'G21 4/64gb ',
+            'category_id' => Category::where('name', 'Nokia ')->first()->id,
+            'price_brutto' => '55 000',
+        ],
+        [
+            'name' => '50 5g 6/128gb ',
+            'category_id' => Category::where('name', 'Honor ')->first()->id,
+            'price_brutto' => '    125 000',
+        ],
+        [
+            'name' => '50 5g 6/128gb ',
+            'category_id' => Category::where('name', 'Honor ')->first()->id,
+            'price_brutto' => '123 000',
+        ],
+        [
+            'name' => '50 5g 8/256gb ',
+            'category_id' => Category::where('name', 'Honor ')->first()->id,
+            'price_brutto' => '144 000',
+        ],
+        [
+            'name' => '70 5g 8/128gb ',
+            'category_id' => Category::where('name', 'Honor ')->first()->id,
+            'price_brutto' => '151 000',
+        ],
+        [
+            'name' => '70 5g 8/128gb ',
+            'category_id' => Category::where('name', 'Honor ')->first()->id,
+            'price_brutto' => '152 000',
+        ],
+        [
+            'name' => '70 5g 8/256gb ',
+            'category_id' => Category::where('name', 'Honor ')->first()->id,
+            'price_brutto' => '167 000',
+        ],
+        [
+            'name' => 'X6 4/64gb ',
+            'category_id' => Category::where('name', 'Honor ')->first()->id,
+            'price_brutto' => '55 000',
+        ],
+        [
+            'name' => 'A1 2/32gb ',
+            'category_id' => Category::where('name', 'Xiaomi')->first()->id,
+            'price_brutto' => '    36 000',
+        ],
+        [
+            'name' => 'A1 2/32gb ',
+            'category_id' => Category::where('name', 'Xiaomi')->first()->id,
+            'price_brutto' => '36 000',
+        ],
+        [
+            'name' => 'A1 2/32gb ',
+            'category_id' => Category::where('name', 'Xiaomi')->first()->id,
+            'price_brutto' => '36 000',
+        ],
+        [
+            'name' => '9a 2/32gb ',
+            'category_id' => Category::where('name', 'Xiaomi')->first()->id,
+            'price_brutto' => '37 000',
+        ],
+        [
+            'name' => '9at 2/32gb ',
+            'category_id' => Category::where('name', 'Xiaomi')->first()->id,
+            'price_brutto' => '37 000',
+        ],
+        [
+            'name' => '9c 2/32gb ',
+            'category_id' => Category::where('name', 'Xiaomi')->first()->id,
+            'price_brutto' => '39 000',
+        ],
+        [
+            'name' => '9c 2/32gb ',
+            'category_id' => Category::where('name', 'Xiaomi')->first()->id,
+            'price_brutto' => '39 000',
+        ],
+        [
+            'name' => '9c 3/64gb ',
+            'category_id' => Category::where('name', 'Xiaomi')->first()->id,
+            'price_brutto' => '47 000',
+        ],
+        [
+            'name' => '9c 4/128gb ',
+            'category_id' => Category::where('name', 'Xiaomi')->first()->id,
+            'price_brutto' => '54 000',
+        ],
+        [
+            'name' => '10a 2/32gb ',
+            'category_id' => Category::where('name', 'Xiaomi')->first()->id,
+            'price_brutto' => '44 000',
+        ],
+        [
+            'name' => '10a 2/32gb ',
+            'category_id' => Category::where('name', 'Xiaomi')->first()->id,
+            'price_brutto' => '44 000',
+        ],
+        [
+            'name' => '10a 2/32gb ',
+            'category_id' => Category::where('name', 'Xiaomi')->first()->id,
+            'price_brutto' => '45 000',
+        ],
+        [
+            'name' => '10a 3/64gb ',
+            'category_id' => Category::where('name', 'Xiaomi')->first()->id,
+            'price_brutto' => '49 000',
+        ],
+        [
+            'name' => '10a 3/64gb ',
+            'category_id' => Category::where('name', 'Xiaomi')->first()->id,
+            'price_brutto' => '49 000',
+        ],
+        [
+            'name' => '10a 4/128gb',
+            'category_id' => Category::where('name', 'Xiaomi')->first()->id,
+            'price_brutto' => '54 000',
+        ],
+        [
+            'name' => '10c 3/64gb ',
+            'category_id' => Category::where('name', 'Xiaomi')->first()->id,
+            'price_brutto' => '48 000',
+        ],
+        [
+            'name' => '10c 3/64gb ',
+            'category_id' => Category::where('name', 'Xiaomi')->first()->id,
+            'price_brutto' => '48 000',
+        ],
+        [
+            'name' => '10c 4/64gb ',
+            'category_id' => Category::where('name', 'Xiaomi')->first()->id,
+            'price_brutto' => '54 000',
+        ],
+        [
+            'name' => '10c 4/64gb ',
+            'category_id' => Category::where('name', 'Xiaomi')->first()->id,
+            'price_brutto' => '54 000',
+        ],
+        [
+            'name' => '10c 4/64gb ',
+            'category_id' => Category::where('name', 'Xiaomi')->first()->id,
+            'price_brutto' => '54 000',
+        ],
+        [
+            'name' => '10c 4/128gb ',
+            'category_id' => Category::where('name', 'Xiaomi')->first()->id,
+            'price_brutto' => '58 000',
+        ],
+        [
+            'name' => '10c 4/128gb ',
+            'category_id' => Category::where('name', 'Xiaomi')->first()->id,
+            'price_brutto' => '58 000',
+        ],
+        [
+            'name' => '10c 4/128gb ',
+            'category_id' => Category::where('name', 'Xiaomi')->first()->id,
+            'price_brutto' => '58 000',
+        ],
+        [
+            'name' => 'Redmi 10 2022 4/64gb ',
+            'category_id' => Category::where('name', 'Xiaomi')->first()->id,
+            'price_brutto' => '59 000',
+        ],
+        [
+            'name' => 'Redmi 10 2022 4/64gb ',
+            'category_id' => Category::where('name', 'Xiaomi')->first()->id,
+            'price_brutto' => '59 000',
+        ],
+        [
+            'name' => 'Redmi 10 2022 4/128gb ',
+            'category_id' => Category::where('name', 'Xiaomi')->first()->id,
+            'price_brutto' => '67 000',
+        ],
+        [
+            'name' => 'Redmi 10 2022 4/128gb ',
+            'category_id' => Category::where('name', 'Xiaomi')->first()->id,
+            'price_brutto' => '67 000',
+        ],
+        [
+            'name' => 'Note 10s 6/128gb',
+            'category_id' => Category::where('name', 'Xiaomi')->first()->id,
+            'price_brutto' => '80 000',
+        ],
+        [
+            'name' => 'Note 10s 6/128gb',
+            'category_id' => Category::where('name', 'Xiaomi')->first()->id,
+            'price_brutto' => '80 000',
+        ],
+        [
+            'name' => 'Note 10s 6/128gb',
+            'category_id' => Category::where('name', 'Xiaomi')->first()->id,
+            'price_brutto' => '80 000',
+        ],
+        [
+            'name' => 'Note 10 Pro 6/64gb ',
+            'category_id' => Category::where('name', 'Xiaomi')->first()->id,
+            'price_brutto' => '80 000',
+        ],
+        [
+            'name' => 'Note 10 Pro 8/128gb ',
+            'category_id' => Category::where('name', 'Xiaomi')->first()->id,
+            'price_brutto' => '93 000',
+        ],
+        [
+            'name' => 'Note 10 Pro 8/256gb ',
+            'category_id' => Category::where('name', 'Xiaomi')->first()->id,
+            'price_brutto' => '97 000',
+        ],
+        [
+            'name' => 'Note 11 4g 4/64gb ',
+            'category_id' => Category::where('name', 'Xiaomi')->first()->id,
+            'price_brutto' => '68 000',
+        ],
+        [
+            'name' => 'Note 11 4g 4/64gb ',
+            'category_id' => Category::where('name', 'Xiaomi')->first()->id,
+            'price_brutto' => '68 000',
+        ],
+        [
+            'name' => 'Note 11 4g 4/128gb ',
+            'category_id' => Category::where('name', 'Xiaomi')->first()->id,
+            'price_brutto' => '74 000',
+        ],
+        [
+            'name' => 'Note 11 4g 6/128gb ',
+            'category_id' => Category::where('name', 'Xiaomi')->first()->id,
+            'price_brutto' => '79 000',
+        ],
+        [
+            'name' => 'Note 11 Pro 4g 6/64gb ',
+            'category_id' => Category::where('name', 'Xiaomi')->first()->id,
+            'price_brutto' => '83 000',
+        ],
+        [
+            'name' => 'Note 11 Pro 4g 6/128gb ',
+            'category_id' => Category::where('name', 'Xiaomi')->first()->id,
+            'price_brutto' => '100 000',
+        ],
+        [
+            'name' => 'Note 11 Pro 4g 6/128gb ',
+            'category_id' => Category::where('name', 'Xiaomi')->first()->id,
+            'price_brutto' => '100 000',
+        ],
+        [
+            'name' => 'Note 11 Pro 4g 8/128gb ',
+            'category_id' => Category::where('name', 'Xiaomi')->first()->id,
+            'price_brutto' => '105 000',
+        ],
+        [
+            'name' => 'Note 11 Pro 5g 6/128gb ',
+            'category_id' => Category::where('name', 'Xiaomi')->first()->id,
+            'price_brutto' => '109 000',
+        ],
+        [
+            'name' => 'Note 11 Pro 5g 8/128gb ',
+            'category_id' => Category::where('name', 'Xiaomi')->first()->id,
+            'price_brutto' => '120 000',
+        ],
+        [
+            'name' => 'Note 11 Pro+ 5g 6/128gb ',
+            'category_id' => Category::where('name', 'Xiaomi')->first()->id,
+            'price_brutto' => '127 000',
+        ],
+        [
+            'name' => 'Note 11s 4g 6/64gb ',
+            'category_id' => Category::where('name', 'Xiaomi')->first()->id,
+            'price_brutto' => '76 000',
+        ],
+        [
+            'name' => 'Note 11s 4g 6/64gb ',
+            'category_id' => Category::where('name', 'Xiaomi')->first()->id,
+            'price_brutto' => '76 000',
+        ],
+        [
+            'name' => 'Note 11s 4g 6/128gb ',
+            'category_id' => Category::where('name', 'Xiaomi')->first()->id,
+            'price_brutto' => '79 000',
+        ],
+        [
+            'name' => 'Note 11s 4g 6/128gb ',
+            'category_id' => Category::where('name', 'Xiaomi')->first()->id,
+            'price_brutto' => '79 000',
+        ],
+        [
+            'name' => 'Note 11s 5g 6/128gb ',
+            'category_id' => Category::where('name', 'Xiaomi')->first()->id,
+            'price_brutto' => '95 000',
+        ],
+        [
+            'name' => 'C40 3/32gb ',
+            'category_id' => Category::where('name', 'Xiaomi')->first()->id,
+            'price_brutto' => '46 000',
+        ],
+        [
+            'name' => 'F4 Gt 5g 12/256gb ',
+            'category_id' => Category::where('name', 'Xiaomi')->first()->id,
+            'price_brutto' => '193 000',
+        ],
+        [
+            'name' => 'F4 Gt 5g 12/256gb ',
+            'category_id' => Category::where('name', 'Xiaomi')->first()->id,
+            'price_brutto' => '193 000',
+        ],
+        [
+            'name' => 'M4 Pro 5g 4/64gb ',
+            'category_id' => Category::where('name', 'Xiaomi')->first()->id,
+            'price_brutto' => '63 000',
+        ],
+        [
+            'name' => 'M5 4/64gb ',
+            'category_id' => Category::where('name', 'Xiaomi')->first()->id,
+            'price_brutto' => '59 000',
+        ],
+        [
+            'name' => 'M5 4/128gb ',
+            'category_id' => Category::where('name', 'Xiaomi')->first()->id,
+            'price_brutto' => '68 000',
+        ],
+        [
+            'name' => 'M5 6/128gb ',
+            'category_id' => Category::where('name', 'Xiaomi')->first()->id,
+            'price_brutto' => '74 000',
+        ],
+        [
+            'name' => 'M5s 6/128gb ',
+            'category_id' => Category::where('name', 'Xiaomi')->first()->id,
+            'price_brutto' => '77 000',
+        ],
+        [
+            'name' => 'X4 Gt 5g 8/128gb ',
+            'category_id' => Category::where('name', 'Xiaomi')->first()->id,
+            'price_brutto' => '119 000',
+        ],
+        [
+            'name' => 'X4 Pro 5g 8/256gb ',
+            'category_id' => Category::where('name', 'Xiaomi')->first()->id,
+            'price_brutto' => '127 000',
+        ],
+        [
+            'name' => 'Mi 10t Lite 5g 6/64gb',
+            'category_id' => Category::where('name', 'Xiaomi')->first()->id,
+            'price_brutto' => '73 000',
+        ],
+        [
+            'name' => 'Mi 10t Lite 5g 6/64gb',
+            'category_id' => Category::where('name', 'Xiaomi')->first()->id,
+            'price_brutto' => '73 000',
+        ],
+        [
+            'name' => '11 Lite 5g Ne 8/128gb',
+            'category_id' => Category::where('name', 'Xiaomi')->first()->id,
+            'price_brutto' => '115 000',
+        ],
+        [
+            'name' => '11 Lite 5g Ne 8/128gb',
+            'category_id' => Category::where('name', 'Xiaomi')->first()->id,
+            'price_brutto' => '118 000',
+        ],
+        [
+            'name' => '11t 5g 8/128gb ',
+            'category_id' => Category::where('name', 'Xiaomi')->first()->id,
+            'price_brutto' => '123 000',
+        ],
+        [
+            'name' => '11t 5g 8/128gb ',
+            'category_id' => Category::where('name', 'Xiaomi')->first()->id,
+            'price_brutto' => '123 000',
+        ],
+        [
+            'name' => '11t Pro 5g 8/128gb',
+            'category_id' => Category::where('name', 'Xiaomi')->first()->id,
+            'price_brutto' => '152 000',
+        ],
+        [
+            'name' => '11t Pro 5g 8/256gb ',
+            'category_id' => Category::where('name', 'Xiaomi')->first()->id,
+            'price_brutto' => '156 000',
+        ],
+        [
+            'name' => '11t Pro 5g 8/256gb ',
+            'category_id' => Category::where('name', 'Xiaomi')->first()->id,
+            'price_brutto' => '156 000',
+        ],
+        [
+            'name' => '12 Lite 5g 6/128gb ',
+            'category_id' => Category::where('name', 'Xiaomi')->first()->id,
+            'price_brutto' => '138 000',
+        ],
+        [
+            'name' => '12 Lite 5g 8/128gb ',
+            'category_id' => Category::where('name', 'Xiaomi')->first()->id,
+            'price_brutto' => '142 000',
+        ],
+        [
+            'name' => '12 5g 8/256gb ',
+            'category_id' => Category::where('name', 'Xiaomi')->first()->id,
+            'price_brutto' => '180 000',
+        ],
+        [
+            'name' => '12 Pro 5g 12/256gb ',
+            'category_id' => Category::where('name', 'Xiaomi')->first()->id,
+            'price_brutto' => '285 000',
+        ],
+        [
+            'name' => '12 Pro 5g 12/256gb ',
+            'category_id' => Category::where('name', 'Xiaomi')->first()->id,
+            'price_brutto' => '285 000',
+        ],
+        [
+            'name' => '12 Pro 5g 12/256gb ',
+            'category_id' => Category::where('name', 'Xiaomi')->first()->id,
+            'price_brutto' => '285 000',
+        ],
+        [
+            'name' => '12t 5g 8/128gb ',
+            'category_id' => Category::where('name', 'Xiaomi')->first()->id,
+            'price_brutto' => '183 000',
+        ],
+        [
+            'name' => '12t 5g 8/256gb ',
+            'category_id' => Category::where('name', 'Xiaomi')->first()->id,
+            'price_brutto' => '186 000',
+        ],
+        [
+            'name' => '12t Pro 5g 8/256gb ',
+            'category_id' => Category::where('name', 'Xiaomi')->first()->id,
+            'price_brutto' => '230 000',
+        ],
+        [
+            'name' => 'Note 10 Lite 4/64gb ',
+            'category_id' => Category::where('name', 'Xiaomi Asai Spec')->first()->id,
+            'price_brutto' => '    54 000',
+        ],
+        [
+            'name' => 'Note 10 Lite 4/64gb ',
+            'category_id' => Category::where('name', 'Xiaomi Asai Spec')->first()->id,
+            'price_brutto' => '54 000',
+        ],
+        [
+            'name' => 'Note 10 Lite 4/128gb',
+            'category_id' => Category::where('name', 'Xiaomi Asai Spec')->first()->id,
+            'price_brutto' => '58 000',
+        ],
+        [
+            'name' => 'Note 10 Lite 4/128gb',
+            'category_id' => Category::where('name', 'Xiaomi Asai Spec')->first()->id,
+            'price_brutto' => '58 000',
+        ],
+        [
+            'name' => 'Note 10 Lite 4/128gb',
+            'category_id' => Category::where('name', 'Xiaomi Asai Spec')->first()->id,
+            'price_brutto' => '58 000',
+        ],
+        [
+            'name' => '8t 5g 8/128gb ',
+            'category_id' => Category::where('name', 'One Plus')->first()->id,
+            'price_brutto' => '    142 000',
+        ],
+        [
+            'name' => '10t 5g 8/128gb ',
+            'category_id' => Category::where('name', 'One Plus')->first()->id,
+            'price_brutto' => '208 000',
+        ],
+        [
+            'name' => '10t 5g 8/128gb ',
+            'category_id' => Category::where('name', 'One Plus')->first()->id,
+            'price_brutto' => '208 000',
+        ],
+        [
+            'name' => '10t 5g 16/256gb ',
+            'category_id' => Category::where('name', 'One Plus')->first()->id,
+            'price_brutto' => '246 000',
+        ],
+        [
+            'name' => '9 5g 8/128gb ',
+            'category_id' => Category::where('name', 'One Plus')->first()->id,
+            'price_brutto' => '170 000',
+        ],
+        [
+            'name' => '9 5g 8/128gb ',
+            'category_id' => Category::where('name', 'One Plus')->first()->id,
+            'price_brutto' => '170 000',
+        ],
+        [
+            'name' => '9 Pro 5g 8/128gb ',
+            'category_id' => Category::where('name', 'One Plus')->first()->id,
+            'price_brutto' => '208 000',
+        ],
+        [
+            'name' => '10 Pro 5g 8/128gb ',
+            'category_id' => Category::where('name', 'One Plus')->first()->id,
+            'price_brutto' => '257 000',
+        ],
+        [
+            'name' => '10 Pro 5g 12/256gb ',
+            'category_id' => Category::where('name', 'One Plus')->first()->id,
+            'price_brutto' => '300 000',
+        ],
+        [
+            'name' => '10 Pro 5g 12/256gb ',
+            'category_id' => Category::where('name', 'One Plus')->first()->id,
+            'price_brutto' => '300 000',
+        ],
+        [
+            'name' => 'Nord 2t 5g 12/256gb ',
+            'category_id' => Category::where('name', 'One Plus')->first()->id,
+            'price_brutto' => '155 000',
+        ],
+        [
+            'name' => 'Xt2083-9 Defy 2021 4/64gb ',
+            'category_id' => Category::where('name', 'Motorola ')->first()->id,
+            'price_brutto' => '    64 000',
+        ],
+        [
+            'name' => 'Xt2133-2 Moto G60s 6/128gb',
+            'category_id' => Category::where('name', 'Motorola ')->first()->id,
+            'price_brutto' => '68 000',
+        ],
+        [
+            'name' => 'Xt2231-1 Moto G22 4/64gb ',
+            'category_id' => Category::where('name', 'Motorola ')->first()->id,
+            'price_brutto' => '48 000',
+        ],
+        [
+            'name' => 'Xt2231-1 Moto G22 4/128gb ',
+            'category_id' => Category::where('name', 'Motorola ')->first()->id,
+            'price_brutto' => '56 000',
+        ],
+        [
+            'name' => 'S42h+ 3/32gb ',
+            'category_id' => Category::where('name', 'Cat')->first()->id,
+            'price_brutto' => '    82 000',
+        ],
+        [
+            'name' => 'S62 Pro 6/128gb ',
+            'category_id' => Category::where('name', 'Cat')->first()->id,
+            'price_brutto' => '206 000',
+        ],
+        [
+            'name' => 'C21y 3/32gb ',
+            'category_id' => Category::where('name', 'Realme')->first()->id,
+            'price_brutto' => '    41 000',
+        ],
+        [
+            'name' => 'C30 3/32gb ',
+            'category_id' => Category::where('name', 'Realme')->first()->id,
+            'price_brutto' => '40 000',
+        ],
+        [
+            'name' => 'C30 3/32gb ',
+            'category_id' => Category::where('name', 'Realme')->first()->id,
+            'price_brutto' => '40 000',
+        ],
+        [
+            'name' => 'C31 3/32gb ',
+            'category_id' => Category::where('name', 'Realme')->first()->id,
+            'price_brutto' => '43 000',
+        ],
+        [
+            'name' => 'C31 3/32gb ',
+            'category_id' => Category::where('name', 'Realme')->first()->id,
+            'price_brutto' => '43 000',
+        ],
+        [
+            'name' => 'C31 4/64gb ',
+            'category_id' => Category::where('name', 'Realme')->first()->id,
+            'price_brutto' => '50 000',
+        ],
+        [
+            'name' => 'C35 4/64gb ',
+            'category_id' => Category::where('name', 'Realme')->first()->id,
+            'price_brutto' => '55 000',
+        ],
+        [
+            'name' => 'C35 4/128gb ',
+            'category_id' => Category::where('name', 'Realme')->first()->id,
+            'price_brutto' => '61 000',
+        ],
+        [
+            'name' => 'C35 4/128gb ',
+            'category_id' => Category::where('name', 'Realme')->first()->id,
+            'price_brutto' => '61 000',
+        ],
+        [
+            'name' => 'Gt Neo 3 5g 150w 12/256gb ',
+            'category_id' => Category::where('name', 'Realme')->first()->id,
+            'price_brutto' => '198 000',
+        ],
+        [
+            'name' => 'Gt Neo 3t 5g 8/256gb ',
+            'category_id' => Category::where('name', 'Realme')->first()->id,
+            'price_brutto' => '160 000',
+        ],
+        [
+            'name' => 'Gt 2 5g 8/128gb ',
+            'category_id' => Category::where('name', 'Realme')->first()->id,
+            'price_brutto' => '132 000',
+        ],
+        [
+            'name' => 'Gt 2 5g 812/256gb ',
+            'category_id' => Category::where('name', 'Realme')->first()->id,
+            'price_brutto' => '160 000',
+        ],
+        [
+            'name' => 'Gt 2 Pro 5g 8/128gb ',
+            'category_id' => Category::where('name', 'Realme')->first()->id,
+            'price_brutto' => '208 000',
+        ],
+        [
+            'name' => 'Gt 2 Pro 5g 8/128gb ',
+            'category_id' => Category::where('name', 'Realme')->first()->id,
+            'price_brutto' => '208 000',
+        ],
+        [
+            'name' => 'A16s 4/64gb ',
+            'category_id' => Category::where('name', 'Oppo')->first()->id,
+            'price_brutto' => '    54 000',
+        ],
+        [
+            'name' => 'A17 4/64gb ',
+            'category_id' => Category::where('name', 'Oppo')->first()->id,
+            'price_brutto' => '54 000',
+        ],
+        [
+            'name' => 'A74 6/128gb ',
+            'category_id' => Category::where('name', 'Oppo')->first()->id,
+            'price_brutto' => '73 000',
+        ],
+        [
+            'name' => 'Reno 4 5g 8/128gb',
+            'category_id' => Category::where('name', 'Oppo')->first()->id,
+            'price_brutto' => '79 000',
+        ],
+        [
+            'name' => 'Reno 6 Pro 5g 12/256gb',
+            'category_id' => Category::where('name', 'Oppo')->first()->id,
+            'price_brutto' => '150 000',
+        ],
+        [
+            'name' => 'X3 Lite 5g 8/128gb',
+            'category_id' => Category::where('name', 'Oppo')->first()->id,
+            'price_brutto' => '98 000',
+        ],
+        [
+            'name' => 'X3 Lite 5g 8/128gb',
+            'category_id' => Category::where('name', 'Oppo')->first()->id,
+            'price_brutto' => '98 000',
+        ],
+
+        [
+            'name' => 'Ot 1052',
+            'category_id' => Category::where('name', 'Alcatel')->first()->id,
+            'price_brutto' => '    3 500',
+        ],
+        [
+            'name' => 'Ot 1016',
+            'category_id' => Category::where('name', 'Alcatel')->first()->id,
+            'price_brutto' => '3 500',
+        ],
+    
+        [
+            'name' => '3310 No Hun ',
+            'category_id' => Category::where('name', 'Nokia')->first()->id,
+            'price_brutto' => '    16 000',
+        ],
+        [
+            'name' => '105 Ds (No Hun)',
+            'category_id' => Category::where('name', 'Nokia')->first()->id,
+            'price_brutto' => '7 000',
+        ],
+        [
+            'name' => '105 Singe Hun ',
+            'category_id' => Category::where('name', 'Nokia')->first()->id,
+            'price_brutto' => '8 000',
+        ],
+        [
+            'name' => '106 Telenor ',
+            'category_id' => Category::where('name', 'Nokia')->first()->id,
+            'price_brutto' => '7 000',
+        ],
+        [
+            'name' => '108 Telenor',
+            'category_id' => Category::where('name', 'Nokia')->first()->id,
+            'price_brutto' => '7 000',
+        ],
+        [
+            'name' => 'Asha 503',
+            'category_id' => Category::where('name', 'Nokia')->first()->id,
+            'price_brutto' => '11 000',
+        ],
+        [
+            'name' => 'Lumia 530',
+            'category_id' => Category::where('name', 'Nokia')->first()->id,
+            'price_brutto' => '13 000',
+        ],
+        [
+            'name' => 'N85 ',
+            'category_id' => Category::where('name', 'Nokia')->first()->id,
+            'price_brutto' => '39 000',
+        ],
+        [
+            'name' => 'N95 ',
+            'category_id' => Category::where('name', 'Nokia')->first()->id,
+            'price_brutto' => '36 000',
+        ],
+        [
+            'name' => 'N95 8gb',
+            'category_id' => Category::where('name', 'Nokia')->first()->id,
+            'price_brutto' => '46 000',
+        ],
+        [
+            'name' => '6730 No Hun',
+            'category_id' => Category::where('name', 'Nokia')->first()->id,
+            'price_brutto' => '25 000',
+        ],
+        [
+            'name' => '6124 No Hun',
+            'category_id' => Category::where('name', 'Nokia')->first()->id,
+            'price_brutto' => '25 000',
+        ],
+        [
+            'name' => 'C5-03',
+            'category_id' => Category::where('name', 'Nokia')->first()->id,
+            'price_brutto' => '18 000',
+        ],
+        [
+            'name' => 'E7 ',
+            'category_id' => Category::where('name', 'Nokia')->first()->id,
+            'price_brutto' => '41 000',
+        ],
+        [
+            'name' => 'N97 Mini No Hun',
+            'category_id' => Category::where('name', 'Nokia')->first()->id,
+            'price_brutto' => '16 000',
+        ],
+    
+        [
+            'name' => 'Kf510',
+            'category_id' => Category::where('name', 'Lg ')->first()->id,
+            'price_brutto' => '    25 000',
+        ],
+        [
+            'name' => 'Kf570',
+            'category_id' => Category::where('name', 'Lg ')->first()->id,
+            'price_brutto' => '21 000',
+        ],
+        [
+            'name' => 'Kf757',
+            'category_id' => Category::where('name', 'Lg ')->first()->id,
+            'price_brutto' => '30 000',
+        ],
+    
+        [
+            'name' => 'G4+ 16gb',
+            'category_id' => Category::where('name', 'Motorola Old Style')->first()->id,
+            'price_brutto' => '    46 000',
+        ],
+        [
+            'name' => 'G4+ 32gb',
+            'category_id' => Category::where('name', 'Motorola Old Style')->first()->id,
+            'price_brutto' => '59 000',
+        ],
+        [
+            'name' => 'G5+ 32gb',
+            'category_id' => Category::where('name', 'Motorola Old Style')->first()->id,
+            'price_brutto' => '46 000',
+        ],
+        [
+            'name' => 'G5s+ 32gb',
+            'category_id' => Category::where('name', 'Motorola Old Style')->first()->id,
+            'price_brutto' => '61 000',
+        ],
+        [
+            'name' => 'Moto X2 ',
+            'category_id' => Category::where('name', 'Motorola Old Style')->first()->id,
+            'price_brutto' => '46 000',
+        ],
+        [
+            'name' => 'Defy Mini ',
+            'category_id' => Category::where('name', 'Motorola Old Style')->first()->id,
+            'price_brutto' => '16 000',
+        ],
+        [
+            'name' => 'Moto X 16gb',
+            'category_id' => Category::where('name', 'Motorola Old Style')->first()->id,
+            'price_brutto' => '37 000',
+        ],
+        [
+            'name' => 'Moto X 32gb',
+            'category_id' => Category::where('name', 'Motorola Old Style')->first()->id,
+            'price_brutto' => '43 000',
+        ],
+        [
+            'name' => 'Z2 Force',
+            'category_id' => Category::where('name', 'Motorola Old Style')->first()->id,
+            'price_brutto' => '101 000',
+        ],
+        [
+            'name' => 'Moto Z 32gb',
+            'category_id' => Category::where('name', 'Motorola Old Style')->first()->id,
+            'price_brutto' => '64 000',
+        ],
+        [
+            'name' => 'Moto E ',
+            'category_id' => Category::where('name', 'Motorola Old Style')->first()->id,
+            'price_brutto' => '21 000',
+        ],
+    
+        [
+            'name' => 'X2 ',
+            'category_id' => Category::where('name', 'Sony')->first()->id,
+            'price_brutto' => '    37 000',
+        ],
+    
+        [
+            'name' => 'Sony Elm ',
+            'category_id' => Category::where('name', 'Felújított Készülékek')->first()->id,
+            'price_brutto' => '    15 000',
+        ],
+        [
+            'name' => 'Sony P1',
+            'category_id' => Category::where('name', 'Felújított Készülékek')->first()->id,
+            'price_brutto' => '24 000',
+        ],
+        [
+            'name' => 'Nokia 3720c',
+            'category_id' => Category::where('name', 'Felújított Készülékek')->first()->id,
+            'price_brutto' => '15 000',
+        ],
+        [
+            'name' => 'Nokia 5140i',
+            'category_id' => Category::where('name', 'Felújított Készülékek')->first()->id,
+            'price_brutto' => '15 000',
+        ],
+        [
+            'name' => 'Nokia 5500 Sport',
+            'category_id' => Category::where('name', 'Felújított Készülékek')->first()->id,
+            'price_brutto' => '8 000',
+        ],
+        [
+            'name' => 'Blacberry Z10 ',
+            'category_id' => Category::where('name', 'Felújított Készülékek')->first()->id,
+            'price_brutto' => '20 000',
+        ],
+
+        [
+            'name' => 'Beovision Horizon 40 Bang&olufsen',
+            'category_id' => Category::where('name', 'Television')->first()->id,
+            'price_brutto' => '    350 000',
+        ],
+        [
+            'name' => 'Samsung Ah59 Remote Controller',
+            'category_id' => Category::where('name', 'Television')->first()->id,
+            'price_brutto' => '5 000',
+        ],
+    
+        [
+            'name' => 'Go Professional 520',
+            'category_id' => Category::where('name', 'Tomtom Navigation')->first()->id,
+            'price_brutto' => '    80 000',
+        ],
+        [
+            'name' => 'Go 5200',
+            'category_id' => Category::where('name', 'Tomtom Navigation')->first()->id,
+            'price_brutto' => '80 000',
+        ],
+    
+        [
+            'name' => 'Hp Envy X2 13 4/128gb',
+            'category_id' => Category::where('name', 'Laptop')->first()->id,
+            'price_brutto' => '    105 000',
+        ],
+        [
+            'name' => 'Hp Elitepad 900',
+            'category_id' => Category::where('name', 'Laptop')->first()->id,
+            'price_brutto' => '110 000',
+        ],
+        [
+            'name' => 'Lenovo Thinkpad Helix Ultra I5 4/128gb',
+            'category_id' => Category::where('name', 'Laptop')->first()->id,
+            'price_brutto' => '115 000',
+        ],
+        [
+            'name' => 'Asus X5541u I3 4/500gb',
+            'category_id' => Category::where('name', 'Laptop')->first()->id,
+            'price_brutto' => '90 000',
+        ],
+        [
+            'name' => 'Dell M4800 I7 16/256gb',
+            'category_id' => Category::where('name', 'Laptop')->first()->id,
+            'price_brutto' => '220 000',
+        ],
+        [
+            'name' => 'Mt847 Ds Double Phone',
+            'category_id' => Category::where('name', 'Other Products')->first()->id,
+            'price_brutto' => '8 000',
+        ],
+        [
+            'name' => 'Bm10 Mini Phone ',
+            'category_id' => Category::where('name', 'Other Products')->first()->id,
+            'price_brutto' => '10 000',
+        ],
+        [
+            'name' => 'Zte Racer 2',
+            'category_id' => Category::where('name', 'Other Products')->first()->id,
+            'price_brutto' => '10 000',
+        ],
+        [
+            'name' => 'Asus Garmin A10',
+            'category_id' => Category::where('name', 'Other Products')->first()->id,
+            'price_brutto' => '25 000',
+        ],
+        [
+            'name' => 'Freeman Speak T100 Dual ',
+            'category_id' => Category::where('name', 'Other Products')->first()->id,
+            'price_brutto' => '4 000',
+        ],
+        [
+            'name' => 'Telenor S450',
+            'category_id' => Category::where('name', 'Other Products')->first()->id,
+            'price_brutto' => '5 000',
+        ],
+        [
+            'name' => 'Telenor 2020',
+            'category_id' => Category::where('name', 'Other Products')->first()->id,
+            'price_brutto' => '7 000',
+        ],
+        [
+            'name' => 'Tecno Camon C9 ',
+            'category_id' => Category::where('name', 'Other Products')->first()->id,
+            'price_brutto' => '25 000',
+        ],
+        [
+            'name' => 'Luna Smart Watch ',
+            'category_id' => Category::where('name', 'Other Products')->first()->id,
+            'price_brutto' => '50 000',
+        ],
+        [
+            'name' => 'Polar Vantage Multi Sport',
+            'category_id' => Category::where('name', 'Other Products')->first()->id,
+            'price_brutto' => '90 000',
+        ],
+        [
+            'name' => 'Carneo Smart U10',
+            'category_id' => Category::where('name', 'Other Products')->first()->id,
+            'price_brutto' => '8 000',
+        ],
+        [
+            'name' => 'Trekstor Surftab Twin 10.1',
+            'category_id' => Category::where('name', 'Other Products')->first()->id,
+            'price_brutto' => '45 000',
+        ],
+        
+    ];
+
+    foreach ($products as $prod) {
+
+        $price = str_replace(" ", "", $prod['price_brutto']);
+
+        $product = new Product();
+        $product->name = Category::where('id', $prod['category_id'])->first()->name.' '.$prod['name'];
+        $product->status = 1;
+        $product->category = $prod['category_id'];
+
+        $product->price_brutto = intval($price) * 1.10;
+        $product->price = (intval($price) * 1.10) / 1.27;
+        
+        $product->unit_id = Measure::where('name', 'db')->first()->id;
+        $product->stock = 1;
+
+        $product->save();
+    }
+
+}
+?>
+==
+<div class="mt-28 container mx-auto flex-col justify-center items-center text-center flex gap-4">
+    <button data-request="onSeedMainCategory" class="bg-green-800 px-5 py-2 font-bold text-white">
+        Main Category seeder
+    </button>
+    <button data-request="onSeedSecondaryCategory" class="bg-green-800 px-5 py-2 font-bold text-white">
+        Main Secondary Category seeder
+    </button>
+    <button data-request="onSeedCategory" class="bg-green-800 px-5 py-2 font-bold text-white">
+        Category seeder
+    </button>
+    <button data-request="onSeedProduct" class="bg-green-800 px-5 py-2 font-bold text-white">
+        Product seeder
+    </button>
+</div>

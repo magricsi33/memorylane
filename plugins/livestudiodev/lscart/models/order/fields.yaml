@@ -1,0 +1,139 @@
+fields:
+    email:
+        label: 'E-mail Cím'
+        span: auto
+        type: text
+    status:
+        label: 'Rendelés Státusza'
+        options:
+            - Beérkezett
+            - Feldolgozott
+            - Számlázás
+            - Elutasítva
+            - Folyamatban
+            - 'Beérkezett és fizetve'
+            - Vélemény
+            - Kész
+            - Szállítva
+        showSearch: true
+        span: auto
+        type: dropdown
+    lang:
+        label: Nyelv
+        options:
+            hu: Magyar
+            en: Angol
+        span: auto
+        type: balloon-selector
+        commentAbove: 'Használt nyelv amikor a rendelés le volt adva'
+    order_number:
+        label: 'Rendelés száma'
+        span: auto
+        type: text
+    name:
+        label: 'Megrendelő neve'
+        span: auto
+        type: text
+tabs:
+    fields:
+        'billing_address[postcode]':
+            label: Irányítószám
+            span: auto
+            type: text
+            tab: 'Számlázási cím'
+        'billing_address[address_name]':
+            label: 'Közterület neve'
+            span: auto
+            type: text
+            tab: 'Számlázási cím'
+        'billing_address[address_type]':
+            label: 'Közterület jellege'
+            span: auto
+            type: text
+            tab: 'Számlázási cím'
+        'billing_address[city]':
+            label: Város
+            span: auto
+            type: text
+            tab: 'Számlázási cím'
+        'billing_address[flat_number]':
+            label: Házszám
+            span: auto
+            type: text
+            tab: 'Számlázási cím'
+        'billing_address[floor]':
+            label: Emelet
+            span: auto
+            type: text
+            tab: 'Számlázási cím'
+        'billing_address[door_num]':
+            label: Ajtó
+            span: auto
+            type: text
+            tab: 'Számlázási cím'
+        'billing_address[phone]':
+            label: Telefonszám
+            span: auto
+            type: text
+            tab: 'Számlázási cím'
+        'billing_address[tax_number]':
+            label: Adószzám
+            span: left
+            type: text
+            tab: 'Számlázási cím'
+        'address[postcode]':
+            label: Irányítószám
+            span: auto
+            type: text
+            tab: 'Szállítási cím / Cím'
+        'address[address_name]':
+            label: 'Közterület neve'
+            span: auto
+            type: text
+            tab: 'Szállítási cím / Cím'
+        'address[address_type]':
+            label: 'Közterület jellege'
+            span: auto
+            type: text
+            tab: 'Szállítási cím / Cím'
+        'address[city]':
+            label: Város
+            span: auto
+            type: text
+            tab: 'Szállítási cím / Cím'
+        'address[flat_number]':
+            label: Házszám
+            span: auto
+            type: text
+            tab: 'Szállítási cím / Cím'
+        'address[floor]':
+            label: Emelet
+            span: auto
+            type: text
+            tab: 'Szállítási cím / Cím'
+        'address[door_num]':
+            label: Ajtó
+            span: auto
+            type: text
+            tab: 'Szállítási cím / Cím'
+        'address[phone]':
+            label: Telefonszám
+            span: auto
+            type: text
+            tab: 'Szállítási cím / Cím'
+        items:
+            span: full
+            path: $/livestudiodev/lscart/partials/_orderitems.htm
+            type: partial
+            tab: 'Rendelt termékek'
+        'infos[note]':
+            label: Megjegyzés
+            size: large
+            span: full
+            type: textarea
+            tab: Egyéb
+        osszegzes:
+            span: full
+            path: $/livestudiodev/lscart/partials/_ordertotal.htm
+            type: partial
+            tab: Összegzés

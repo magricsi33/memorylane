@@ -1,0 +1,33 @@
+fields:
+    name:
+        label: Megnevezés
+        span: auto
+        type: text
+    sku:
+        label: Cikkszám
+        span: auto
+        type: text
+    pricediff:
+        label: Árdifferencia
+        span: auto
+        type: number
+        comment: 'Alap termék ár + Differencia = Darabár'
+    image:
+        label: Termékkép
+        mode: file
+        useCaption: true
+        thumbOptions:
+            mode: crop
+            extension: auto
+        span: auto
+        type: fileupload
+    status:
+        label: Státusz
+        showSearch: true
+        span: auto
+        type: dropdown
+    stock:
+        label: 'Raktáron lévő'
+        span: auto
+        type: number
+        comment: 'Raktáron lévő termékek száma'

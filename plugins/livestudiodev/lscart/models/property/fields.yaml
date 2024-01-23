@@ -1,0 +1,65 @@
+fields:
+    name:
+        label: Megnevezés
+        span: auto
+        type: text
+    type:
+        label: Típus
+        options:
+            - 'String (Szöveg)'
+            - 'Number (Szám)'
+            - 'Dropdown (Legördülő)'
+            - 'Multiselect (Legördülő)'
+            - 'Switch (Váltó)'
+        showSearch: true
+        span: auto
+        type: dropdown
+    extra:
+        label: 'Legördülő menü elemei'
+        prompt: 'Adjon hozzá új elemet'
+        span: auto
+        trigger:
+            action: show
+            field: type
+            condition: 'value[2] || value[3]'
+        type: repeater
+        form:
+            fields:
+                item:
+                    label: Megnevezés
+                    span: auto
+                    type: text
+                media:
+                    label: 'Csatolt média'
+                    mode: file
+                    span: auto
+                    hidden: 1
+                    type: mediafinder
+                    comment: (Opcionális)
+                description:
+                    label: 'Rövid leírás'
+                    span: auto
+                    type: text
+                    comment: (Opcionális)
+                slug:
+                    label: 'Keresőbarát név'
+                    span: right
+                    type: text
+                    comment: (Opcionális)
+    filter_type:
+        label: 'Filter típusa'
+        options:
+            string: 'Szöveges input'
+            checklist: 'Jelölőnégyzet lista'
+        showSearch: true
+        span: auto
+        type: dropdown
+        comment: 'Frontenden megjelenő filter típusa. Kompatibilis típusok csak!'
+    filter_unit:
+        label: 'Csúszka egysége'
+        span: right
+        trigger:
+            action: show
+            field: filter_type
+            condition: 'value[slider]'
+        type: text

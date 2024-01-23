@@ -1,0 +1,21 @@
+{{ form_ajax('onSignin') }}
+
+    <div class="form-floating mb-3">
+        <input type="email" class="form-control btn-border" name="login" id="userSigninLogin" placeholder="Email">
+        <label for="userSigninLogin">E-mail cím*</label>
+    </div>
+
+    <div class="form-floating mb-3">
+        <input type="password" class="form-control btn-border" name="password" id="userSigninPassword" placeholder="Email">
+        <label for="userSigninPassword">Jelszó*</label>
+    </div>
+
+    <!-- <div class="form-group">
+        <div class="checkbox">
+        <label><input name="remember" type="checkbox" value="1">Stay logged in</label>
+        </div>
+    </div> -->
+
+    <button type="submit" class="btn btn-prim px-4 py-2 text-white fw-bold btn-border effect col-12 mb-3">Bejelentkezés</button>
+
+{{ form_close() }}

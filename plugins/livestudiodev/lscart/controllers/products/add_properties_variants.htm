@@ -1,0 +1,61 @@
+<?php
+if($this->vars['relationManageWidget']->context != 'create') {
+    $model = $vars['formModel'];
+?>
+<div>
+    <p class="text-danger">
+        Ezeket a tulajdonságok a termékből vannak eredeztetve. 
+        Az itten módosításuk egy külön rekordot vesz fel a változathoz, ez az oldalon azt eredményezi hogy amikor ez a kiválasztott változat akkor ez jelenik meg. 
+        Amennyiben nincs módosítva pedig a termék értékét használja.
+    </p>
+	<?php foreach($model->product->properties()->get() as $property) { ?>
+		<?php 
+			if($model->properties()->find($property->id)){ 
+				$property = $model->properties()->find($property->id);
+			}
+			if($property->type == 2){
+		?> 
+		<div class="form-group span-full">
+			<label><?= $property->name ?></label>
+			<select name="property_<?= $property->id."_value" ?>" class="form-control custom-select">
+			<?php
+				foreach($property->extra as $key => $option) {
+			?>
+				<option value="<?= $key ?>" <?= $key == $property->pivot->propertable_value ? 'selected' : '' ?>><?= $option['item'] ?></option>
+			<?php } ?>
+			</select>
+		</div>
+		<?php } else if($property->type == 3){ ?>
+		<div class="form-group span-full">
+			<label><?= $property->name ?></label>
+			<select name="property_<?= $property->id."_value[]" ?>" class="form-control custom-select" multiple="multiple">
+			<?php
+				foreach($property->extra as $key => $option) {
+				$values = explode(',',$property->pivot->propertable_value);
+			?>
+				<option value="<?= $key ?>" <?= in_array($key,$values) ? 'selected' : '' ?>><?= $option['item'] ?></option>
+			<?php } ?>
+			</select>
+		</div>
+		<?php } else if($property->type == 4){ ?>
+		<div class="form-group switch-field span-left">
+			<div class="field-switch">
+				<label><?= $property->name ?></label>
+			</div>
+			<label class="custom-switch">
+				<input type="checkbox" name="property_<?= $property->id ?>_value" value="1" <?= $property->pivot->propertable_value == 1 ? 'checked' : '' ?>/>
+				<span><span>Igen</span><span>Nem</span></span>
+				<a class="slide-button"></a>
+			</label>
+		</div>
+		<?php } else { ?>
+		<div class="form-group span-full">
+			<label><?= $property->name ?></label>
+			<input type="<?= $property->typeName ?>" name="property_<?= $property->id."_value" ?>" value="<?= $property->pivot->propertable_value ?>" class="form-control" />
+		</div>
+		<?php }?>
+	<?php } ?>
+</div>
+<?php } else { ?>
+	Kérem mentse le (hozza létre) a változatot a tulajdonságok módosításához / megadásához.	
+<?php }?>

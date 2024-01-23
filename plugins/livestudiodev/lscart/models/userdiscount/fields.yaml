@@ -1,0 +1,23 @@
+fields:
+    name:
+        label: 'Felhasználói kedvezmény megnevezése'
+        span: auto
+        type: text
+    discounts:
+        label: Kategóriák
+        prompt: 'Adjon hozzá kategóriát'
+        span: full
+        type: repeater
+        commentAbove: 'Ezen Termékkategóriákra szól a kedvezmény'
+        form:
+            fields:
+                category:
+                    label: Kategória
+                    nameFrom: name
+                    descriptionFrom: description
+                    span: auto
+                    type: relation
+                value:
+                    label: 'Százalékos kedvezmény'
+                    span: auto
+                    type: number

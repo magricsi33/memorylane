@@ -1,0 +1,14 @@
+<form class="paypal-button" method="post" action="{{ paymentInfo.url }}" target="_top">
+<div id="errorBox" class="hide"></div>
+<input name="button" value="{{ paymentInfo.type }}" type="hidden">
+<input name="item_name" value="{{ paymentInfo.item_name }}" type="hidden">
+<input name="amount" value="{{ paymentInfo.amount }}" type="hidden">
+<input name="env" value="{{ paymentInfo.env }}" type="hidden">
+    <input name="return" value="{{ paymentInfo.return }}" type="hidden">
+    <input name="rm" value="2" type="hidden">
+<input name="currency_code" value="{{ paymentInfo.currency_code }}" type="hidden">
+<input name="cmd" value="{{ paymentInfo.cmd }}" type="hidden">
+<input name="business" value="{{ paymentInfo.paypal_email }}" type="hidden">
+<input name="bn" value="JavaScriptButton_{{ paymentInfo.type }}" type="hidden">
+<button class="paypal-button large" type="submit">{{ paymentInfo.text }}</button>
+</form>

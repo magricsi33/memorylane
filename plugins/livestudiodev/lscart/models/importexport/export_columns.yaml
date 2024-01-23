@@ -1,0 +1,61 @@
+columns:
+    id:
+        label: id
+        type: number
+    name:
+        label: name
+        type: text
+    cikkszam:
+        label: cikkszam
+        type: text
+    price:
+        label: price
+        type: text
+    brand_id:
+        label: brand_id
+        type: number
+    vatkey_id:
+        label: vatkey_id
+        type: number
+    unit_id:
+        label: unit_id
+        type: number
+    description:
+        label: description
+        type: text
+    category_id:
+        label: category_id
+        type: number
+    slug:
+        label: slug
+        type: text
+    price_brutto:
+        label: price_brutto
+        type: text
+    sort_order:
+        label: sort_order
+        type: number
+    meta_title:
+        label: meta_title
+        type: text
+    meta_description:
+        label: meta_description
+        type: text
+    meta_keywords:
+        label: meta_keywords
+        type: text
+    created_at:
+        label: created_at
+        type: datetime
+    updated_at:
+        label: updated_at
+        type: datetime
+    properties:
+        label: properties
+        type: text
+    variantonly:
+        label: variantonly
+        type: text
+    status:
+        label: status
+        type: number

@@ -1,0 +1,25 @@
+<div class="product-list" style="display:flex;flex-wrap:wrap;">
+	<?php 
+	$items = $this->vars["formModel"]->items;
+	foreach($items as $item) { 
+		$product = $item->product;
+		$variant = $item->variant;
+	?>
+	<div style="width:12%;min-height:300px;margin-right:.5%;margin-bottom:20px;max-height:max-content;background-color:white;text-align:center;padding:15px;border:1px solid #ddd; border-radius:7px;">
+		
+		<?php if(isset($product)){?>
+
+			<img src='"<?= $product->image->path ?>"' alt='' style='max-height:250px;max-width:100%'>
+			<h4 style="font-weight:bold;"><?= $product->name ?></h4>
+			<p style="font-weight: bold;">
+				Változat: <?= $variant ? $variant->name : '' ?>
+			</p>
+			<p style="font-weight: bold;">
+				Mennyiség: <?= $item->quantity ?> <?= $item->product->unit->name ?>
+			</p>
+
+		<?php } ?>
+
+	</div>
+	<?php } ?>
+</div>

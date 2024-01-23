@@ -1,0 +1,10 @@
+columns:
+    id:
+        label: Azonosító
+        type: number
+        sortable: true
+    name:
+        label: Megnevezés
+        type: text
+        searchable: true
+        sortable: true

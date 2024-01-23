@@ -1,0 +1,29 @@
+tabs:
+    fields:
+        measure:
+            label: 'Alapértelmezett Mértékegység'
+            nameFrom: name
+            descriptionFrom: description
+            span: auto
+            type: relation
+            tab: Alapértelmezett
+        vatkey:
+            label: 'Alapértelmezett Adókulcs'
+            nameFrom: value
+            descriptionFrom: description
+            span: auto
+            type: relation
+            comment: '%-ban'
+            tab: Alapértelmezett
+        currency:
+            label: 'Alapértelmezett Pénznem'
+            nameFrom: code
+            descriptionFrom: description
+            span: auto
+            type: relation
+            tab: Alapértelmezett
+        useStock:
+            label: 'Raktárhasználat engedélyezése'
+            span: auto
+            type: switch
+            tab: Alapértelmezett

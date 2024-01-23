@@ -1,0 +1,4 @@
+title: Banners
+modelClass: Codergram\Slider\Models\Banner
+toolbar:
+    buttons: reorder_toolbar

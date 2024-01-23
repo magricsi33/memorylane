@@ -1,0 +1,337 @@
+fields:
+    name:
+        label: Megnevezés
+        span: auto
+        type: text
+    slug:
+        label: 'Keresőbarát név'
+        span: auto
+        preset:
+            field: name
+            type: slug
+        type: text
+tabs:
+    fields:
+        sections:
+            label: Szekciók
+            prompt: Hozzáadás
+            style: collapsed
+            span: full
+            type: repeater
+            tab: Tartalom
+            form:
+                fields:
+                    name:
+                        label: Szekciók
+                        span: auto
+                        type: text
+                    full_width:
+                        label: 'Teljes szélesség'
+                        span: auto
+                        type: switch
+                        comment: 'iframe és egyéb használatához'
+                    modify_margin:
+                        label: 'Külső margók módosítása'
+                        span: auto
+                        type: switch
+                    use_bg:
+                        label: 'Háttérkép használata'
+                        span: auto
+                        type: switch
+                    margin_top:
+                        label: 'Külső-felső margó'
+                        span: left
+                        trigger:
+                            action: show
+                            field: modify_margin
+                            condition: checked
+                        type: number
+                    margin_bottom:
+                        label: 'Külső-alsó margó'
+                        span: auto
+                        trigger:
+                            action: show
+                            field: modify_margin
+                            condition: checked
+                        type: number
+                    bg_image:
+                        label: 'Szekció háttérképe'
+                        mode: file
+                        span: auto
+                        trigger:
+                            action: show
+                            field: use_bg
+                            condition: checked
+                        type: mediafinder
+                        commentAbove: 'A szekció mögötti kép'
+                    bg_padding:
+                        label: 'Belső Alsó-felső padding'
+                        span: auto
+                        trigger:
+                            action: show
+                            field: use_bg
+                            condition: checked
+                        type: number
+                        commentAbove: 'A szekción belüli margó mérete (px)'
+                    contents:
+                        label: 'Tartalmi elemek'
+                        prompt: Hozzáadás
+                        style: default
+                        span: full
+                        type: repeater
+                        form:
+                            fields:
+                                type:
+                                    label: Típus
+                                    options:
+                                        title: Cím
+                                        text: 'Simple Text'
+                                        text-big: 'Szöveg (nagy)'
+                                        text-medium: 'Szöveg (közepes)'
+                                        text-normal: 'Szöveg (normál)'
+                                        list: Listaelemek
+                                        parallax: Parallax
+                                        text-with-image: 'Osztott szöveg képpel'
+                                        image: Kép
+                                        video: Videó
+                                        gallery: Képgaléria
+                                        blogs: 'Blog cikkek'
+                                    showSearch: true
+                                    span: auto
+                                    type: dropdown
+                                title:
+                                    label: Cím
+                                    span: auto
+                                    trigger:
+                                        action: show
+                                        field: type
+                                        condition: 'value[title] && value[parallax] && value[text-with-image]'
+                                    type: text
+                                reverse:
+                                    label: 'Kép beállítása első elemként'
+                                    span: auto
+                                    trigger:
+                                        action: show
+                                        field: type
+                                        condition: 'value[text-with-image]'
+                                    type: switch
+                                    comment: 'Baloldalt lesz a kép és jobb oldalt a szöveg'
+                                col_items:
+                                    label: Tartalom
+                                    prompt: Hozzáadás
+                                    style: collapsed
+                                    span: full
+                                    trigger:
+                                        action: show
+                                        field: type
+                                        condition: 'value[text-with-image]'
+                                    type: repeater
+                                    form:
+                                        fields:
+                                            title:
+                                                label: Cím
+                                                span: auto
+                                                type: text
+                                            text:
+                                                label: Szöveg
+                                                size: large
+                                                span: full
+                                                type: richeditor
+                                            icon:
+                                                label: Ikon
+                                                span: auto
+                                                type: text
+                                                commentAbove: 'https://fontawesome.com/ pl: fa-solid fa-shield'
+                                            icon_color:
+                                                label: 'Ikon szín'
+                                                span: auto
+                                                type: colorpicker
+                                                commentAbove: 'Csak fontawesome ikonokra érvényes'
+                                            icon_size:
+                                                label: 'Ikon mérete (px)'
+                                                span: auto
+                                                type: text
+                                text:
+                                    label: Szöveg
+                                    size: small
+                                    span: auto
+                                    trigger:
+                                        action: show
+                                        field: type
+                                        condition: 'value[text-big] && value[text] && value[text-medium] && value[text-normal] && value[parallax]'
+                                    type: richeditor
+                                image:
+                                    label: Kép
+                                    mode: image
+                                    span: left
+                                    trigger:
+                                        action: show
+                                        field: type
+                                        condition: 'value[image] && value[text-with-image]'
+                                    type: mediafinder
+                                blog_count:
+                                    label: 'Cikkek száma'
+                                    options:
+                                        1: '1'
+                                        2: '2'
+                                        3: '3'
+                                        4: '4'
+                                        5: '5'
+                                        6: '6'
+                                        7: '7'
+                                        8: '8'
+                                        9: '9'
+                                        10: '10'
+                                        11: '11'
+                                        12: '12'
+                                        13: '13'
+                                        14: '14'
+                                        15: '15'
+                                        16: '16'
+                                        17: '17'
+                                        18: '18'
+                                        19: '19'
+                                        20: '20'
+                                        all: Összes
+                                    showSearch: true
+                                    span: auto
+                                    trigger:
+                                        action: show
+                                        field: type
+                                        condition: 'value[blogs]'
+                                    type: dropdown
+                                video:
+                                    label: 'Youtube iframe'
+                                    size: small
+                                    span: auto
+                                    trigger:
+                                        action: show
+                                        field: type
+                                        condition: 'value[video]'
+                                    type: textarea
+                                items:
+                                    label: Elemek
+                                    prompt: Hozzáadás
+                                    style: default
+                                    span: full
+                                    trigger:
+                                        action: show
+                                        field: type
+                                        condition: 'value[list]'
+                                    type: repeater
+                                    form:
+                                        fields:
+                                            title:
+                                                label: Cím
+                                                span: auto
+                                                trigger:
+                                                    action: hide
+                                                    field: type
+                                                    condition: 'value[gallery]'
+                                                type: text
+                                            description:
+                                                label: Szöveg
+                                                size: small
+                                                span: auto
+                                                type: richeditor
+                                            icon:
+                                                label: Ikon
+                                                span: auto
+                                                trigger:
+                                                    action: hide
+                                                    field: type
+                                                    condition: 'value[gallery]'
+                                                type: text
+                                                commentAbove: 'https://fontawesome.com/ pl: fa-solid fa-shield'
+                                            icon_color:
+                                                label: 'Ikon színe'
+                                                span: auto
+                                                type: colorpicker
+                                                commentAbove: 'Csak fontawesome ikonokra érvényes'
+                                            custom_icon:
+                                                label: 'Egyedi ikon'
+                                                mode: image
+                                                span: auto
+                                                type: mediafinder
+                                                commentAbove: 'Ha megvan adva, felülírja a fontawesome ikont'
+                                            icon_size:
+                                                label: 'Ikon mérete (px)'
+                                                span: auto
+                                                default: '24'
+                                                type: number
+                                            bg_color:
+                                                label: 'Box háttérszíne'
+                                                span: auto
+                                                type: colorpicker
+                                            text_color:
+                                                label: 'Szöveg színe'
+                                                options:
+                                                    black: Sötét
+                                                    white: Világos
+                                                showSearch: true
+                                                span: auto
+                                                type: dropdown
+                                            url:
+                                                label: Link
+                                                span: auto
+                                                type: text
+                                                commentAbove: 'Ha nincs kitöltve akkor nem lesz kattinható'
+                                            blank:
+                                                label: 'Megnyitás új lapon'
+                                                span: auto
+                                                type: switch
+                                            padding:
+                                                label: 'Belső margók'
+                                                span: auto
+                                                type: text
+                                gallery:
+                                    label: Galéria
+                                    prompt: Hozzáadás
+                                    style: collapsed
+                                    span: auto
+                                    trigger:
+                                        action: show
+                                        field: type
+                                        condition: 'value[gallery]'
+                                    type: repeater
+                                    form:
+                                        fields:
+                                            title:
+                                                label: Cím
+                                                span: auto
+                                                type: text
+                                            item:
+                                                label: Kép
+                                                mode: image
+                                                span: auto
+                                                type: mediafinder
+        meta_title:
+            label: 'Meta title'
+            span: auto
+            type: text
+            tab: SEO
+        meta_description:
+            label: 'Meta description'
+            span: auto
+            type: text
+            tab: SEO
+        meta_keywords:
+            label: 'Meta keywords'
+            span: auto
+            type: text
+            tab: SEO
+        menu_name:
+            label: 'Menü elnevezés'
+            span: auto
+            type: text
+            tab: Menü
+        show_menu:
+            label: 'Megjelenik a fejlécben'
+            span: left
+            type: switch
+            tab: Menü
+        show_footer:
+            label: 'Megjelenik a láblécben'
+            span: auto
+            type: switch
+            tab: Menü

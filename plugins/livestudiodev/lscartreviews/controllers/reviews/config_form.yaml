@@ -1,0 +1,10 @@
+name: Vélemények
+form: $/livestudiodev/lscartreviews/models/review/fields.yaml
+modelClass: LivestudioDev\Lscartreviews\Models\Review
+defaultRedirect: livestudiodev/lscartreviews/reviews
+create:
+    redirect: 'livestudiodev/lscartreviews/reviews/update/:id'
+    redirectClose: livestudiodev/lscartreviews/reviews
+update:
+    redirect: livestudiodev/lscartreviews/reviews
+    redirectClose: livestudiodev/lscartreviews/reviews

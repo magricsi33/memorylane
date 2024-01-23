@@ -1,0 +1,10 @@
+name: Discounts
+form: $/livestudiodev/lscart/models/discount/fields.yaml
+modelClass: LivestudioDev\Lscart\Models\Discount
+defaultRedirect: livestudiodev/lscart/discounts
+create:
+    redirect: 'livestudiodev/lscart/discounts/update/:id'
+    redirectClose: livestudiodev/lscart/discounts
+update:
+    redirect: livestudiodev/lscart/discounts
+    redirectClose: livestudiodev/lscart/discounts

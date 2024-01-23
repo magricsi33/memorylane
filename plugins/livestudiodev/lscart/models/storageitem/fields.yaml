@@ -1,0 +1,31 @@
+fields:
+    name:
+        label: Név
+        span: auto
+        type: text
+    stock:
+        label: Raktár
+        span: auto
+        type: number
+    price_netto:
+        label: Nettó
+        span: auto
+        type: number
+    price_brutto:
+        label: Bruttó
+        span: auto
+        type: number
+    category:
+        label: Kategória
+        nameFrom: name
+        descriptionFrom: description
+        span: auto
+        type: relation
+    brand:
+        label: Brand
+        span: auto
+        type: text
+    partner:
+        label: PArtner
+        span: auto
+        type: text

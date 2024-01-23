@@ -1,0 +1,10 @@
+columns:
+    id:
+        label: Azonosító
+        type: number
+    usercount:
+        label: 'Felhasználók  száma'
+        type: number
+    name:
+        label: Megnevezés
+        type: text

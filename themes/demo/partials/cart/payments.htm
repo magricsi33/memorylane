@@ -1,0 +1,46 @@
+{% if cart.cart.payment.id %}
+<div class="xl:border-t border-dashed border-neutral-600 xl:py-8 xl:px-8 relative w-full mb-20 xl:mb-10">
+    <div class="xl:absolute uppercase xl:left-10 xl:-top-3 text-primary bg-[#f5f5f5] font-primary xl:px-5 mb-2 xl:mb-0 flex items-center">
+        <div class="w-7 flex items-center justify-start">
+            <i class="fa-solid fa-credit-card text-primary"></i>
+        </div> 
+        Fizetési mód
+	</div>
+    <p class="text-neutral-800 text-sm mb-5">
+        A webshop nem kezel bankkártya adatokat. Az online fizetési rendszert a Stripe rendszere kezeli.            
+    </p>
+    <input 
+    type="text" 
+    name="payment_mode" 
+    class="bg-[#111] text-white border" 
+    value="{{ cart.cart.payment.id }}" hidden/>
+    <div class="flex flex-wrap">
+        {% for key, item in cart.cart.shipping.payments %}
+        {% set method = cart.cart.shipping.getPaymentMethod(item.payment) %}
+    
+        <a data-request="onSetCartPayment" data-request-data="payment_mode: {{ item.payment }}" class="w-full">
+            <div class="bg-[#fff] px-4 w-full rounded-lg border border-neutral-200 hover:border-[#151C1C] p-5 flex items-center justify-between cursor-pointer
+            {{ cart.cart.payment.id == item.payment ? '!border-[#151C1C] !bg-[#fff] bg-opacity-5' : '' }} {{ not loop.last ? 'mb-5' }}">
+                <div>
+                    <p class="font-medium font-primary text-xl">
+                        {{ method.name }}
+                    </p>   
+                    <div class="text-neutral-500 text-sm raw">
+                        {{ method.description|raw }}
+                    </div>
+                </div>
+                <p class="font-semibold text-sm">
+                    {% if item.value == 0 %}
+                    Ingyenes
+                    {% else %}
+                    + {{ item.value|number_format(0, ',', ' ') }} Ft
+                    {% endif %}
+                </p>
+            </div>
+        </a>
+
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
+

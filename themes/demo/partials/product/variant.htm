@@ -1,0 +1,59 @@
+<!-- {% if product.variants|length > 0 %}                   
+    <div class="flex flex-wrap items-center mb-5">
+       
+            {% for variant in product.variants.sortBy('id') %}
+            <input 
+            data-request="onChangeVariants"
+            name="variant_id" 
+            value="{{ variant.id }}" 
+            type="radio" hidden
+            class="variantCheck"
+            {{ variant.id == variant_id ? 'checked' }}
+            id="variant{{ variant.id }}"
+            {{ variant.stock == 0 ? 'disabled' }} >
+            <label for="variant{{ variant.id }}" class="w-full">
+                <div class="mb-3 {{ variant.stock == 0 ? 'cursor-not-allowed opacity-40' : 'hover:border-[#2B3990] cursor-pointer' }} py-4 px-3 border-2 mr-3 rounded-lg 
+                 bg-white border-neutral-200 flex items-center justify-between {{ variant.id == variant_id ? '!border-[#2B3990]' }}">
+                    <div class="checkBox {{ variant.id == variant_id ? '!bg-[#2B3990]' }} w-5 h-5 min-w-[20px] min-h-[20px] rounded-full bg-neutral-300 mr-2">
+
+                    </div>
+                    <p class="mt-1">
+                        {{ variant.name }}
+                    </p>
+                    <p class="mt-1">
+                        {{ variant.pricediff > 0 ? '+'~variant.pricediff|number_format(0, ',', ' ') ~ ' Ft' : '' }}
+                    </p>
+                </div>
+            </label>
+            {% endfor %}
+    
+    </div>
+{% endif %} -->
+{% if product.variants|length > 0 %}                   
+    <div class="grid xl:grid-cols-4 gap-2 mb-5">
+       
+            {% for variant in product.variants.sortBy('id') %}
+            <input 
+            data-request="onChangeVariants"
+            name="variant_id" 
+            value="{{ variant.id }}" 
+            type="radio" hidden
+            class="variantCheck"
+            {{ variant.id == variant_id ? 'checked' }}
+            id="variant{{ variant.id }}"
+            {{ variant.stock == 0 ? 'disabled' }} >
+            <label for="variant{{ variant.id }}" class="w-full">
+                <div class="{{ variant.stock == 0 ? 'cursor-not-allowed opacity-40' : 'hover:border-[#151C1C] cursor-pointer' }} py-3 px-3 border-2 rounded-lg 
+                 bg-white border-neutral-200 {{ variant.id == variant_id ? '!border-[#151C1C] !bg-[#151C1C] text-white' }}">
+                    <p class="font-medium text-sm">
+                        {{ variant.name }}
+                    </p>
+                    <p class="text-xs font-light">
+                        {{ '+'~variant.pricediff~ ' Ft' }}
+                    </p>
+                </div>
+            </label>
+            {% endfor %}
+    
+    </div>
+{% endif %}

@@ -1,0 +1,6 @@
+plugin:
+    name: 'codergram.ecommpay::lang.plugin.name'
+    description: 'codergram.ecommpay::lang.plugin.description'
+    author: Codergram
+    icon: oc-icon-gratipay
+    homepage: ''

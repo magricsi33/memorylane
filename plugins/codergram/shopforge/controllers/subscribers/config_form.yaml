@@ -1,0 +1,10 @@
+name: Subscribers
+form: $/codergram/shopforge/models/subscriber/fields.yaml
+modelClass: Codergram\Shopforge\Models\Subscriber
+defaultRedirect: codergram/shopforge/subscribers
+create:
+    redirect: 'codergram/shopforge/subscribers/update/:id'
+    redirectClose: codergram/shopforge/subscribers
+update:
+    redirect: codergram/shopforge/subscribers
+    redirectClose: codergram/shopforge/subscribers

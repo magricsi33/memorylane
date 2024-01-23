@@ -1,0 +1,18 @@
+<div class="container mx-auto w-11/12 grid xl:grid-cols-2 gap-3 my-20">
+    <div class=" flex flex-col justify-center">
+        <h2 class="text-5xl font-primary text-white">{{ banner.name }}</h2>
+        <p class="my-10 text-lg text-[#888]">
+            {{ banner.description }}
+        </p>
+        <a href="{{ banner.button.url }}">
+            <div
+                class="h-[50px] bg-[#2B3990] px-10 text-white font-bold flex items-center justify-center clip-box relative z-10 w-max"
+            >
+                {{ banner.button.text }}
+            </div>
+        </a>
+    </div>
+    <div class="w-full h-full">
+        <img src="{{ banner.image_desktop.path }}" class="w-full xl:h-[600px] h-[400px] object-contain" alt="">
+    </div>
+</div>

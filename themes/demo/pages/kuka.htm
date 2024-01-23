@@ -1,0 +1,183 @@
+title = "kuka"
+url = "/kuka"
+layout = "default"
+meta_title = ""
+is_hidden = 1
+robot_index = "index"
+robot_follow = "follow"
+==
+<?php
+use LivestudioDev\Lscart\Classes\XmlFeedResolver;
+use LivestudioDev\Lscart\Models\Category;
+use LivestudioDev\Lscart\Models\Product;
+use LivestudioDev\Lscart\Models\StorageItem;
+use LivestudioDev\Lscart\Models\Property;
+use LivestudioDev\Lscart\Models\Propertable;
+use Carbon\Carbon;
+
+function onStart()
+{
+    $products = Product::all();
+
+    // foreach ($products as $product) {
+    //     if ($product->image_link && !$product->image) {
+
+    //         $file = new \System\Models\File;
+            
+    //         $imageUrl = $product->image_link;
+    //         $file->fromUrl($imageUrl, $product->slug);
+
+    //         $product->image = $file;
+    //         $product->save();
+
+
+    //     } else {
+    //         continue;
+    //     }
+    // }
+
+}
+
+function onXmlFeed()
+{
+    XmlFeedResolver::syncProducts(2);
+}
+
+function onChangeImageType()
+{
+    set_time_limit(0);
+
+    $products = Product::where('category_id', 720)->limit(15)->get();
+    // $products = Product::all();
+
+    foreach ($products as $key => $product) {
+           
+        $product->profit = 3;
+
+        if (isset($product->image)) {
+            $product->image->delete();
+        }
+
+        if (isset($product->gallery)) {
+            foreach ($product->gallery as $key => $gallery) {
+                $gallery->delete();
+            }
+        }
+
+        // if ($product->image_link) {
+
+        //     $file = new \System\Models\File;
+        //     $file->fromUrl($product->image_link);
+        //     $product->image()->add($file);
+            
+        // }
+
+        // if ($product->gallery_links) {
+            
+        //     $galleries = [];
+
+        //     foreach ($product->gallery_links as $key => $galleryImg) {
+                
+        //         $file = new \System\Models\File;
+        //         $file->fromUrl($galleryImg);
+        //         $galleries = $file;
+                
+        //     }
+
+        //     $product->gallery()->add($galleries);
+            
+        // }
+
+        $product->save();
+
+    }
+
+}
+
+function onDeleteData()
+{
+    foreach (Category::all() as $key => $value) {
+        $value->delete();
+    }
+
+    foreach (Product::all() as $key => $value) {
+        $value->delete();
+    }
+
+    foreach (StorageItem::all() as $key => $value) {
+        $value->delete();
+    }
+
+    foreach (Property::all() as $key => $value) {
+        $value->delete();
+    }
+
+    foreach (Propertable::all() as $key => $value) {
+        $value->delete();
+    }
+
+}
+
+function onDeleteProperties()
+{
+
+    foreach (Property::all() as $key => $value) {
+        $value->delete();
+    }
+
+    foreach (Propertable::all() as $key => $value) {
+        $value->delete();
+    }
+
+}
+
+function onSetptop()
+{
+    set_time_limit(0);
+
+    foreach (StorageItem::all() as $key => $item) {
+
+ 
+        $product = Product::where('name', $item->name)->first();
+
+        if ($product) {
+
+            $profit = 5;
+
+            $product->profit = $profit;
+            $product->price = $item->price_netto * ($profit / 100 + 1);
+            $product->price_brutto = $item->price_brutto * ($profit / 100 + 1);
+            $product->save();
+
+            $item->product_id = $product->id;
+            $item->save();
+            
+        }
+
+
+    }
+
+}
+?>
+==
+<div class="mt-28 container mx-auto flex flex-col justify-center items-center text-center">
+    <button data-request="onXmlFeed" class="text-white">
+        onXmlFeed
+    </button>
+    <button data-request="onDeleteData" class="mt-20 text-red-700">
+        delete data
+    </button>
+    <button data-request="onDeleteProperties" class="mt-20 text-red-700">
+        delete properties
+    </button>
+
+    <p class="py-5">-------------</p>
+
+    <button data-request="onSetptop" class="mt-20 text-red-700">
+        Setptop
+    </button>
+    <button data-request="onChangeImageType" class="mt-20 text-red-700">
+        onChangeImageType
+    </button>
+
+</div>

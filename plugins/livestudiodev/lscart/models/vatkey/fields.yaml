@@ -1,0 +1,10 @@
+fields:
+    name:
+        label: 'Adó kulcs megnevezése'
+        span: auto
+        type: text
+    value:
+        label: 'Adó kulcs értéke'
+        span: auto
+        type: number
+        commentAbove: '%-ban'

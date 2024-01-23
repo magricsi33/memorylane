@@ -1,0 +1,4 @@
+title: Pages
+modelClass: Codergram\Shopforge\Models\Page
+toolbar:
+    buttons: reorder_toolbar

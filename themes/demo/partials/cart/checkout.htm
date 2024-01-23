@@ -1,0 +1,106 @@
+<div class="p-5 relative w-full bg-[#151C1C] border border-neutral-200 rounded-lg text-white">
+
+    <p class="text-3xl font-primary mb-5">
+        Összesítés
+    </p>
+
+    <!-- <div class="flex items-center justify-between border-b border-zinc-800 py-3">
+        <span class="font-medium text-white text-sm">Nettó ár:</span>
+        <span class="text-white text-sm">
+            {{ cart.totalNetto(false, true)|number_format(0, ',', ' ') }} {{ cart.cart.currency.shortcode }}
+        </span>
+    </div> -->
+    <!-- <div class="flex items-center justify-between border-b border-zinc-800 py-3">
+        <span class="font-medium text-white text-sm">ÁFA:</span>
+        <span class="text-white text-sm">
+            {{ (cart.totalBrutto(false, true) - cart.totalNetto(false, true))|number_format(0, ',', ' ') }} {{ cart.cart.currency.shortcode }}
+        </span>
+    </div> -->
+    {% if cart.cart.coupon %}
+    <div class="flex items-center justify-between py-3">
+        <span class="font-bold text-sm">Kupon:</span>
+        <span class="text-sm">
+            -                        
+            {% if cart.cart.coupon.value_type == 50 %}
+            {{ cart.cart.coupon.value  }}%
+            ({{ (cart.totalBrutto(false, true) - cart.totalBrutto())|number_format(0, ',', ' ') }}
+            {{ cart.cart.currency.shortcode }})
+            {% else %}
+            {{ cart.cart.coupon.value|number_format(0, ',', ' ') }}
+            {% endif %}        
+        </span>
+    </div>
+    {% endif %}
+
+    <!-- <div class="flex items-center justify-between py-3">
+        <span class="font-medium">Szállítási idő:</span>
+        <span class="">
+            1-3 munkanap
+        </span>
+    </div> -->
+    <div class="flex items-center justify-between py-3">
+        <span class="font-bold text-sm">Szállítási mód:</span>
+        <span class="text-sm">
+            {{ cart.cart.shipping.name ?? 'Nincs kiválaszva' }}
+        </span>
+    </div>
+    <div class="flex items-center justify-between py-3">
+        <span class="font-bold text-sm">Fizetési mód:</span>
+        <span class="text-sm">
+            {{ cart.cart.payment.name ?? 'Nincs kiválaszva' }}
+        </span>
+    </div>
+
+    <div class="flex items-center justify-between py-3">
+        <span class="font-bold text-sm">Szállítás és fizetés:</span>
+        <span class="text-sm">
+            {{ cart.ShippingCost(cart.cart)|number_format(0, ',', ' ') == 0 ? 'Ingyenes' : cart.ShippingCost(cart.cart)|number_format(0, ',', ' ') ~ ' '~cart.cart.currency.shortcode }}
+        </span>
+    </div>
+
+    <div class="flex items-center justify-between py-3 border-t border-neutral-200">
+        <span class="font-bold text-sm ">Összesen:</span>
+        <span class="text-sm">
+            {{ cart.absolutePrice|number_format(0, ',', ' ') }} {{ cart.cart.currency.shortcode }}
+        </span>
+    </div>
+
+    <div class="form-check flex items-start my-4">
+        <input required class="form-check-input appearance-none border border-neutral-400 h-[20px] w-[20px] min-h-[20px] min-w-[20px] rounded-md bg-transparent checked:bg-[#26bc5f] checked:border-[#26bc5f] focus:outline-none
+        transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="checkbox" value="" id="adatkezeles">
+        <label class="form-check-label inline-block text-[#888] text-sm cursor-pointer" for="adatkezeles">
+            Elfogadom az Általános szerződési feltételeket és az Adatkezelési nyilatkozatot!
+        </label>
+    </div>
+
+    <button 
+    type="submit" form="form1" id="submitButton"
+    class="h-[50px]  bg-[#fff] rounded-lg hover:bg-opacity-80 transition-all ease-in-out px-10 text-[#151C1C] font-primary flex items-center justify-center w-full">
+        <i class="fa-solid fa-spinner-third fa-spin mr-2 hidden"></i> Rendelés véglegesítése
+    </button>
+
+</div>
+
+<!-- <div class="w-full h-10 overflow-hidden px-10 pt-2">
+    <img src="{{ 'assets/images/stripe.png'|theme }}" class="w-full h-full object-contain" alt="stripe">
+</div> -->
+
+{% put scripts %}
+<script type="text/javascript">
+    function removeFromCart(item) {
+        window.dataLayer = window.dataLayer || [];
+        dataLayer.push({
+            event: 'remove_from_cart',
+            ecommerce: {
+                items: [{
+                    id: item.id,
+                    name: item.name,       // Name or ID is required.
+                    price: item.price,
+                    quantity: item.quantity
+                }]
+            }
+        });
+    location.reload();
+    }
+</script>
+{% endput %}

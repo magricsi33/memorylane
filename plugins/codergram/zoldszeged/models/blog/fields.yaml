@@ -1,0 +1,61 @@
+fields:
+    title:
+        label: Cím
+        span: auto
+        type: text
+    slug:
+        label: Slug
+        span: auto
+        preset:
+            field: title
+            type: slug
+        type: text
+    public:
+        label: Publikus
+        span: auto
+        type: switch
+tabs:
+    fields:
+        intro:
+            label: Bevezető
+            size: small
+            span: full
+            type: textarea
+            tab: Tartalom
+        body:
+            label: Tartalom
+            size: giant
+            span: full
+            type: richeditor
+            tab: Tartalom
+        public_start:
+            label: 'Publikálás kezdete'
+            mode: datetime
+            span: auto
+            type: datepicker
+            tab: Közzététel
+        meta_title:
+            label: 'Meta title'
+            span: auto
+            type: text
+            tab: SEO
+        meta_description:
+            label: 'Meta description'
+            span: auto
+            type: text
+            tab: SEO
+        meta_keywords:
+            label: 'Meta keywords'
+            span: auto
+            type: text
+            tab: SEO
+        image:
+            label: Kép
+            mode: image
+            useCaption: true
+            thumbOptions:
+                mode: crop
+                extension: auto
+            span: auto
+            type: fileupload
+            tab: Kép

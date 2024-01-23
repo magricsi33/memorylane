@@ -1,0 +1,74 @@
+title = "Fizetés"
+url = "/fizetes/:orderid?"
+layout = "default"
+is_hidden = 0
+robot_index = "index"
+robot_follow = "follow"
+==
+<?php
+
+use LivestudioDev\Lscart\Models\Order;
+use LivestudioDev\Lscart\Models\PaymentMethod as Payment;
+use LivestudioDev\Lscartbarion\Classes\BarionDriver;
+use Codergram\Ecommpay\Classes\EcommpayDriver;
+use Codergram\Stripe\Classes\StripeDriver;
+
+function onStart()
+{
+    $orderId = $this->param('orderid');
+    $order = Order::find($orderId);
+
+    if (isset($order) && $order->status == 0 && $order->payment->payment_gate != null) {
+        $order->status = 4;
+        $order->save();
+    } else if($order->status != 0) {
+        return \Redirect::to('/404');
+    }
+
+    $payment_id = $order->payment_id;
+    $gate = Payment::find($payment_id)->payment_gate;
+
+    if ($gate == "Barion") {
+        $barion = new BarionDriver();
+        $url = $barion->getPayUrl($order);
+
+        return \Redirect::to($url);
+
+    } elseif ($gate == "Stripe") {
+        $stripe = new StripeDriver();
+        $url = $stripe->getPayUrl($order);
+
+        return \Redirect::to($url);
+
+    } else {
+        return \Redirect::to('/koszonjuk/'.$order->id);
+    }
+}
+?>
+==
+<section class="payment my-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <form action="{{ driver.url }}" id="payment-form" method="post">
+                    {% for field, value in formdata %}
+                    <div class="form-group">
+                        <input type="hidden" class="form-control" name="{{ field }}" value="{{ value }}" />
+                    </div>
+                    {% endfor %}
+                    <div class="form-group">
+                        <h4 class="text-center">Hamarosan átirányítjuk önt a Borgun fizetési felületére...</h4>
+                        <!-- <button type="submit" class="btn btn-primary">Tovább a borgun oldalára >></button> -->
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+{% put scripts %}
+<script>
+    $(document).ready(function() {
+        $("#payment-form").submit();
+    });
+</script>
+{% endput %}

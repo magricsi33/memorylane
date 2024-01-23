@@ -1,0 +1,31 @@
+<div id="checkbtn" data-href="{{ 'rendeles'|page }}" onclick="goCheckout(this)">
+    <h2>Kérem az Árajánlatot <i class="fas fa-edit"></i>
+        <span class="count">{{ cart.cart.items|length }}</span>
+    </h2>
+</div>
+<div class="contents" id="contents">
+    {% if cart.cart.items|length != 0 %}
+    <div class="content-list">
+        {% for item in cart.cart.items %}
+        {% set product = item.product %}
+        <div class="content">
+            {% if product.image %}
+            <div class="imgdiv" onclick="removeItem(this)" data-id="{{ item.id }}">
+                <img src="{{ product.image.path }}" alt="{{ product.name }}" class="thumb">
+            </div>
+            {% else %}
+            <div class="imgdiv" onclick="removeItem(this)" data-id="{{ item.id }}">
+                <img src="{{ 'assets/images/site/noimg.png'|theme }}" alt="{{ product.name }}">
+            </div>
+            {% endif %}
+            <p>{{ product.name }}</p>
+            <span class="quantity">
+                 {{ item.quantity }} {{ product.measure.name }}
+            </span>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p class="text-center noitems">Az ön kosarában nincsenek termékek...</p>
+    {% endif %}
+</div>

@@ -1,0 +1,6 @@
+plugin:
+    name: 'codergram.stripe::lang.plugin.name'
+    description: 'codergram.stripe::lang.plugin.description'
+    author: Codergram
+    icon: oc-icon-credit-card
+    homepage: ''

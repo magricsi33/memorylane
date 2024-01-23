@@ -1,0 +1,5 @@
+fields:
+    name:
+        label: 'Mértékegység neve'
+        span: auto
+        type: text

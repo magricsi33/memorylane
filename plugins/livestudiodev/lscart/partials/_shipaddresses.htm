@@ -1,0 +1,8 @@
+<ul>
+<?php 
+	$addresses = $this->vars["formModel"]->shipaddresses;
+	foreach($addresses as $item) {
+?>
+    <li><?= $item->name ?></li>
+<?php } ?>
+</ul>

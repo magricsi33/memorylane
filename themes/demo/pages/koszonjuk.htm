@@ -1,0 +1,128 @@
+title = "Köszönjük"
+url = "/koszonjuk/:orderid"
+layout = "default"
+meta_title = "Köszönjük!"
+is_hidden = 0
+robot_index = "index"
+robot_follow = "follow"
+==
+<?php
+use LivestudioDev\Lscart\Models\Order;
+use LivestudioDev\Lscart\Models\PaymentMethod;
+
+function onStart()
+{
+    $order = Order::find($this->param('orderid'));
+    $this['order'] = $order;
+
+    if (!$order) {
+        return redirect('404');
+    }
+
+    // $payment_gate = PaymentMethod::where('name', $order->history['paymentMode'])->first()->payment_gate;
+
+    // if ($payment_gate == 'Ecommpay') {
+
+    //     $state = \Input::get('state');
+
+    //     if ($state == 'success') {
+    //         $order->status = 5;
+    //         $order->save();
+    //     } else {
+    //         $order->status = 3;
+    //         $order->save();
+    //     }
+
+    // }
+
+    $json_order = new StdClass;
+    $json_order->contents = $order->items;
+    $json_order->currency = 'HUF';
+    $json_order->revenue = $order->getAbsolutePrice();
+    $json_order->step = 2;
+
+    $this['json_order'] = json_encode($json_order);
+    
+}
+?>
+==
+
+<div class="mt-28 container w-11/12 xl:w-auto mx-auto flex flex-col justify-center items-center text-center">
+    {% if order and (order.status == 5 or order.status == 0 ) %}
+    <!-- <div class="w-full h-40 mb-10">
+        <img src="{{ 'assets/images/SVG/happy.svg'|theme }}" class="w-full h-full object-contain" alt="404">
+    </div> -->
+   
+    <div class="flex items-center justify-center">
+        <i class="fa-thin fa-circle-check text-[#26bc5f] text-7xl"></i>
+    </div>
+    
+    <h1 class="sm:text-5xl text-4xl font-primary mt-10 text-white">
+        <span class="text-[#26bc5f] font-primary">Sikeres</span> vásárlás, köszönjük!
+    </h1>
+
+    <p class="text-neutral-400 text-lg">
+        Megrendelésed rögzítettük.
+    </p>
+
+    {% if order.payment.name == 'Utalás bankszámlára' %}
+
+        <div class="bg-[#26bc5f05] p-8 my-3 xl:w-7/12 clip-box">
+            <p class="text-white text-lg">
+                A következő számlára kérjük utalja át a megrendelés összegét. Az utalás közleményében kérjük feltüntetni
+                a <strong>rendelés azonosítóját</strong>.
+            </p>
+            <div class="xl:w-9/12 mx-auto flex flex-col gap-1 mt-6">
+                <p class="text-neutral-400 flex items-center justify-between">
+                    <strong class="text-neutral-400">Azonosító:</strong> {{ order.order_number }}
+                </p>
+                <p class="text-neutral-400 flex items-center justify-between">
+                    <strong class="text-neutral-400">Átutalandó összeg:</strong> {{ order.absolutePrice|number_format(0, ' ', ' ') }} Ft
+                </p>
+                <p class="text-neutral-400 flex items-center justify-between">
+                    <strong class="text-neutral-400">Számlaszám:</strong> 11733003-27324219
+                </p>
+                <p class="text-neutral-400 flex items-center justify-between">
+                    <strong class="text-neutral-400">Számla tulajdonosa:</strong> Codergram Kft.
+                </p>
+            </div>
+        </div>
+
+    {% endif %}
+
+    <a href="/">
+        <div class="h-[50px] bg-[#2B3990] mb-3 hover:bg-opacity-50 transition-all ease-in-out px-10 text-white font-primary flex items-center 
+        justify-center clip-box w-full">
+            Tovább a főoldalra
+        </div>
+    </a>
+
+    {% elseif order and (order.status != 5 and order.status != 0) %}
+    <h1 class="sm:text-5xl text-4xl font-primary mt-10">
+        <span class="text-[#2B3990] font-primary">Sajnáljuk</span> de a fizetés sikertelen volt!
+    </h1>
+    {% else %}
+    <h1 class="sm:text-5xl text-4xl font-primarymt-10">
+        <span class="text-[#2B3990] font-primary">Sajnáljuk</span> de ilyen rendelés nem létezik!
+    </h1>
+    {% endif %}
+</div>
+
+{% put scripts %}
+<script>
+
+    let order = {{ json_order|raw }};
+    
+    const purchaseProperties  = {
+        'contents': order.contents,
+        'currency': order.currency,
+        'revenue': order.revenue,
+        'step': order.step,
+    }
+
+    console.log(purchaseProperties);
+
+    bp('track', 'purchase', purchaseProperties);
+
+</script>
+{% endput %}

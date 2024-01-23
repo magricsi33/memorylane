@@ -1,0 +1,27 @@
+{% if not hidden %}
+    {% if style == 'big' %}
+    <div class="w-full bg-[#f3f2ee] h-[50px] flex items-center justify-between mb-3">
+        <div class="h-full max-w-max flex items-center relative">
+            <h1 class="font-bold text-white uppercase text-3xl bg-primary px-4 relative z-10 h-full flex items-center">
+                {{ title }}
+            </h1>
+            <div class="absolute right-[0.5px] bottom-0 w-[50px] h-[50px] bg-primary  translate-x-[100%] z-10" 
+            style="clip-path: polygon(0 0, 0% 100%, 100% 100%);"></div>
+            <div class="absolute right-0 bottom-2 w-[50px] h-[50px] scale-[2] bg-[#121212] translate-x-[100%]" 
+            style="clip-path: polygon(0 0, 0% 100%, 100% 100%);"></div>
+        </div>
+    </div>
+    {% else %}
+    <div class="w-full bg-[#222] h-[40px] flex items-center justify-between mb-3 mt-3 overflow-hidden">
+        <div class="h-full max-w-max flex items-center relative">
+            <h1 class="font-bold text-white uppercase bg-primary px-4 relative z-10 h-full flex items-center">
+                {{ title }}
+            </h1>
+            <div class="absolute right-[0.5px] bottom-0 w-[40px] h-[40px] bg-primary  translate-x-[100%] z-10" 
+            style="clip-path: polygon(0 0, 0% 100%, 100% 100%);"></div>
+            <div class="absolute right-0 bottom-2 w-[40px] h-[40px] scale-[2] bg-[#121212] translate-x-[100%]" 
+            style="clip-path: polygon(0 0, 0% 100%, 100% 100%);"></div>
+        </div>
+    </div>
+    {% endif %}
+{% endif %}

@@ -1,0 +1,10 @@
+name: Categories
+form: $/livestudiodev/lscart/models/category/fields.yaml
+modelClass: LivestudioDev\Lscart\Models\Category
+defaultRedirect: livestudiodev/lscart/categories
+create:
+    redirect: 'livestudiodev/lscart/categories/update/:id'
+    redirectClose: livestudiodev/lscart/categories
+update:
+    redirect: livestudiodev/lscart/categories
+    redirectClose: livestudiodev/lscart/categories

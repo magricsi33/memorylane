@@ -1,0 +1,13 @@
+list: $/livestudiodev/lscart/models/storageitem/columns.yaml
+modelClass: LivestudioDev\Lscart\Models\StorageItem
+title: StorageItems
+noRecordsMessage: 'backend::lang.list.no_records'
+showSetup: true
+showCheckboxes: true
+recordsPerPage: 20
+toolbar:
+    buttons: list_toolbar
+    search:
+        prompt: 'backend::lang.list.search_prompt'
+recordUrl: 'livestudiodev/lscart/storageitems/update/:id'
+filter: config_filter.yaml

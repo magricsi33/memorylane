@@ -1,0 +1,14 @@
+fields:
+    name:
+        label: Név
+        span: auto
+        type: text
+    email:
+        label: E-mail
+        span: auto
+        type: text
+    active:
+        label: Aktív
+        span: auto
+        default: 1
+        type: switch

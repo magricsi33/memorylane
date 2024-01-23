@@ -1,0 +1,33 @@
+columns:
+    id:
+        label: Azonosító
+        type: number
+        invisible: true
+    order_number:
+        label: 'Rendelés azonosító'
+        type: text
+        searchable: true
+        sortable: true
+    name:
+        label: 'Megrendelő neve'
+        type: text
+        searchable: true
+        invisible: false
+        sortable: true
+    email:
+        label: Email
+        type: text
+        searchable: true
+        sortable: true
+    absolutePrice:
+        label: Összeg
+        type: text
+        sortable: false
+    orderStatus:
+        label: Státusz
+        type: text
+        sortable: true
+    created_at:
+        label: 'Leadás dátuma'
+        type: datetime
+        sortable: true

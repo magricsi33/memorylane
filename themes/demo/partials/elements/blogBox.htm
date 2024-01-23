@@ -1,0 +1,16 @@
+<a href="/cikk/{{ blog.slug }}" class="group bg-white shadow-xl rounded-xl overflow-hidden">
+    <div class="w-full h-[220px] overflow-hidden">
+        <img src="{{ blog.image.path }}" class="w-full h-full object-cover group-hover:scale-110 transition-all ease-in-out" alt="{{ blog.title }}">
+    </div>
+    <div class="p-6">
+        <h2 class="text-2xl font-bold mt-3 h-[93px] overflow-hidden">
+            {{ blog.title }}
+        </h2>
+        <p class="h-[100px] my-6">
+            {{ blog.intro|length > 180 ? blog.intro|slice(0, 180)~'...' : blog.intro }}
+        </p>
+        <div class="font-bold bg-[#ef4137] group-hover:bg-opacity-90 transition-all ease-in-out w-full p-3 rounded-lg text-white text-lg text-center">
+            Bővebben
+        </div>
+    </div>
+</a>

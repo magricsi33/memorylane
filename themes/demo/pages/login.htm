@@ -1,0 +1,59 @@
+title = "Belépés"
+url = "/belepes"
+layout = "default"
+is_hidden = 0
+
+[account]
+paramCode = "code"
+forceSecure = 0
+requirePassword = 0
+
+[session]
+security = "guest"
+redirect = "profile"
+==
+<?php
+use RainLab\User\Facades\Auth;
+use RainLab\User\Models\User;
+
+function onStart() {
+
+}
+?>
+==
+<div class="xl:w-3/12 md:w-9/12 lg:w-10/12 w-11/12 flex flex-col justify-center mx-auto relative z-10 xl:mt-36 mt-20 bg-white rounded-xl xl:shadow-xl xl:p-10 xl:border border-neutral-200">
+    <h1 class="xl:text-4xl text-3xl font-medium mb-5">
+        Belépés a fiókba
+    </h1>
+    <div class="text-zinc-500 mb-10 flex flex-wrap items-center">
+        <p class="mr-2">
+            Nincs még felhasználód? 
+        </p>
+        <a href="{{ 'register'|page }}" class="font-medium">
+            Regisztráció
+        </a>
+    </div>
+    <div class="flex flex-wrap w-full text-white">
+        <form data-request="onSignin" data-request-flash class="w-full">
+            <div class="w-full form-floating mb-3">
+                <input type="text" required class="form-control w-full px-3 py-1.5 bg-transparent border border-neutral-200 rounded-xl focus:outline-none text-black
+                focus:border-[#2B3990] focus:shadow-none" 
+                name="email" id="email" placeholder="E-mail cím">
+                <label for="email" class="text-zinc-500 ml-2" required>E-mail cím</label>
+            </div>
+            <div class="w-full form-floating mb-3">
+                <input type="password" required class="form-control w-full px-3 py-1.5 bg-transparent border border-neutral-200 rounded-xl focus:outline-none text-black
+                focus:border-[#2B3990] focus:shadow-none" 
+                name="password" id="password" placeholder="Jelszó">
+                <label for="password" class="text-zinc-500 ml-2" required>Jelszó</label>
+            </div>
+
+            <button
+            type="submit"
+            class="w-full py-4 mt-5 text-white hover:brightness-110 bg-[#2B3990] bg-clip-padding shadow-lg rounded-xl transition ease-in-out
+            disabled:opacity-50 uppercase font-medium text-sm">
+                Belépés
+            </button>
+        </form>
+    </div>
+</div>

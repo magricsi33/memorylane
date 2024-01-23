@@ -1,0 +1,143 @@
+title = "Kosár" 
+url = "/kosar" 
+layout = "default" 
+==
+<?php
+function onStart() {
+    $out = [];
+    foreach ($this->cart->cart->items as $item) {
+        $outItem = new stdClass;
+        $outItem->id  = $item->id;
+        $outItem->name = $item->product->name;
+        if($item->variant) {
+            $outItem->price = $item->product->getItemPrice($item->variant_id);
+        } else {
+            $outItem->price = $item->product->getItemPrice();
+        }
+        $outItem->variant = $item->variant ? $item->product->name." ".$item->variant->name : $item->product->name;
+        $outItem->quantity = $item->quantity;
+        $out[] = $outItem;
+    }
+
+    $this['conjuncture'] = json_encode($out);
+
+}
+?>
+==
+
+{% set input = 'bg-[#191919] h-[55px] px-4 w-full rounded-xl text-white focus:outline-0' %}
+{% set label = 'text-white font-medium mb-[4px]' %}
+
+<div id="cart" class="xl:mt-10 mt-6 pb-20 container xl:w-9/12 mx-auto w-11/12">
+    {% partial 'cart/cart' %}
+</div>
+
+{% put scripts %}
+<script>
+    // $(document).on("change", "#shipping_methods input", function () {
+    //     let id = $(this).val();
+
+    //     $.request("onSetCartShipping", {
+    //         data: {
+    //             shipping_mode: id,
+    //             payment_mode: 1
+    //         }
+    //     });
+    // });
+
+    // $(document).on("change", "#payment_methods_card input", function () {
+    //     let id = $(this).val();
+
+    //     $.request("onSetCartPayment", {
+    //         data: {
+    //             payment_mode: id
+    //         }
+    //     });
+    // });
+
+    $("#ship_bill_equal").change(function () {
+        if ($(this).is(':checked')) {
+            $("#shipping_adress_card").slideDown();
+            $("input[name='ship_bill_equal']").val(0);
+            $("#shipping_adress_card input").not(".except").prop("required", true);
+        }
+        else {
+            $("#shipping_adress_card").slideUp();
+            $("input[name='ship_bill_equal']").val(1);
+            $("#shipping_adress_card input").prop("required", false);
+        }
+    });
+
+    function sendOrder(el, event) {
+        event.preventDefault();
+
+        $("form button[type='submit']").prop("disabled", true);
+        let shipping = $('input[name="shipping_mode"]').val();
+        let payment = $('input[name="payment_mode"]').val();
+        console.log(payment);
+
+        if("input[]")
+
+        if (shipping == undefined || payment == undefined) {
+            $.wn.flashMsg({
+                interval: 2,
+                class: 'error',
+                text: 'Kérjük válasszon szállítási és fizetési módot!'
+            });
+
+            return false;
+        }
+
+        $(el).request("onCheckout", {
+            success: (data) => {
+                $.wn.flashMsg({
+                    interval: 2,
+                    class: 'success',
+                    text: 'Rendelését megkaptuk, köszönjük!'
+                });
+
+                setTimeout(function () {
+                    location.href = `/fizetes/${data.id}`;
+                }, 500);
+            },
+            error: () => {
+                $.wn.flashMsg({
+                    interval: 2,
+                    class: 'error',
+                    text: 'Hiba történt a rendelés leadása közben!'
+                });
+
+                return false;
+            }
+        });
+    }
+
+    function checkCoupon(data) {
+        if (data.responseJSON.error) {
+            $.oc.flashMsg({
+                interval: 3,
+                text: data.responseJSON.error,
+                class: 'error'
+            });
+        }
+        return;
+    }
+
+    function sendCouponForm(event) {
+        let key = event.keyCode;
+
+        if(key === 13 || key === undefined) {
+            let code = $("#coupon_code").val();
+
+            $(this).request("onAddCoupon", {
+                data: {
+                    code: code
+                },
+                complete: (data) => {
+                    checkCoupon(data);
+                }
+            });
+        }
+    }
+</script>
+{% endput %}

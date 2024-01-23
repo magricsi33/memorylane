@@ -1,0 +1,16 @@
+fields:
+    name:
+        label: 'Fizetési mód neve'
+        span: auto
+        type: text
+    vatkey:
+        label: Adókulcs
+        nameFrom: name
+        descriptionFrom: description
+        span: auto
+        type: relation
+    description:
+        label: 'Fizetési mód leírása'
+        size: huge
+        span: auto
+        type: richeditor

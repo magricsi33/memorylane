@@ -1,0 +1,15 @@
+{
+    "name": "livestudiodev/oc-lscart",
+    "type": "october-plugin",
+    "description": "",
+    "homepage": "https://livestudio.eu",
+    "authors": [
+        {
+            "name": "Livestudio",
+            "email": "lorex@livestudio.eu"
+        }
+    ],
+    "require": {
+        "maatwebsite/excel": "^3.1"
+    }
+}

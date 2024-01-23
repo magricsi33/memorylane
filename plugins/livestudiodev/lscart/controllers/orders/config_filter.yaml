@@ -1,0 +1,19 @@
+scopes:
+  finished:
+    label: Teljesítettek eltüntetése
+    type: checkbox
+    default: 1
+    conditions: status <> 2
+  status:
+    label: Státusz
+    type: group
+    conditions: status in (:filtered)
+    options:
+        0: Beérkezett
+        1: Feldolgozott
+        2: Kész
+  created_at:
+    label: Leadás dátuma
+    type: daterange
+    conditions: created_at >= ':after' AND created_at <= ':before'
+  

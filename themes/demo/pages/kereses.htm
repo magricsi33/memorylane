@@ -1,0 +1,71 @@
+title = "Keresés" 
+url = "/kereses" 
+layout = "default" 
+==
+<?php
+use LivestudioDev\Lscart\Models\Category;
+use LivestudioDev\Lscart\Models\Product;
+use LivestudioDev\Lscart\Models\Discount;
+use RainLab\User\Facades\Auth;
+use Codergram\Shopforge\Models\Sitesearch;
+
+function onStart() {
+    $this['categories'] = Category::whereNull('parent_id')->where('active',  1)->with('children')->get();
+    $this['category'] = Category::where('slug', $this->param('category'))->first();
+
+    $filter = Input::get('filter');
+
+    $search = new Sitesearch();
+    $search->name = $filter['name'];
+    $search->save();
+
+    if($filter) {
+        if ($this->param('category')) {
+            $products = Product::whereIn('category_id', $this['category']->getAllChildrenAndSelf()->pluck('id'))->where('status', '<>', 0)->get()->orderBy('id','ASC');
+        } else {
+            $products = Product::where('status', '<>', 0)->orderBy('id','ASC');
+        }
+
+        foreach ($filter as $key => $value) {
+            $products->where($key, 'LIKE', "%".$value."%");
+        }
+        $products = $products->paginate(20);
+    } else {
+        if ($this->param('category')) {
+            $products = Product::whereIn('category_id', $this['category']->getAllChildrenAndSelf()->pluck('id'))->where('status', '<>', 0)->orderBy('id','ASC')->paginate(20);
+        } else {
+            $products = Product::where('status', '<>', 0)->orderBy('id', 'ASC')->paginate(20);
+        }
+    }
+
+    $this['filter'] = $filter;
+    $this['products'] = $products;
+}
+
+?>
+==
+
+<div id="kereses" class="xl:mt-28 container w-11/12 xl:w-full mx-auto">
+    <div class="flex flex-wrap justify-between items-center w-full mt-3">
+        <div>
+            <h1 class="text-3xl">
+                Keresési találatok a következőre: "{{ filter.name }}"
+            </h1>
+            <div class="flex flex-wrap items-center">
+                <div class="text-primary text-white text-sm font-medium w-max">
+                    Összesen {{ products|length }} találat
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="w-full flex flex-wrap mt-5">
+        {% for product in products %}
+            <div class="xl:w-3/12 w-full xl:px-1 mb-10">
+                {% partial 'elements/product/productBox' product=product %}
+            </div>
+        {% endfor %}
+    </div>
+    <!-- <div class="flex flex-wrap text-center pagi">
+        {{ products.appends(filter).render|raw }}
+    </div> -->
+</div>

@@ -1,0 +1,56 @@
+1.0.1:
+    - 'Initialize plugin.'
+1.0.2:
+    - 'Created table livestudiodev_lscartreviews_reviewcodes'
+    - builder_table_create_livestudiodev_lscartreviews_reviewcodes.php
+1.0.3:
+    - 'Created table livestudiodev_lscartreviews_reviews'
+    - builder_table_create_livestudiodev_lscartreviews_reviews.php
+1.0.4:
+    - 'Updated table livestudiodev_lscartreviews_reviews'
+    - builder_table_update_livestudiodev_lscartreviews_reviews.php
+1.0.5:
+    - 'Updated table livestudiodev_lscartreviews_reviews'
+    - builder_table_update_livestudiodev_lscartreviews_reviews_2.php
+1.0.6:
+    - 'Created table livestudiodev_lscartreviews_product_reviews'
+    - builder_table_create_livestudiodev_lscartreviews_product_reviews.php
+1.0.7:
+    - 'Updated table livestudiodev_lscartreviews_reviews'
+    - builder_table_update_livestudiodev_lscartreviews_reviews_3.php
+1.0.8:
+    - 'Updated table livestudiodev_lscartreviews_reviews'
+    - builder_table_update_livestudiodev_lscartreviews_reviews_4.php
+1.0.9:
+    - 'Updated table livestudiodev_lscartreviews_product_reviews'
+    - builder_table_update_livestudiodev_lscartreviews_product_reviews.php
+1.0.10:
+    - 'Updated table livestudiodev_lscartreviews_product_reviews'
+    - builder_table_update_livestudiodev_lscartreviews_product_reviews_2.php
+1.0.11:
+    - 'Fixed some issues, regarding naming.'
+1.0.12:
+    - 'Fixed menu bug'
+1.0.13:
+    - 'Updated table livestudiodev_lscartreviews_reviewcodes'
+    - builder_table_update_livestudiodev_lscartreviews_reviewcodes.php
+1.0.14:
+    - 'Updated table livestudiodev_lscartreviews_reviews'
+    - builder_table_update_livestudiodev_lscartreviews_reviews_5.php
+1.0.15:
+    - 'Updated table livestudiodev_lscartreviews_product_reviews'
+    - builder_table_update_livestudiodev_lscartreviews_product_reviews_3.php
+1.0.16:
+    - 'Fixed nullvariant issue'
+1.0.17:
+    - 'Updated table livestudiodev_lscartreviews_product_reviews'
+    - builder_table_update_livestudiodev_lscartreviews_product_reviews_4.php
+1.0.18:
+    - 'Updated table livestudiodev_lscartreviews_reviews'
+    - builder_table_update_livestudiodev_lscartreviews_reviews_6.php
+1.0.19:
+    - 'Updated table livestudiodev_lscartreviews_product_reviews'
+    - builder_table_update_livestudiodev_lscartreviews_product_reviews_5.php
+1.0.20:
+    - 'Updated table livestudiodev_lscartreviews_reviews'
+    - builder_table_update_livestudiodev_lscartreviews_reviews_7.php

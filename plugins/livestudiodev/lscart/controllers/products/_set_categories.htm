@@ -1,0 +1,67 @@
+<?php 
+  use LivestudioDev\Lscart\Models\Category;
+  use LivestudioDev\Lscart\Models\Product;
+
+  $checked_items_ids = $vars["checked_items_ids"];
+
+?>
+
+<form
+  action=""
+  data-request="onSetCategories"
+  data-request-flash
+  data-request-loading
+  data-request-complete="$('.modal').modal('hide');"
+>
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+      &times;
+    </button>
+    <h4 class="modal-title">
+      Kategóriához rendelés
+    </h4>
+  </div>
+  <?php if ($checked_items_ids) { ?>
+    <div class="modal-body">    
+      <div class="form-group">
+
+        <div style="margin-top: 6px;">
+            <label for='categoryId'>Melyik kategóriához szeretnéd hozzárendelni a termékeket?</label>
+            <p class="text-danger">
+              Ha egy terméket másik kategóriába helyezel, a tulajdonságok hiányában a termékhez megadott tulajdonságok eltűnnek amennyibe a következő kategórán nincsnek meg a szükséges tulajdonságok.
+            </p>
+            <select name="categoryId" id="categoryId" class="form-control">
+              <?php foreach (Category::all() as $category) { ?>
+                <option value="<?php echo $category->id ?>"><?php echo $category->name ?></option>
+              <?php } ?>
+            </select>
+        </div>
+
+        <?php foreach ($checked_items_ids as $id) { ?>
+          <input hidden style="border: 0; outline: 0; margin-top: 6px;" type="name" name="products[]" value="<?php echo $id ?>">
+        <?php } ?>
+
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="submit" class="btn btn-primary">
+        Hozzárendelés
+      </button>
+      <button type="button" class="btn btn-default" data-dismiss="modal">
+        Mégsem
+      </button>
+    </div>
+  <?php } else { ?>
+    <div class="modal-body">    
+      <p style="color:red; font-weight:bold; font-size: 18px">
+        Valami hiba történt...
+      </p>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-default" data-dismiss="modal">
+        Mégsem
+      </button>
+    </div>
+  <?php } ?>
+
+</form>

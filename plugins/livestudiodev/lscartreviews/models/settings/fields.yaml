@@ -1,0 +1,23 @@
+fields:
+    expire:
+        label: 'Véleményezési e-mailek lejárhatnak'
+        span: auto
+        type: switch
+    weekDelay:
+        label: 'Lejárati idő intervallum'
+        options:
+            1: '1 Hét'
+            2: '2 Hét'
+            3: '3 Hét'
+            4: '4 Hét'
+            5: '5 Hét'
+        showSearch: true
+        span: auto
+        type: dropdown
+        comment: 'Ennyi hétre a kiküldés után jár le az e-mail'
+    page:
+        label: 'Véleményadási oldal'
+        showSearch: true
+        span: auto
+        type: dropdown
+        comment: '(Erre az oldalra készül a link)'

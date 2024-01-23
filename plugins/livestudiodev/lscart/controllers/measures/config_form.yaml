@@ -1,0 +1,10 @@
+name: Measures
+form: $/livestudiodev/lscart/models/measure/fields.yaml
+modelClass: LivestudioDev\Lscart\Models\Measure
+defaultRedirect: livestudiodev/lscart/measures
+create:
+    redirect: 'livestudiodev/lscart/measures/update/:id'
+    redirectClose: livestudiodev/lscart/measures
+update:
+    redirect: livestudiodev/lscart/measures
+    redirectClose: livestudiodev/lscart/measures

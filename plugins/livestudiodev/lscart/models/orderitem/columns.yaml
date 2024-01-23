@@ -1,0 +1,23 @@
+columns:
+    id:
+        label: id
+        type: number
+    order_id:
+        label: order_id
+        type: number
+        select: order_number
+        relation: order
+    product_id:
+        label: product_id
+        type: number
+        select: name
+        relation: product
+    quantity:
+        label: quantity
+        type: number
+    created_at:
+        label: created_at
+        type: datetime
+    updated_at:
+        label: updated_at
+        type: datetime

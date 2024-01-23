@@ -1,0 +1,14 @@
+columns:
+    id:
+        label: Azonosító
+        type: number
+        sortable: true
+    active:
+        label: Aktív
+        type: switch
+        sortable: true
+    name:
+        label: Név
+        type: text
+        searchable: true
+        sortable: true

@@ -1,0 +1,22 @@
+columns:
+    id:
+        label: Azonosító
+        type: number
+    code:
+        label: code
+        type: text
+    order_id:
+        label: order_id
+        type: number
+    expires_at:
+        label: expires_at
+        type: text
+    expires:
+        label: expires
+        type: text
+    created_at:
+        label: created_at
+        type: datetime
+    updated_at:
+        label: updated_at
+        type: datetime

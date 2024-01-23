@@ -1,0 +1,79 @@
+tabs:
+    fields:
+        name:
+            label: Cím
+            span: auto
+            type: text
+            tab: Általános
+        category:
+            label: Kategória
+            options:
+                Termék: Termék
+            showSearch: true
+            span: auto
+            hidden: 1
+            type: dropdown
+            tab: Általános
+        'button[text]':
+            label: 'Gomb szövege'
+            span: auto
+            hidden: 1
+            type: text
+            tab: Általános
+        'button[url]':
+            label: 'Gomb url'
+            span: auto
+            hidden: 1
+            type: text
+            tab: Általános
+        description:
+            label: Leírás
+            size: large
+            span: auto
+            hidden: 1
+            type: textarea
+            tab: Általános
+        image:
+            label: Kép
+            mode: image
+            useCaption: true
+            thumbOptions:
+                mode: crop
+                extension: auto
+            span: auto
+            type: fileupload
+            tab: Általános
+        image_mobile:
+            label: 'Telefon méretes kép'
+            mode: image
+            useCaption: true
+            thumbOptions:
+                mode: crop
+                extension: auto
+            span: auto
+            type: fileupload
+            tab: Általános
+        'title[text]':
+            label: 'Tag szövege'
+            span: auto
+            hidden: 1
+            type: text
+            tab: Tag
+        'title[icon]':
+            label: 'Tag ikon'
+            span: auto
+            hidden: 1
+            type: text
+            tab: Tag
+        'title[color]':
+            label: 'Tag színe'
+            span: auto
+            hidden: 1
+            type: colorpicker
+            tab: Tag
+        'data[price]':
+            label: 'Termék ára'
+            span: auto
+            hidden: 1
+            type: number
+            tab: 'More data'

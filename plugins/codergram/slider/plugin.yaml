@@ -1,0 +1,20 @@
+plugin:
+    name: 'codergram.slider::lang.plugin.name'
+    description: 'codergram.slider::lang.plugin.description'
+    author: Codergram
+    icon: oc-icon-sliders
+    homepage: ''
+navigation:
+    main-menu-item:
+        label: Kezelő
+        url: codergram/slider/sliders
+        icon: icon-briefcase
+        sideMenu:
+            side-menu-item:
+                label: Képváltó
+                url: codergram/slider/sliders
+                icon: icon-sliders
+            side-menu-item2:
+                label: Bannerek
+                url: codergram/slider/banners
+                icon: icon-image

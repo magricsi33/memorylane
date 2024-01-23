@@ -1,0 +1,32 @@
+{% if canRegister %}
+    {{ form_ajax('onRegister') }}
+
+    <div class="form-floating mb-3">
+        <input type="text" class="form-control btn-border" name="name" id="name" placeholder="Teljes név" required>
+        <label for="name">Teljes név*</label>
+    </div>
+    <div class="form-floating mb-3">
+        <input type="email" class="form-control btn-border" name="email" id="email" placeholder="Email" required>
+        <label for="email">E-mail cím*</label>
+    </div>
+    <div class="form-floating mb-3">
+        <input minlength="8" type="password" class="form-control btn-border" name="password" id="password" placeholder="Jelszó" required>
+        <label for="password">Jelszó*</label>
+    </div>
+    <div class="form-floating mb-3">
+        <input minlength="8" type="password" class="form-control btn-border" name="password_confirmation" id="password_re" placeholder="Jelszó" required>
+        <label for="password_re">Jelszó újra*</label>
+    </div>
+
+    <div class="form-check form-switch d-flex px-1 mb-3">
+        <input required class="form-check-input me-2 col-1" type="checkbox" value="1" id="adatkezeles">
+        <label class="form-check-label des" for="adatkezeles">Elfogadom az <a target="_blank" href="{{ 'blog'|page({slug: 'adatkezelesi' }) }}">Adatkezelési tájékoztatót</a> és az <a href="{{ 'blog'|page({slug: 'aszf' }) }}" target="_blank">Általános Szerződési Feltételeket</a>!</label>
+    </div>
+
+    <button type="submit" class="btn btn-prim px-4 py-2 text-white fw-bold btn-border effect col-12 mb-3">Regisztráció</button>
+
+
+    {{ form_close() }}
+{% else %}
+    <!-- Registration is disabled. -->
+{% endif %}

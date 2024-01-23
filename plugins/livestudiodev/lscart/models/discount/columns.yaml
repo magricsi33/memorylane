@@ -1,0 +1,21 @@
+columns:
+    id:
+        label: Azonosító
+        type: number
+        sortable: true
+    active:
+        label: Státusz
+        type: number
+    date_start:
+        label: 'Kezdődő dátum'
+        type: date
+        sortable: true
+    date_end:
+        label: 'Végződő dátum'
+        type: date
+        sortable: true
+    discount:
+        label: 'Akció mértéke'
+        type: text
+        searchable: true
+        sortable: true

@@ -1,0 +1,6 @@
+plugin:
+    name: 'livestudiodev.lscookiealert::lang.plugin.name'
+    description: 'livestudiodev.lscookiealert::lang.plugin.description'
+    author: LivestudioDev
+    icon: oc-icon-coffee
+    homepage: ''

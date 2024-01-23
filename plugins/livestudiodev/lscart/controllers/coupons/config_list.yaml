@@ -1,0 +1,12 @@
+list: $/livestudiodev/lscart/models/coupon/columns.yaml
+modelClass: LivestudioDev\Lscart\Models\Coupon
+title: Coupons
+noRecordsMessage: 'backend::lang.list.no_records'
+showSetup: true
+showCheckboxes: true
+recordsPerPage: 20
+toolbar:
+    buttons: list_toolbar
+    search:
+        prompt: 'backend::lang.list.search_prompt'
+recordUrl: 'livestudiodev/lscart/coupons/update/:id'

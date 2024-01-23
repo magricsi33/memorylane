@@ -1,0 +1,11 @@
+plugin:
+    name: 'livestudiodev.lscartreviews::lang.plugin.name'
+    description: 'livestudiodev.lscartreviews::lang.plugin.description'
+    author: LivestudioDev
+    icon: oc-icon-list
+    homepage: ''
+navigation:
+    main-menu-item:
+        label: 'Menu Item'
+        icon: icon-life-ring
+        url: /

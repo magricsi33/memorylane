@@ -1,0 +1,229 @@
+<div class="offcanvas offcanvas-start fixed bottom-0 flex flex-col max-w-full bg-[#111] invisible bg-clip-padding 
+shadow-sm outline-none transition duration-300 ease-in-out text-gray-700 top-0 left-0 border-none w-full z-[9999999999]" 
+tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+    <div class="offcanvas-header flex items-center justify-between p-4">
+        <div class="h-full w-max flex items-center justify-center select-none py-3 mr-8">
+            <a href="/">
+                <div class="titletransition-[font-size] ease-in-out w-40 h-full">
+                    <img src="{{ 'assets/images/logo.png'|theme }}" class="w-full h-full object-contain" alt="HardwareHeaven">
+                </div>
+            </a>
+        </div>
+        <a data-bs-dismiss="offcanvas" aria-label="Close">
+            <div class="w-10 h-10 rounded-full bg-white flex items-center justify-center xl:ml-5 ml-2">
+                <i class="fa-solid fa-xmark text-black"></i>
+            </div>
+        </a>
+    </div>
+    <div class="offcanvas-body flex flex-col py-4 overflow-x-hidden overflow-y-auto">
+        <!-- <a href="" class="w-full">
+            <div         
+            class="transition duration-150 ease-in-out flex justify-between items-center w-full px-5 font-medium text-start py-4 !bg-transparent text-white hover:!text-[#2B3990] border-t border-zinc-800">
+                Blog
+            </div>
+        </a> -->
+        <div class="w-full customFilter h-[calc(100vh-105px)] xl:overflow-auto mb-20">
+            <!-- <div class="px-5 py-2 mb-5">
+                <input
+                autocomplete="off"
+                type="text"
+                role="combobox"
+                list=""
+                id="input"
+                value="{{ filter.contact_city }}"
+                name="filter[contact_city]"
+                class="bg-[#222] py-3 px-3 rounded-xl text-zinc-400 w-full text-start border-none focus:outline-0"
+                placeholder="Keresés név szerint..." />
+            </div> -->
+        
+            {% for category in categories %}
+                {% if category.children|length > 0 %}
+                <button
+                class="transition duration-150 ease-in-out flex justify-between items-center w-full px-5 font-medium text-start py-4 !bg-transparent text-white hover:!text-[#2B3990] border-t border-zinc-800"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#collapse-{{ category.id }}-{{ loop.index }}"
+                aria-expanded="false"
+                aria-controls="collapse-{{ category.id }}-{{ loop.index }}">
+                    {{ category.name }} <i class="fa-light fa-circle-arrow-right text-neutral-500"></i>
+                </button>
+                {% else %}
+                <a href="/termekek/{{category.slug}}" class="w-full">
+                    <div         
+                    class="transition duration-150 ease-in-out flex justify-between items-center w-full px-5 font-medium text-start py-4 !bg-transparent text-white hover:!text-[#2B3990] border-t border-zinc-800">
+                        {{ category.name }}
+                    </div>
+                </a>
+                {% endif %}
+        
+                <div class="collapse collapse-horizontal absolute top-0 right-0 w-full" id="collapse-{{ category.id }}-{{ loop.index }}">
+                    <div class="rounded-lg shadow-lg bg-[#111] max-w-sm min-h-screen w-full flex flex-col items-start">
+                        <div class="px-5 pt-5 pb-4">
+                            <button
+                            type="button" data-bs-toggle="collapse" data-bs-target="#collapse-{{ category.id }}-{{ loop.index }}"
+                            aria-expanded="false" aria-controls="collapse-{{ category.id }}-{{ loop.index }}"
+                            class="w-full min-w-max py-4 mt-4 text-white btn-primary hover:!bg-[#2B3990] hover:!text-white bg-clip-padding
+                            px-5 rounded-lg transition ease-in-out disabled:opacity-50 uppercase font-medium text-sm">
+                                <i class="fa-regular fa-arrow-left-long mr-2"></i> Vissza
+                            </button>
+                        </div>
+                        <a href="/termekek/{{category.slug}}" class="w-full">
+                            <div class="!bg-[#111] px-4 mb-5 w-full min-w-max">
+                                <div class="flex items-center shadow-lg w-full py-4 !bg-[#222] hover:bg-opacity-70 bg-opacity-30 justify-center
+                                rounded-lg transition ease-in-out duration-200">
+                                    <p class="font-semibold text-white text-sm">Összes "{{ category.name }}" termék</p>
+                                </div>
+                            </div>
+                        </a>
+    
+                        {% for child in category.children %}
+    
+                            {% if child.children|length > 0 %}
+                            <button
+                            class="transition duration-150 min-w-max ease-in-out flex justify-between items-center w-full px-5 font-medium text-start py-4 !bg-transparent text-white hover:!text-[#2B3990] border-t border-zinc-800"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#collapse-{{ child.id }}-{{ loop.index }}"
+                            aria-expanded="false"
+                            aria-controls="collapse-{{ child.id }}-{{ loop.index }}">
+                                {{ child.name }} <i class="fa-light fa-circle-arrow-right text-neutral-500"></i>
+                            </button>
+                            {% else %}
+                            <a href="/termekek/{{category.slug}}/{{child.slug}}" class="w-full min-w-max">
+                                <div         
+                                class="transition duration-150 ease-in-out flex justify-between items-center w-full px-5 font-medium text-start py-4 !bg-transparent text-white hover:!text-[#2B3990] border-t border-zinc-800">
+                                    {{ child.name }}
+                                </div>
+                            </a>
+                            {% endif %}
+                            
+                            
+                                <div class="collapse collapse-horizontal absolute top-0 right-0 w-full" id="collapse-{{ child.id }}-{{ loop.index }}">
+                                    <div class="rounded-lg shadow-lg bg-[#111] max-w-sm min-h-screen w-full flex flex-col items-start">
+                                        
+                                        <div class="px-5 pt-5 pb-4">
+                                            <button
+                                            type="button" data-bs-toggle="collapse" data-bs-target="#collapse-{{ child.id }}-{{ loop.index }}"
+                                            aria-expanded="false" aria-controls="collapse-{{ child.id }}-{{ loop.index }}"
+                                            class="w-full min-w-max py-4 mt-4 text-white btn-primary hover:!bg-[#2B3990] hover:!text-white bg-clip-padding
+                                            px-5 rounded-lg transition ease-in-out disabled:opacity-50 uppercase font-medium text-sm">
+                                                <i class="fa-regular fa-arrow-left-long mr-2"></i> Vissza
+                                            </button>
+                                        </div>
+                                        <a href="/termekek/{{category.slug}}/{{child.slug}}" class="w-full">
+                                            <div class="!bg-[#111] px-4 mb-5 w-full">
+                                                <div class="flex items-center min-w-max shadow-lg w-full py-4 !bg-[#222] hover:bg-opacity-70 bg-opacity-30 justify-center
+                                                rounded-lg transition ease-in-out duration-200">
+                                                    <p class="font-semibold text-white text-sm">Összes "{{ child.name }}" termék</p>
+                                                </div>
+                                            </div>
+                                        </a>
+    
+                                        {% for sChild in child.children %}
+                                        <a href="/termekek/{{category.slug}}/{{child.slug}}/{{sChild.slug}}" class="w-full">
+                                            <div         
+                                            class="transition duration-150 ease-in-out min-w-max flex justify-between items-center w-full px-5 font-medium text-start py-4 !bg-transparent text-white hover:!text-[#2B3990] border-t border-zinc-800">
+                                                {{ sChild.name }}
+                                            </div>
+                                        </a>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                        
+                        {% endfor %}
+    
+                    </div>
+                </div>
+              
+            {% endfor %}
+
+            <form onsubmit="retrieveOrderBy(event)" class="w-full {{ dynamic_filters|length < 0 ? 'hidden' }}">
+                <input type="hidden" name="orderBy">
+                <!-- <h3 class="text-primary mb-0"> 
+                    <span class="closeNext pointer h4">Szűrés</span>
+                    <hr class="mt-0">
+                    <div class="closeModal"><i class="fas fa-times"></i></div>
+                </h3> -->
+                <div class="toggleClose px-4 py-3">
+                    <!-- <div class="oneBlock">
+                        <h5 class="text-primary h6">Összeg:</h5>
+                        <input type="hidden" name="price_min" value="{{ price_range.prev_min }}" >
+                        <input type="hidden" name="price_max" value="{{ price_range.prev_max }}">
+                        <div class="range" name="price" data-min="{{ price_range.min }}" data-max="{{ price_range.max }}" data-type="Ft"></div>
+                        <div class="rangeVals">
+                            <div class="left"><input class="leftChange withMask form-control" data-type="Ft" value="{{ price_range.min }}"></div>
+                            <div class="right"><input class="rightChange withMask form-control" data-type="Ft" value="{{ price_range.max }}"></div>
+                        </div>
+                    </div> -->
+                    {% for filter in dynamic_filters %}
+                    {% if filter.type == 'string' %}
+                        <div class="oneBlock">
+                            <h5 class="text-primary h6 mb-0 pb-1">{{ filter.name }}</h5>
+                            <hr class="mt-0">
+                            <input type="string" name="filter_{{ filter.id }}" value="{{ filter.prev_value }}" class="form-control">
+                        </div>
+                    {% elseif filter.type == 'slider' %}
+                        <div class="oneBlock">
+                            <h5 class="text-primary h6 mb-0 pb-1">{{ filter.name }}:</h5>
+                            <hr class="mt-0">
+                            <input type="hidden" name="filter_{{ filter.id }}_min" value="{{ filter.prev_value[0] ? filter.prev_value[0] : filter.min }}">
+                            <input type="hidden" name="filter_{{ filter.id }}_max" value="{{ filter.prev_value[1] ? filter.prev_value[1] : filter.max }}">
+                            <div class="range" name="filter_{{ filter.id }}" data-min="{{ filter.min }}" data-max="{{ filter.max }}" data-type="{{ filter.unit }}"></div>
+                            <div class="rangeVals">
+                                <div class="left"><input class="leftChange withMask form-control" data-type="{{ filter.unit }}" value="{{ filter.min }}"></div>
+                                <div class="right"><input class="rightChange withMask form-control" data-type="{{ filter.unit }}" value="{{ filter.max }}"></div>
+                            </div>
+                        </div>
+                    {% elseif filter.type == "checklist" %}
+                    <div class="py-5">
+                        <h5 class="font-bold mb-0 pb-1 text-white">{{ filter.name }}</h5>
+                        <hr class="mt-0 border-neutral-400">
+                        <div class="selectList">
+                            {% for value,property in filter.values %}
+                                {% if property.extra[value].item %}
+                                <div class="form-check flex items-center my-2">
+                                    <input class="form-check-input appearance-none border border-neutral-400 h-[20px] w-[20px] min-h-[20px] min-w-[20px] rounded-md bg-transparent checked:bg-[#2B3990] checked:border-[#2B3990] focus:outline-none
+                                    transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" 
+                                    type="checkbox" 
+                                    value="{{ value }}" 
+                                    id="customCheck{{ value }}"
+                                    name="filter_{{ filter.id }}[]"
+                                    {{ code.inArray(value,filter.prev_value ?? []) ? 'checked' : '' }} >
+                                    <label class="form-check-label inline-block  text-sm cursor-pointer text-white" for="customCheck{{ value }}">
+                                        {% set mediable_item=property.extra[value] %}
+                                        {{ mediable_item.item }}
+                                    </label>
+                                </div>
+                                {% elseif property.extra == [] %}
+                                <div class="custom-control custom-checkbox">
+                                    <input 
+                                    type="checkbox" 
+                                    class="custom-control-input" 
+                                    name="filter_{{ filter.id }}[]" 
+                                    value="{{ value }}" {{ code.inArray(value,filter.prev_value ?? []) ? 'checked' : '' }} 
+                                    id="customCheck{{ value}}">
+                                    <label 
+                                    class="custom-control-label d-flex justify-content-between align-items-center align-content-center" 
+                                    for="customCheck{{ value }}">
+                                    {{ value == 1 ? 'Igen' : 'Nem' }}
+                                    </label>
+                                </div>
+                                {% endif %}
+                            {% endfor %}
+                        </div> 
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+ 
+                    <button 
+                    type="submit"
+                    class="bg-[#2B3990] text-white hover:text-white flex items-center justify-center w-full transition-all ease-in-out rounded-xl 
+                    py-4 font-medium oswald hover:brightness-110 uppercase disabled:opacity-40 disabled:cursor-not-allowed text-sm">
+                        Szűrés
+                    </button>
+               
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

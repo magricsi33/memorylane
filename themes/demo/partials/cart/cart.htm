@@ -1,0 +1,168 @@
+{% if cart.cart.items|length > 0 %}    
+
+<h1 class="text-3xl font-primary mb-6">
+    Kosár
+</h1>
+
+<div class="border border-neutral-600 border-dashed rounded-xl xl:p-5 p-3 relative w-full mb-5 flex flex-col gap-2">
+    <div class="absolute uppercase text-primary left-10 xl:-top-2 -top-3 px-5 text-primary bg-[#f5f5f5] flex items-center font-primary">
+        TERMÉKEK
+    </div>
+    {% for item in cart.cart.items %}
+        {% set product = item.product %}
+        <div class="w-full {{ cart.cart.items|length > 1 ? 'border-b border-neutral-300' : '' }} py-6 bg-opacity-40 xl:p-5 flex flex-wrap items-center">
+            <div class="w-full xl:w-6/12 flex items-center xl:pr-6">
+                <div class="xl:w-[80px] [60px] xl:min-w-[80px] min-w-[60px] xl:h-[80px] h-[60px] bg-white p-2 mr-3 clip-box overflow-hidden">
+                    <img src="{{ product.image.path }}" class="w-full h-full object-contain" alt="{{ product.name }}">
+                </div>
+                <div>
+                    <a href="{{ 'termek'|page({slug: product.slug}) }}" target="_blank" class="font-medium w-full text-sm">
+                        {{ product.name }}
+                        {% if item.variant %}
+                        - ( {{ item.variant.name }} )
+                        {% endif %}
+                    </a>
+                    <p class="text-neutral-400 font-bold text-sm">
+                        {{ (product.getItemPrice(item.variant_id, null, true, false, user ? user.discounts : null))|number_format(0, ',', ' ') }}
+                        {{ cart.cart.currency.shortcode }}
+                    </p>
+                </div>
+            </div>
+            <div class="hidden xl:block xl:w-1/12">
+                <p class="text-sm text-neutral-800">
+                    {{ item.quantity }} db
+                </p>
+            </div>
+            <div class="hidden xl:flex w-6/12 xl:w-2/12 items-center">
+                <p class="text-neutral-800 font-bold">
+                    {{ (product.getItemPrice(item.variant_id, null, true, false, user ? user.discounts : null))|number_format(0, ',', ' ') }}
+                    {{ cart.cart.currency.shortcode }}
+                </p>
+            </div>
+            <div class="w-6/12 xl:w-2/12 mt-3 xl:mt-0">
+                <div class="flex items-center h-10 border border-neutral-200 rounded-lg gap-6 w-max px-5">
+                    {% if item.quantity == 1 %}
+                    <button type="button" class="text-xl font-medium h-full flex items-center justify-center group"  
+                    data-request="onRemoveCartItem" data-request-data="id: {{ item.id }}">
+                        <i class="fa-solid fa-trash xl:text-xs text-2xl group-hover:text-red-600"></i>
+                    </button>
+                    {% else %}
+                    <button type="button" class="text-xl font-medium h-full flex items-center justify-center group" 
+                    data-request="onModifyItemQuantity" data-request-data="id: {{ item.id }}, action: 'remove'">
+                        <i class="fa-solid fa-circle-minus xl:text-sm text-2xl"></i>
+                    </button>
+                    {% endif %}
+                    <div class="w-10 text-center text-sm font-medium">
+                        {{ item.quantity }}
+                    </div>
+                    <button type="button" class="text-xl font-medium h-full flex items-center justify-center group" 
+                    data-request="onModifyItemQuantity" data-request-data="id: {{ item.id }}, action: 'add'">
+                        <i class="fa-solid fa-circle-plus xl:text-sm text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="w-6/12 xl:w-1/12 flex items-center justify-end mt-3 xl:mt-0">
+                <p class="text-[#38a093] font-bold">
+                    {{ (product.getItemPrice(item.variant_id, null, true, false, user ? user.discounts : null) * item.quantity)|number_format(0, ',', ' ') }}
+                    {{ cart.cart.currency.shortcode }}
+                </p>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+<div class="xl:w-4/12 ml-auto">
+    <!-- <div class="flex items-center justify-between mb-3">
+        <p class="text-neutral-800 text-end text-sm">
+            Teljes összeg ÁFA nélkül
+        </p>
+        <p class="text-neutral-400 text-end text-sm">
+            {{ cart.absoluteNetto|number_format(0, ',', ' ') }} {{ cart.cart.currency.shortcode }}
+        </p>
+    </div> -->
+    <div class="flex items-center justify-between">
+        <p class="text-end text-2xl font-bold">
+            Teljes összeg
+        </p>
+        <p class="text-[#38a093] text-end text-2xl font-bold">
+            {{ cart.absolutePrice|number_format(0, ',', ' ') }} {{ cart.cart.currency.shortcode }}
+        </p>
+    </div>
+    {% if not user %}
+    <div>
+        <a href="/penztar"
+        class="h-[50px] bg-[#151C1C] hover:bg-opacity-50 transition-all mt-6 ease-in-out px-10 text-white font-primary flex items-center justify-center w-full rounded-lg">
+            Tovább a pénztárba 
+        </a>
+    </div>
+    {% endif %}
+</div>
+{% if user %}
+<div class="xl:w-8/12 mx-auto mt-12">
+    <div class="grid lg:grid-cols-2 gap-6">
+        <div class="bg-[#fff] border border-neutral-200 p-7 flex flex-col justify-between">
+            <div>
+                <p class="text-2xl font-primary">
+                    Új vásárló vagyok
+                </p>
+                <p class="text-neutral-800 mt-2">
+                    Vásárlási lehetőségek
+                </p>
+            </div>
+            
+            <div class="flex items-center gap-3">
+                <i class="fa-light fa-circle-info text-yellow-400 text-3xl"></i>
+                <p class="text-sm italic text-neutral-800">
+                    Regisztrált vásárlóként gyorsabban tudsz vásárolni és naprakész lehetsz a kedvezményeinkről.
+                </p>
+            </div>
+
+            <div>
+                <button @click="openModal = 'register'" type="button"
+                class="h-[50px] bg-[#151C1C] hover:bg-opacity-50 rounded-lg transition-all mt-6 ease-in-out px-10 text-white font-primary flex items-center justify-center w-full">
+                    Regisztráció
+                </button>
+                <a href="/penztar"
+                class="h-[50px] bg-[#151C1C10] hover:bg-[#151C1C15] rounded-lg hover:bg-opacity-80 transition-all mt-6 ease-in-out px-10 text-[#151C1C] font-primary flex items-center justify-center w-full">
+                    Folytatás regisztráció nélkül
+                </a>
+            </div>
+
+        </div>
+        <form data-request="onSignin" data-request-flash data-request-loading class="bg-[#fff] border border-neutral-200 p-7 flex flex-col justify-between">
+            <p class="text-2xl font-primary">
+                Vásárlás meglévő regisztrációval
+            </p>
+            <p class="text-neutral-800 mt-2">
+                Belépek és folytatom
+            </p>
+            <div class="py-6">
+                <div class="w-full mb-3 flex flex-col gap-1">
+                    <label for="login" class="font-semibold text-sm" required>E-mail cím</label>
+                    <input type="text" required 
+                    class="bg-[#eee] h-[55px] px-4 w-full rounded-xl focus:outline-0" 
+                    name="login" id="login">
+                </div>
+                <div class="w-full mb-3 flex flex-col gap-1">
+                    <label for="password" class="font-semibold text-sm" required>Jelszó</label>
+                    <input type="password" required 
+                    class="bg-[#eee] h-[55px] px-4 w-full rounded-xl focus:outline-0" 
+                    name="password" id="password">
+                </div>
+            </div>
+            <button type="submit"
+            class="h-[50px] bg-[#151C1C] rounded-lg hover:bg-opacity-80 transition-all mt-6 ease-in-out px-10 text-white font-primary flex items-center justify-center w-full">
+                Belépés és folytatás
+            </button>
+        </form>
+    </div>
+</div>
+{% endif %}
+{% else %}
+
+<div class="text-center">
+<i class="fa-solid fa-box-open text-4xl text-[#151C1C]"></i>
+<h3 class="text-center mb-5 mt-3 font-primary text-lg">Az ön kosara üres!</h3>
+</div>
+
+{% endif %}

@@ -1,0 +1,10 @@
+name: PaymentMethods
+form: $/livestudiodev/lscart/models/paymentmethod/fields.yaml
+modelClass: LivestudioDev\Lscart\Models\PaymentMethod
+defaultRedirect: livestudiodev/lscart/paymentmethods
+create:
+    redirect: 'livestudiodev/lscart/paymentmethods/update/:id'
+    redirectClose: livestudiodev/lscart/paymentmethods
+update:
+    redirect: livestudiodev/lscart/paymentmethods
+    redirectClose: livestudiodev/lscart/paymentmethods

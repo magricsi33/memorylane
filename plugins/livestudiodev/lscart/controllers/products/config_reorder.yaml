@@ -1,0 +1,4 @@
+title: Products
+modelClass: LivestudioDev\Lscart\Models\Product
+toolbar:
+    buttons: reorder_toolbar

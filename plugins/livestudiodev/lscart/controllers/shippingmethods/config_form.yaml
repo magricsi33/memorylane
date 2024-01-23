@@ -1,0 +1,10 @@
+name: ShippingMethods
+form: $/livestudiodev/lscart/models/shippingmethod/fields.yaml
+modelClass: LivestudioDev\Lscart\Models\ShippingMethod
+defaultRedirect: livestudiodev/lscart/shippingmethods
+create:
+    redirect: 'livestudiodev/lscart/shippingmethods/update/:id'
+    redirectClose: livestudiodev/lscart/shippingmethods
+update:
+    redirect: livestudiodev/lscart/shippingmethods
+    redirectClose: livestudiodev/lscart/shippingmethods

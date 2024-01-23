@@ -1,0 +1,10 @@
+name: Products
+form: $/livestudiodev/lscart/models/product/fields.yaml
+modelClass: LivestudioDev\Lscart\Models\Product
+defaultRedirect: livestudiodev/lscart/products
+create:
+    redirect: 'livestudiodev/lscart/products/update/:id'
+    redirectClose: livestudiodev/lscart/products
+update:
+    redirect: livestudiodev/lscart/products
+    redirectClose: livestudiodev/lscart/products

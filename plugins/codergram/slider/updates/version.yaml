@@ -1,0 +1,8 @@
+1.0.1:
+    - 'Initialize plugin.'
+1.0.2:
+    - 'Created table codergram_slider_sliders'
+    - builder_table_create_codergram_slider_sliders.php
+1.0.3:
+    - 'Created table codergram_slider_banners'
+    - builder_table_create_codergram_slider_banners.php

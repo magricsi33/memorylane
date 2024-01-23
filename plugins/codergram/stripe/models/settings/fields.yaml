@@ -1,0 +1,12 @@
+fields:
+    public_key:
+        label: 'Publikus kulcs'
+        span: auto
+        required: 1
+        type: text
+        comment: '(POS Key)'
+    private_key:
+        label: 'Titkos kulcs'
+        span: auto
+        required: 1
+        type: text

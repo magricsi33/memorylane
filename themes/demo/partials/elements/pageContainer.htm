@@ -1,0 +1,214 @@
+    {% for section in page.sections %}
+
+        {% set container = section.full_width ? 'w-full' : 'container mx-auto xl:w-full w-11/12 relative z-50' %}
+
+        <div class="flex flex-col gap-3 relative text-white
+        {{ section.modify_margin ? 'mt-['~section.margin_top ?? '24px'~'px] mb-['~section.margin_bottom ?? '24px'~'px]' : not loop.first ? 'my-12' : 'mb-12' }}
+        {{ section.use_bg and section.bg_image and section.bg_padding ? 'pt-20 pb-40 xl:py-['~section.bg_padding~'px]' : (section.use_bg and section.bg_image ? 'py-40' : '') }}" 
+        x-data="{ activeImg: null }">
+
+            {% if section.use_bg and section.bg_image %}
+                
+            <div class="absolute left-0 top-0 w-full h-full overflow-hidden z-10">
+                <img src="{{ section.bg_image|media }}" class="w-full h-full object-cover blur-sm" alt="">
+            </div>
+            <div class="absolute left-0 top-0 w-full h-full overflow-hidden z-10">
+                <div class="bg-black bg-opacity-80 z-10 w-full h-full absolute left-0 top-0"></div>
+            </div>
+
+            {% endif %}
+
+            {% for key, content in section.contents %}
+                {% if content.type == 'title' %}
+                    <div class="{{ container }}">
+                        <h2 class="xl:text-5xl text-2xl font-bold uppercase xl:text-center font-primary {{ section.use_bg and section.bg_image ? 'text-white relative z-20  w-11/12 mx-auto' : '' }}">
+                            {{ content.title }}
+                        </h2>
+                    </div>
+                {% elseif content.type == 'text' %}
+                    <div class="{{ container }}">
+                        <div class="mt-3 text-white product-description">
+                            {{ content.text|raw }}
+                        </div>
+                    </div>
+                {% elseif content.type == 'text-big' %}
+                    <div class="{{ container }}">
+                        <div class="xl:text-3xl text-xl xl:text-center mt-3 text-white font-primary {{ section.use_bg and section.bg_image ? 'relative z-20  w-11/12 mx-auto' : '' }}">
+                            {{ content.text|raw }}
+                        </div>
+                    </div>
+                {% elseif content.type == 'text-medium' %}
+                    <div class="{{ container }}">
+                        <div class="xl:text-2xl text-lg xl:text-center mt-3 text-white font-primary {{ section.use_bg and section.bg_image ? 'relative z-20  w-11/12 mx-auto' : '' }}">
+                            {{ content.text|raw }}
+                        </div>
+                    </div>
+                {% elseif content.type == 'text-normal' %}
+                    <div class="{{ container }}">
+                        <div class="text-lg xl:text-center mt-3 text-white font-primary {{ section.use_bg and section.bg_image ? 'relative z-20  w-11/12 mx-auto' : '' }}">
+                            {{ content.text|raw }}
+                        </div>
+                    </div>
+                {% elseif content.type == 'list' %}
+                    <!-- {{ loop.last ? 'mt-10' : ' my-10' }} -->
+                    <div class="{{ container }} ">
+                        <div class="grid xl:grid-cols-3 gap-3">
+                            {% for item in content.items %}
+                            <a {{ item.url ? 'href='~item.url~'' : '' }} {{ item.blank ? 'target="_blank"' : '' }}>
+                                <div class="flex justify-center items-center flex-col bg-[{{ item.bg_color }}] {{ item.bg_color ? 'px-8' }} py-[{{ item.padding }}px]">
+                                    {% if item.custom_icon %}
+                                        <img src="{{ item.custom_icon|media }}" class="w-[80px] h-[80px] object-contain" alt="{{ item.title }}">
+                                    {% else %}
+                                        <i class="{{ item.icon }} text-[{{ item.icon_size ?? '72' }}px] text-[{{ item.text_color }}]"></i>
+                                    {% endif %}
+                                    <p class="text-4xl xl:text-center mt-6 content text-[{{ item.text_color }}] font-primary">  
+                                        {{ item.title }}
+                                    </p>
+                                    <div class="text-sm text-neutral-500 xl:text-center content text-[{{ item.text_color }}] mt-2">
+                                        {{ item.description|raw }}
+                                    </div>
+                                </div>
+                            </a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% elseif content.type == 'parallax' %}
+
+                <div class="{{ container }}">
+                    <p class="xl:text-[48px] text-3xl xl:leading-[55px] text-white xl:text-center font-primary">
+                        {{ content.title }}
+                    </p>
+                    <div class="xl:text-2xl text-lg text-white xl:text-center mt-3">
+                        {{ content.text|raw }}
+                    </div>
+                </div>
+            
+                {% elseif content.type == 'text-with-image' %}
+                <div class="flex flex-wrap items-center {{ content.reverse ? 'flex-row-reverse' : '' }} {{ loop.last ? 'mt-10' : ' my-10' }} {{ container }} relative z-20">
+                    <div class="xl:w-6/12 w-full flex flex-col gap-6">
+                        <h2 class="xl:text-7xl text-xl font-primary">
+                            {{ content.title }}
+                        </h2>
+                        {% for item in content.col_items %}
+
+                            <div class="flex items-center gap-3">
+                                {% if item.icon %}
+                                <div class="w-[{{ item.icon_size + 20 }}px] flex items-center justify-center">
+                                    <i class="{{ item.icon }} text-[{{ item.icon_size }}px] text-primary"></i>
+                                </div>
+                                {% endif %}
+                                <div>
+                                    <p class="xl:text-3xl text-lg font-primary">
+                                        {{ item.title }}
+                                    </p>
+                                    <div class="{{ item.title ? 'mt-3' : '' }} content">
+                                        {{ item.text|raw }}
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        {% endfor %}
+                    </div>
+                    <div class="xl:w-6/12 w-full {{ content.reverse ? 'pr-6' : 'pl-6' }}">
+                        <img src="{{ content.image|media }}" class="h-[600px] max-h-full w-full object-contain" alt="">
+                    </div>
+                </div>
+                {% elseif content.type == 'image' %}
+                <div class="{{ container }} {{ loop.last ? 'mt-10' : ' my-10' }}">
+                    <img src="{{ content.image|media }}" class="h-auto w-full object-cover" alt="">
+                </div>
+                {% elseif content.type == 'video' %}
+                <div class="{{ container }} overflow-hidden">
+                    <div class="content">
+                        {{ content.video|raw }}
+                    </div>
+                </div>
+                {% elseif content.type == 'gallery' %}
+
+                <div class="{{ container }} {{ loop.last ? 'mt-10' : ' my-10' }}">
+                    {% set gridSize = content.gallery < 4 ? '2' : '5' %}
+                    <div class="grid xl:grid-cols-{{ gridSize }} grid-cols-2 gap-3">
+                        {% for item in content.gallery %}
+                        <div x-on:click="activeModal === 'lightbox' ? activeModal = 'null' : activeModal = 'lightbox', activeImg = {{ loop.index }}" class="cursor-pointer">
+                            <img src="{{ item.item|media }}" alt="{{ item.title }}">
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div 
+                    :class="{
+                        'block w-full h-full opacity-100': activeModal === 'lightbox',
+                        'hidden max-h-0 opacity-0': activeModal !== 'lightbox'
+                    }"
+                    class="fixed top-[50%] -translate-y-[50%] left-[50%] -translate-x-[50%] w-0 h-0 flex items-center justify-center z-[999999999999]"
+                >
+                    <div class="absolute left-0 top-0 w-full h-full bg-black bg-opacity-70" x-on:click="activeModal = 'null'"></div>
+                    <button type="button" class="absolute left-5 top-[50%] -translate-y-[50%] flex items-center justify-center rounded-full w-16 h-16 bg-[#00B3E3] bg-opacity-70 hover:bg-opacity-100 transition-all
+                     ease-in-out" 
+                    x-on:click="activeImg = (activeImg == 1 ? 1 : activeImg - 1)">
+                        <i class="fa-solid fa-angle-left text-2xl text-white"></i>
+                    </button>
+                    {% for item in content.gallery %}
+                    <div 
+                    x-on:click="activeModal = 'null'"
+                    :class="{
+                        'block': activeImg === {{ loop.index }},
+                        'hidden': activeImg !== {{ loop.index }}
+                    }"
+                    class="w-[80%] h-[80%] relative z-10">
+                        <img src="{{ item.item|media }}" class="w-full h-full object-contain" alt="{{ item.title }}">
+                    </div>
+                    {% endfor %}
+                    <button type="button" class="absolute right-5 top-[50%] -translate-y-[50%] flex items-center justify-center rounded-full w-16 h-16 bg-[#00B3E3] bg-opacity-70 hover:bg-opacity-100 transition-all
+                     ease-in-out" 
+                    x-on:click="activeImg = (activeImg > {{ content.gallery|length-1 }} ? 1 : activeImg + 1)">
+                        <i class="fa-solid fa-angle-right text-2xl text-white"></i>
+                    </button>
+                </div>
+
+                {% elseif content.type == 'blogs' %}
+                <div class="{{ container }} {{ loop.last ? 'mt-10' : ' my-10' }}">
+                    <div class="grid xl:grid-cols-3 gap-x-6 gap-y-12">
+                        {% for blog in blogs %}
+                            {% partial 'elements/blogBox' blog=blog %}
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+
+            {% endfor %}
+        </div>
+
+    {% endfor %}
+
+{% put scripts %}
+<script>
+    const nexticon = '<i class="fa-regular fa-chevron-right"></i>';
+    const previcon = '<i class="fa-regular fa-chevron-left"></i>';
+
+    $('.owl-gallery').owlCarousel({
+        loop:true,
+        margin:30,
+        nav:true,
+        dots:true,
+        navText: [
+            previcon,
+            nexticon    
+        ],
+        responsive:{
+            0:{
+                items:1
+            },
+            640:{
+                items:1
+            },
+            990:{
+                items:3
+            },
+        }
+    })
+
+</script>
+{% endput %}

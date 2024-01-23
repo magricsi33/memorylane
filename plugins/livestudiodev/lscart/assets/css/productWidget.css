@@ -1,0 +1,31 @@
+tbody td i {
+	width: 25px;
+	text-align: center;
+	margin-right: 10px;
+}
+
+.clickable tbody tr, .clickable tbody tr td {
+	transition: all ease-in-out 250ms;
+}
+
+.clickable tbody tr:hover {
+	background-color: #666;	
+	cursor: pointer;
+}
+
+.clickable tbody tr:hover td {
+	color: white !important;	
+	cursor: pointer
+}
+
+h5 {
+	text-transform: uppercase;
+	color: #666;
+	margin:15px 0;
+	font-weight: bold;
+}
+h5 i {
+	width: 15px;
+	text-align: center;
+	margin-right: 5px;
+}

@@ -1,0 +1,40 @@
+==
+<h2 class="font-weight-bold mb-4 mt-3 color-dark">Összesítés</h2>
+<table class="table mb-3">
+    <tbody>
+        <tr class="mb-4">
+            <td class="border-0 border-0 color-dark">Nettó ár:</td>
+            <td class="font-weight-bold border-0 text-right lead color-dark">
+                {{ cart.totalNetto(false, true, null)|number_format(0, ',', ' ') }} {{ cart.cart.currency.shortcode }}
+            </td>
+        </tr>
+        <!-- <tr>
+            <td class="order-0 border-0 color-dark">ÁFA:</td>
+            <td class="font-weight-bold border-0 text-right lead color-dark">
+                {{ (cart.totalBrutto(false, true) - cart.totalNetto(false, true))|number_format(0, ',', ' ') }}
+                {{ cart.cart.currency.shortcode }}
+            </td>
+        </tr> -->
+        {% if cart.cart.coupon %}
+        <tr>
+            <td class="font-weight-bold border-0">Kupon</td>
+            <td class="border-0 text-right lead color-dark">-
+                {% if cart.cart.coupon.value_type == 50 %}
+                {{ cart.cart.coupon.value  }}%
+                ({{ (cart.totalBrutto(false, true) - cart.totalBrutto())|number_format(0, ',', ' ') }}
+                {{ cart.cart.currency.shortcode }})
+                {% else %}
+                {{ cart.cart.coupon.value|number_format(0, ',', ' ') }} {{ cart.cart.currency.shortcode }}
+                {% endif %}
+            </td>
+        </tr>
+        {% endif %}
+
+        <tr>
+            <td class="font-weight-bold lead color-dark">Összesen:</td>
+            <td class="font-weight-bold text-right lead color-dark">
+                {{ cart.totalBrutto|number_format(0, ',', ' ') }} {{ cart.cart.currency.shortcode }}
+            </td>
+        </tr>
+    </tbody>
+</table>

@@ -1,0 +1,17 @@
+{% if products|length == 0 %}
+    <div class="w-full md:px-4 mb-5 flex items-center justify-center flex-col py-10 text-center text-white ">
+        <i class="fa-solid fa-face-sad-cry mb-2 text-5xl text-[#2B3990]"></i>
+        <p class="text-xl mt-3 font-bold">
+            Nem találtunk terméket
+        </p>
+        <p class="text-sm text-neutral-500">
+            A megadott keresési feltételek alapján nem találtunk terméket
+        </p>
+    </div>
+{% else %}
+    {% for product in products %}
+        <div class="w-full">
+            {% partial 'elements/product/productBox' product=product %}
+        </div>
+    {% endfor %}
+{% endif %} 

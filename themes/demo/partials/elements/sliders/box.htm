@@ -1,0 +1,54 @@
+<div class="bg-zinc-300 py-10">
+    <div class="container mx-auto">
+        <div class="owl-carousel owl-theme owl-slider rounded-3xl overflow-hidden">
+            {% for i in 0..5 %}
+            <div class="after:bg-transparent after:bg-opacity-50 after:absolute after:top-0 after:left-0 after:w-full after:h-full 
+            bg-no-repeat bg-cover bg-center bg-[url({{ 'assets/images/slider7.jpg'|theme }})] py-16 h-[600px]">
+                <div class="2xl:container 2xl:w-10/12 w-11/12 mx-auto flex flex-col justify-center h-full relative z-10">
+                    <div class="xl:w-6/12">
+                        <!-- <h1 class="xl:text-6xl rj text-4xl text-white font-bold">
+                            Lorem ipsum dolor sit amet
+                        </h1>
+                        <p class="xl:text-lg text-white my-12">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas eleifend sapien neque. Nam lacus turpis, ultricies eget est et, congue aliquam justo. Fusce et maximus elit,
+                        </p>
+                        <div class="flex items-center">
+                            <a href="">
+                                <div class="bg-white text-sm rj hover:bg-[#0f203f] hover:text-white transition-all ease-in-out rounded-xl px-8 py-3 font-bold uppercase mr-4">
+                                    Lorem ipsum
+                                </div>
+                            </a>
+                            <a href="">
+                                <div class="bg-white text-sm rj hover:bg-[#0f203f] hover:text-white transition-all ease-in-out rounded-xl px-8 py-3 font-bold uppercase mr-4">
+                                    Lorem ipsum
+                                </div>
+                            </a>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+
+{% put scripts %}
+<script>
+	const nexticon = '<i class="fa-regular fa-chevron-right"></i>';
+	const previcon = '<i class="fa-regular fa-chevron-left"></i>';
+
+    $('.owl-slider').owlCarousel({
+        loop:true,
+        margin:30,
+        nav:true,
+        dots:true,
+        navText: [
+            previcon,
+            nexticon    
+        ],
+        items:1
+    })
+
+</script>
+{% endput %}

@@ -1,0 +1,13 @@
+scopes:
+  partner:
+      label: Partner
+      type: group
+      conditions: partner in (:filtered)
+      options:
+        'Computer Emporium': 'Computer Emporium'
+        'Dotcomp': 'Dotcomp'
+  stock:
+    label: Csak raktáron lévők
+    type: checkbox
+    default: 1
+    conditions: stock <> '0'

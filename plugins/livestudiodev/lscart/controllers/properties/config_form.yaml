@@ -1,0 +1,10 @@
+name: Properties
+form: $/livestudiodev/lscart/models/property/fields.yaml
+modelClass: LivestudioDev\Lscart\Models\Property
+defaultRedirect: livestudiodev/lscart/properties
+create:
+    redirect: 'livestudiodev/lscart/properties/update/:id'
+    redirectClose: livestudiodev/lscart/properties
+update:
+    redirect: livestudiodev/lscart/properties
+    redirectClose: livestudiodev/lscart/properties

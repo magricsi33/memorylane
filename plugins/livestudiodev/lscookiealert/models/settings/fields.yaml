@@ -1,0 +1,7 @@
+fields:
+    cookierule:
+        label: 'Cookie alert szöveg'
+        size: huge
+        span: full
+        type: richeditor
+        comment: 'Külön oldal, az "ide" gombra'

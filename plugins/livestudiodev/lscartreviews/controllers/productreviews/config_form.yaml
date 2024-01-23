@@ -1,0 +1,10 @@
+name: ProductReviews
+form: $/livestudiodev/lscartreviews/models/productreview/fields.yaml
+modelClass: LivestudioDev\Lscartreviews\Models\ProductReview
+defaultRedirect: livestudiodev/lscartreviews/productreviews
+create:
+    redirect: 'livestudiodev/lscartreviews/productreviews/update/:id'
+    redirectClose: livestudiodev/lscartreviews/productreviews
+update:
+    redirect: livestudiodev/lscartreviews/productreviews
+    redirectClose: livestudiodev/lscartreviews/productreviews

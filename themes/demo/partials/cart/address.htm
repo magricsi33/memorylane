@@ -1,0 +1,119 @@
+<div id="shipping_adress_card" style="display: none"
+    class="border-t border-dashed border-neutral-600 xl:py-8 xl:px-8 px-3s py-8 relative w-full mb-10"
+>
+    <div
+        class="absolute uppercase left-10 -top-3 oswald text-primary bg-[#f5f5f5] px-5 flex items-center font-primary"
+    >
+        <div class="w-5 flex items-center justify-start">
+            <i class="fa-solid fa-location-dot text-primary"></i>
+        </div>
+        Szállítási adatok
+    </div>
+    <div class="absolute right-10 -top-3 bg-[#161719] px-5"></div>
+    <div >
+        <div class="flex flex-wrap">
+            <div class="xl:w-4/12 w-full form-floating px-2 mb-3">
+                <label for="name" class="{{ label }}" required
+                    >Szállítási név</label
+                >
+                <input
+                    type="text"
+                    class="{{ input }}"
+                    name="name"
+                    id="name"
+                    value="{{ user.trans_name  }}"
+                    placeholder="Szállítási név"
+                />
+            </div>
+
+            <div class="xl:w-4/12 w-full form-floating px-2 mb-3">
+                <label for="postcode" class="{{ label }}" required
+                    >Irányítószám</label
+                >
+                <input
+                    type="text"
+                    class="{{ input }}"
+                    name="postcode"
+                    id="postcode"
+                    value="{{ user.trans_zip }}"
+                    placeholder="Irányítószám"
+                />
+            </div>
+            <div class="xl:w-4/12 w-full form-floating px-2 mb-3">
+                <label for="city" class="{{ label }}" required>Település</label>
+                <input
+                    type="text"
+                    class="{{ input }}"
+                    name="city"
+                    id="city"
+                    value="{{ user.trans_city }}"
+                    placeholder="Település"
+                />
+            </div>
+
+            <div class="xl:w-6/12 w-full form-floating px-2 mb-3">
+                <label for="address_name" class="{{ label }}"
+                    >Közterület megnevezése</label
+                >
+                <input
+                    type="text"
+                    class="{{ input }}"
+                    name="address_name"
+                    id="address_name"
+                    value="{{ user.trans_address }}"
+                    placeholder="Közterület megnevezése"
+                />
+            </div>
+
+            <div class="xl:w-6/12 w-full form-floating px-2 mb-3">
+                <label for="address_type" class="{{ label }}"
+                    >Közterület jellege</label
+                >
+                <input
+                    type="text"
+                    class="{{ input }}"
+                    name="address_type"
+                    id="address_type"
+                    value="{{ user.billing_address_type }}"
+                    placeholder="Közterület jellege"
+                />
+            </div>
+
+            <div class="xl:w-4/12 w-full form-floating px-2 mb-3">
+                <label for="flat_number" class="{{ label }}" required
+                    >Házszám</label
+                >
+                <input
+                    type="text"
+                    class="{{ input }}"
+                    name="flat_number"
+                    id="flat_number"
+                    value="{{ user.trans_house_number }}"
+                    placeholder="Házszám"
+                />
+            </div>
+            <div class="xl:w-4/12 w-full form-floating px-2 mb-3">
+                <label for="floor" class="{{ label }}" required>Emelet</label>
+                <input
+                    type="text"
+                    class="{{ input }}"
+                    name="floor"
+                    id="floor"
+                    value="{{ user.trans_floor }}"
+                    placeholder="Emelet"
+                />
+            </div>
+            <div class="xl:w-4/12 w-full form-floating px-2 mb-3">
+                <label for="door_num" class="{{ label }}" required>Ajtó</label>
+                <input
+                    type="text"
+                    class="{{ input }}"
+                    name="door_num"
+                    id="door_num"
+                    value="{{ user.trans_door }}"
+                    placeholder="Ajtó"
+                />
+            </div>
+        </div>
+    </div>
+</div>

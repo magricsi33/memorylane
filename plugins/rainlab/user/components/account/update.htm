@@ -1,0 +1,99 @@
+{{ form_ajax('onUpdate') }}
+<h3 class="text-2xl font-primary mb-1 text-white">
+    Adatok szerkesztése
+</h3>
+<p class="text-neutral-400 mb-12">
+    Szerkesztheted fiókod adatait.
+</p>
+<div class="w-full flex flex-col gap-1 mb-3">
+    <label
+        for="accountName"
+        class="text-white font-medium mb-[3px] text-sm"
+        required
+        >Teljes név <sup class="text-red-500 text-[8px]">kötelező</sup></label
+    >
+    <input
+        type="text"
+        required
+        value="{{ user.name }}"
+        class="bg-[#1b1c1f] h-[55px] px-4 w-full text-white focus:outline-0"
+        name="name"
+        id="accountName"
+    />
+</div>
+<div class="w-full flex flex-col gap-1 mb-3">
+    <label
+        for="accountEmail"
+        class="text-white font-medium mb-[3px] text-sm"
+        required
+        >E-mail cím <sup class="text-red-500 text-[8px]">kötelező</sup></label
+    >
+    <input
+        type="email"
+        required
+        disabled
+        value="{{ user.email }}"
+        class="bg-[#1b1c1f] h-[55px] px-4 w-full text-white focus:outline-0 opacity-50"
+        name="email"
+        id="accountEmail"
+    />
+</div>
+<div class="w-full flex flex-col gap-1 mb-3">
+    <label
+        for="accountPassword"
+        class="text-white font-medium mb-[3px] text-sm"
+        required
+        >Jelszó <sup class="text-red-500 text-[8px]">kötelező</sup></label
+    >
+    <input
+        type="password"
+        required
+        class="bg-[#1b1c1f] h-[55px] px-4 w-full text-white focus:outline-0"
+        name="password"
+        id="accountPassword"
+    />
+</div>
+<div class="w-full flex flex-col gap-1 mb-3">
+    <label
+        for="accountPasswordConfirm"
+        class="text-white font-medium mb-[3px] text-sm"
+        required
+        >Jelszó <sup class="text-red-500 text-[8px]">kötelező</sup></label
+    >
+    <input
+        type="password"
+        required
+        class="bg-[#1b1c1f] h-[55px] px-4 w-full text-white focus:outline-0"
+        name="password_confirmation"
+        id="accountPasswordConfirm"
+    />
+</div>
+
+<p class="mt-6 text-white mb-3">
+    Az adatok módosításához kérjük add meg a jelenlegi jelszavad!
+</p>
+<div class="w-full flex flex-col gap-1 mb-6">
+    <label
+        for="accountPasswordCurrent"
+        class="text-white font-medium mb-[3px] text-sm"
+        required
+        >Jelenlegi jelszó
+        <sup class="text-red-500 text-[8px]">kötelező</sup></label
+    >
+    <input
+        type="password"
+        required
+        class="bg-[#1b1c1f] h-[55px] px-4 w-full text-white focus:outline-0"
+        name="password_current"
+        id="accountPasswordCurrent"
+    />
+</div>
+
+<button
+    type="submit"
+    class="h-[50px] bg-[#2B3990] hover:bg-opacity-50 transition-all ease-in-out px-10 text-white font-primary flex items-center justify-center clip-box w-full"
+>
+    Módosítások mentése
+</button>
+
+{{ form_close() }}

@@ -1,0 +1,14 @@
+1.0.1:
+    - 'Initialize plugin.'
+1.0.2:
+    - 'Created table codergram_shopforge_subscribers'
+    - builder_table_create_codergram_shopforge_subscribers.php
+1.0.3:
+    - 'Created table codergram_shopforge_pages'
+    - builder_table_create_codergram_shopforge_pages.php
+1.0.4:
+    - 'Created table codergram_shopforge_sitesearch'
+    - builder_table_create_codergram_shopforge_sitesearch.php
+1.0.5:
+    - 'Updated table codergram_shopforge_sitesearch'
+    - builder_table_update_codergram_shopforge_sitesearch.php

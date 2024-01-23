@@ -1,0 +1,349 @@
+title = "Pénztár" 
+url = "/penztar" 
+layout = "default" 
+==
+<?php
+function onStart() {
+    $out = [];
+    foreach ($this->cart->cart->items as $item) {
+        $outItem = new stdClass;
+        $outItem->id  = $item->id;
+        $outItem->name = $item->product->name;
+        if($item->variant) {
+            $outItem->price = $item->product->getItemPrice($item->variant_id);
+        } else {
+            $outItem->price = $item->product->getItemPrice();
+        }
+        $outItem->variant = $item->variant ? $item->product->name." ".$item->variant->name : $item->product->name;
+        $outItem->quantity = $item->quantity;
+        $out[] = $outItem;
+    }
+
+    $this['conjuncture'] = json_encode($out);
+
+}
+?>
+==
+<!-- <div class="w-full pt-6 pb-3 bg-gradient-to-b from-[#00000050] to-transparent">
+    <div class="container mx-auto">
+        <div class="flex items-center justify-between gap-1 mt-10 w-7/12 mx-auto">
+            <div class="w-8 relative">
+                <p class="text-sm font-primary text-white absolute -top-7 left-[50%] -translate-x-[50%] text-center w-max">
+                    Kosár
+                </p>
+                <div class="w-8 h-8 rounded-full font-primary bg-primary flex items-center justify-center text-white text-sm">
+                    1
+                </div>
+            </div>
+            <div class="flex items-end justify-center w-full">
+                <div class="w-full h-8 flex items-center justify-center">
+                    <div class="w-full h-[2px] bg-neutral-700 rounded-full"></div>
+                </div>
+            </div>
+            <div class="w-8 relative">
+                <p class="text-sm font-primary text-white absolute -top-7 left-[50%] -translate-x-[50%] text-center w-max">
+                    Szállítás & Fizetés
+                </p>
+                <div class="w-8 h-8 rounded-full font-primary bg-neutral-600 flex items-center justify-center text-white text-sm">
+                    2
+                </div>
+            </div>
+            <div class="flex items-end justify-center w-full">
+                <div class="w-full h-8 flex items-center justify-center">
+                    <div class="w-full h-[2px] bg-neutral-700 rounded-full"></div>
+                </div>
+            </div>
+            <div class="w-8 relative">
+                <p class="text-sm font-primary text-white absolute -top-7 left-[50%] -translate-x-[50%] text-center w-max">
+                    Szállítás és számlázás
+                </p>
+                <div class="w-8 h-8 rounded-full font-primary bg-neutral-600 flex items-center justify-center text-white text-sm">
+                    3
+                </div>
+            </div>
+            <div class="flex items-end justify-center w-full">
+                <div class="w-full h-8 flex items-center justify-center">
+                    <div class="w-full h-[2px] bg-neutral-700 rounded-full"></div>
+                </div>
+            </div>
+            <div class="w-8 relative">
+                <p class="text-sm font-primary text-white absolute -top-7 left-[50%] -translate-x-[50%] text-center w-max">
+                    Összegzés
+                </p>
+                <div class="w-8 h-8 rounded-full font-primary bg-neutral-600 flex items-center justify-center text-white text-sm">
+                    4
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->
+{% set input = 'bg-[#fff] h-[55px] px-4 w-full focus:outline-0 rounded-lg border border-neutral-200' %}
+{% set label = 'font-medium mb-[3px] text-sm' %}
+
+<div id="kosar" class="xl:mt-10 mt-10 pb-20 container xl:w-9/12 mx-auto w-11/12">
+    {% if cart.cart.items|length > 0 %}    
+
+    <!-- <div class="grid grid-cols-3 gap-3">
+        <div class="col-span-2">
+            <form 
+            id="contactForm" 
+            data-request="onCreateMessage" 
+            data-request-flash 
+            data-request-loading 
+            data-request-validate
+            data-request-complete="$(this).trigger('reset');">    
+                <div class="grid grid-cols-2 gap-3">
+                    <div class="text-start w-full mb-6 relative">
+                        <p class="text-white font-medium mb-[2px] text-sm">Név<sup class="text-red-500 text-ms ml-1 font-normal">kötelező</sup></p>
+                        <input 
+                        class="bg-[#191919] h-[55px] px-4 w-full rounded-xl text-white focus:outline-0"
+                        placeholder="Add meg az neved"
+                        type="text" 
+                        name="name"
+                        required>
+                        <span class="text-red-500 text-[10px] pl-4 absolute right-0 top-1 font-bold" data-validate-for="name"></span>
+                    </div>
+                    <div class="text-start w-full mb-6 relative">
+                        <p class="text-white font-bold mb-[2px]">Telefonszám</p>
+                        <input 
+                        class="bg-[#0D1A27] h-[50px] px-4 w-full rounded-2xl text-white focus:outline-0"
+                        placeholder="Add meg a telefonszámod"
+                        type="text" 
+                        name="phone"
+                        required>
+                        <span class="text-red-500 text-[10px] pl-4 absolute right-0 top-1 font-bold" data-validate-for="phone"></span>
+                    </div>
+                    <div class="text-start w-full mb-6 relative">
+                        <p class="text-white font-bold mb-[2px]">E-mail cím<span class="text-red-500 font-bold">*</span></p>
+                        <input 
+                        class="bg-[#0D1A27] h-[50px] px-4 w-full rounded-2xl text-white focus:outline-0"
+                        placeholder="Add meg az e-mail címed"
+                        type="text" 
+                        name="email"
+                        required>
+                        <span class="text-red-500 text-[10px] pl-4 absolute right-0 top-1 font-bold" data-validate-for="email"></span>
+                    </div>
+                    <div class="text-start w-full mb-6 relative">
+                        <p class="text-white font-bold mb-[2px]">Miben segíthetünk? <span class="text-red-500 font-bold">*</span></p>
+                        <textarea 
+                        class="bg-[#0D1A27] h-[150px] px-4 pt-3 w-full rounded-2xl text-white focus:outline-0"
+                        placeholder="Üzenet..."
+                        type="text" 
+                        name="comment"
+                        required></textarea>
+                        <span class="text-red-500 text-[10px] pl-4 absolute right-0 top-1 font-bold" data-validate-for="comment"></span>
+                    </div>
+                    <div class="w-full text-start mb-6 relative">
+                        <div class="form-check flex items-center">
+                            <input 
+                            class="form-check-input appearance-none xl:h-[35px] xl:w-[35px] xl:min-w-[35px] xl:min-h-[35px] 
+                            h-[30px] w-[30px] min-w-[30px] min-h-[30px] border border-[#0D1A27] rounded-sm bg-[#0D1A27] 
+                            checked:bg-[#3CB7FC] checked:border-[#3CB7FC] focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center 
+                            bg-contain float-left mr-2 cursor-pointer" 
+                            type="checkbox" 
+                            value="1" 
+                            name="terms"
+                            id="terms"
+                            required>
+                            <label class=" text-white cursor-pointer xl:text-sm text-xs text-start" for="terms">
+                                Hozzájárulok a megadott adataim kapcsolatfelvétel céljából történő kezeléséhez és elfogadom az
+                                <a href="{{ 'data'|page({slug:'adatkezelesi-tajekoztato'}) }}" class="hover:text-[#3CB7FC] transition-all ease-in-out" 
+                                target="_blank">
+                                    Adatkezelési tájékoztatót
+                                </a>   
+                                <span class="text-red-500 font-bold">*</span>                 
+                            </label>
+                        </div>
+                        <span class="text-red-500 text-[10px] font-bold" data-validate-for="terms"></span>
+        
+                        <button 
+                        type="submit" class="h-[60px] w-full flex items-center justify-center mt-6 text-white transition-all ease-in-out duration-300 px-10 rounded-3xl relative
+                        bg-gradient-to-r from-[#495DF8] to-[#3CB7FC] group overflow-hidden">
+                            <div class="relative z-20 rt text-xl group-hover:text-[#3CB7FC] transition-all ease-in-out duration-300">
+                                <i class="fa-light fa-paper-plane mr-2"></i> Üzenet küldése
+                            </div>
+                            <div class="absolute -bottom-2 left-[50%] -translate-x-[50%] bg-white w-[120%] h-[120%] 
+                            max-h-0 max-w-0 group-hover:max-w-[120%] group-hover:max-h-[120%] rounded-t-full group-hover:bottom-0
+                            transition-all ease-in-out duration-300"></div>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-span-1">
+
+        </div>
+    </div> -->
+
+    <form id="form1" class="mt-5" data-request-flash data-request-loading onsubmit="sendOrder(this, event);">
+
+        <input type="hidden" name="ship_bill_equal" value="1" />
+
+        <div class="flex flex-wrap">
+            <div class="2xl:w-8/12 xl:w-8/12 w-full mx-auto xl:px-5">
+                <div class="border-t border-dashed border-neutral-600 xl:py-8 xl:px-8 px-3s py-8 relative w-full mb-10">
+                    {% partial 'cart/billings' input=input label=label %}
+                </div>
+                <div class="form-check form-switch flex items-center !p-0 mb-12">
+                    <input class="form-check-input appearance-none border border-neutral-200 h-[30px] w-[30px] min-h-[30px] min-w-[30px] rounded-lg bg-white checked:bg-[#2B3990]
+                     checked:border-[#2B3990] focus:outline-none
+                    transition duration-200 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="checkbox" value="" id="ship_bill_equal">
+                    <label class="form-check-label inline-block font-medium text-sm cursor-pointer" for="ship_bill_equal">
+                        A szállítási címem eltér a számlázási adatokban megadottaktól.
+                    </label> 
+                </div>
+
+                <div id="addressData">
+                    {% partial 'cart/address' input=input label=label %}
+                </div>
+
+
+                <div id="shipping_methods" class="w-full">
+                    {% partial 'cart/shipping_methods' input=input label=label %}
+                </div>
+                <!-- {% if not cart.cart.shipping.id %}
+                <p class="mb-10 text-red-600">
+                    Nincs megadva szállítási mód
+                </p>
+                {% endif %} -->
+
+                <div id="payments" class="w-full">
+                    {% partial 'cart/payments' input=input label=label %}
+                </div>
+               
+            </div>
+            <div class="2xl:w-4/12 xl:w-4/12 w-full xl:px-5">
+                <div id="cartitems">
+                    {% partial 'cart/cartitems' input=input label=label %}
+                </div>
+                <div id="coupon" class="mb-5">
+                    {% partial 'cart/coupon' input=input label=label %}
+                </div>
+                <div id="checkout" class="sticky top-[130px]">
+                    {% partial 'cart/checkout' input=input label=label %}
+                </div>
+            </div>
+        </div>
+    </form>
+    {% else %}
+
+    <div class="text-center">
+        <i class="fa-solid fa-box-open text-4xl text-[#2B3990]"></i>
+        <h3 class="text-center mb-5 mt-3 text-white font-primary text-lg">Az ön kosara üres!</h3>
+    </div>
+
+    {% endif %}
+</div>
+
+{% put scripts %}
+<script>
+    // $(document).on("change", "#shipping_methods input", function () {
+    //     let id = $(this).val();
+
+    //     $.request("onSetCartShipping", {
+    //         data: {
+    //             shipping_mode: id,
+    //             payment_mode: 1
+    //         }
+    //     });
+    // });
+
+    // $(document).on("change", "#payment_methods_card input", function () {
+    //     let id = $(this).val();
+
+    //     $.request("onSetCartPayment", {
+    //         data: {
+    //             payment_mode: id
+    //         }
+    //     });
+    // });
+
+    $("#ship_bill_equal").change(function () {
+        if ($(this).is(':checked')) {
+            $("#shipping_adress_card").slideDown();
+            $("input[name='ship_bill_equal']").val(0);
+            $("#shipping_adress_card input").not(".except").prop("required", true);
+        }
+        else {
+            $("#shipping_adress_card").slideUp();
+            $("input[name='ship_bill_equal']").val(1);
+            $("#shipping_adress_card input").prop("required", false);
+        }
+    });
+
+    function sendOrder(el, event) {
+        event.preventDefault();
+
+        $("form button[type='submit']").prop("disabled", true);
+        let shipping = $('input[name="shipping_mode"]').val();
+        let payment = $('input[name="payment_mode"]').val();
+        console.log(payment);
+        
+        var submitButton = document.getElementById("submitButton");
+        submitButton.classList.add("loading");
+
+        if("input[]")
+
+        if (shipping == undefined || payment == undefined) {
+            $.wn.flashMsg({
+                interval: 2,
+                class: 'error',
+                text: 'Kérjük válasszon szállítási és fizetési módot!'
+            });
+
+            return false;
+        }
+
+        $(el).request("onCheckout", {
+            success: (data) => {
+                $.wn.flashMsg({
+                    interval: 2,
+                    class: 'success',
+                    text: 'Rendelését megkaptuk, köszönjük!'
+                });
+
+                setTimeout(function () {
+                    location.href = `/fizetes/${data.id}`;
+                }, 500);
+            },
+            error: () => {
+                $.wn.flashMsg({
+                    interval: 2,
+                    class: 'error',
+                    text: 'Hiba történt a rendelés leadása közben!'
+                });
+
+                return false;
+            }
+        });
+    }
+
+    function checkCoupon(data) {
+        if (data.responseJSON.error) {
+            $.oc.flashMsg({
+                interval: 3,
+                text: data.responseJSON.error,
+                class: 'error'
+            });
+        }
+        return;
+    }
+
+    function sendCouponForm(event) {
+        let key = event.keyCode;
+
+        if(key === 13 || key === undefined) {
+            let code = $("#coupon_code").val();
+
+            $(this).request("onAddCoupon", {
+                data: {
+                    code: code
+                },
+                complete: (data) => {
+                    checkCoupon(data);
+                }
+            });
+        }
+    }
+</script>
+{% endput %}

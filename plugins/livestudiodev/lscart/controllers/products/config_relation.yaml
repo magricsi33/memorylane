@@ -1,0 +1,24 @@
+allvariants:
+    label: Termék változat
+    view:
+        list: $/livestudiodev/lscart/models/productvariant/columns.yaml
+        toolbarButtons: create|delete
+    manage:
+        form: $/livestudiodev/lscart/models/productvariant/fields.yaml
+        recordsPerPage: 10
+related_products:
+    label: Kapcsolódó termék
+    view:
+        list: $/livestudiodev/lscart/models/product/columns.yaml
+        toolbarButtons: add|remove
+    manage:
+        form: $/livestudiodev/lscart/models/product/fields.yaml
+        recordsPerPage: 10
+storages:
+    label: Raktár
+    view:
+        list: $/livestudiodev/lscart/models/storageitem/columns.yaml
+        toolbarButtons: add|remove
+    manage:
+        form: $/livestudiodev/lscart/models/storageitem/fields.yaml
+        recordsPerPage: 10   

@@ -1,0 +1,71 @@
+<div class="owl-carousel owl-theme owl-slider overflow-hidden owl-main-slider">
+    {% for slider in sliders %}
+    <div class="xl:h-[800px] pt-10 xl:pt-0 relative bg-cover bg-no-repeat bg-right-top bg-[#fff] xl:px-16 px-4 overflow-hidden">
+        
+        <div class="absolute -bottom-48 -left-5 w-[120%] h-[350px] bg-[#202020] -rotate-6 z-20"></div>
+        <!-- <div class="absolute right-0 bottom-16 z-10">
+            <div class="w-[500px] h-[500px]">
+                <img src="{{ 'assets/images/SVG/see.svg'|theme }}" class="w-full h-full object-contain" alt="muki">
+            </div>
+        </div> -->
+        
+        <div class="2xl:container mx-auto flex flex-wrap h-full relative z-30">
+            <div class="xl:w-6/12 w-full flex flex-col justify-center">
+                <div class="flex items-center mb-12">
+                    <div class="bg-[{{ slider.title.color }}] w-8 h-8 rounded-full mr-5 text-white flex items-center justify-center">
+                        <i class="fa-solid fa-{{ slider.title.icon }} "></i>
+                    </div>
+                    <p class="text-sm font-bold text-[{{ slider.title.color }}]">
+                        {{ slider.title.text }}              
+                    </p>
+                </div>
+                <h2 class="xl:text-6xl text-2xl text-white font-bold">
+                    {{ slider.name }}
+                </h2>
+                <p class="!text-white xl:mb-12 mb-3 mt-3 xl:mt-12">
+                    {{ slider.description }}      
+                </p>
+                <div class="flex xl:flex-col items-center xl:items-start justify-between xl:justify-start">
+                    {% if slider.data.price %}
+                    <p class="text-white xl:text-5xl text-3xl font-bold xl:mr-5 text-primary xl:mb-12">
+                        {{ slider.data.price|number_format(0, ',', ' ') }}
+                        {{ cart.cart.currency.shortcode }} 
+                    </p>
+                    {% endif %}
+                    <a href="{{ slider.button.url }}">
+                        <div class="bg-[#00ffba] text-white hover:text-white flex items-center w-max transition-all ease-in-out rounded-xl 
+                        xl:px-10 px-8 xl:py-4 py-3 font-bold uppercase text-sm xl:text-base">
+                            {{ slider.button.text }}
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="xl:w-6/12 w-full xl:h-full h-[350px] mt-6 xl:mt-0 xl:py-16 pb-16 overflow-hidden relative flex justify-center items-center">
+                <!-- <div class="absolute w-[350px] h-[120%] bg-gradient-to-t from-[#00ffba] to-[#39ca9500] rotate-12"></div> -->
+                <img src="{{ slider.image.path }}" class="w-full h-full object-contain relative z-10" alt="">
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+
+{% put scripts %}
+<script>
+	const nexticon = '<i class="fa-regular fa-chevron-right"></i>';
+	const previcon = '<i class="fa-regular fa-chevron-left"></i>';
+
+    $('.owl-slider').owlCarousel({
+        loop:true,
+        margin:0,
+        nav:true,
+        dots:true,
+        navText: [
+            previcon,
+            nexticon    
+        ],
+        items:1
+    })
+
+</script>
+{% endput %}

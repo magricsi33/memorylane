@@ -1,0 +1,8 @@
+columns:
+    id:
+        label: Id
+        type: number
+        sortable: true
+    name:
+        label: Név
+        type: text

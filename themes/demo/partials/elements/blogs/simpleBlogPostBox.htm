@@ -1,0 +1,17 @@
+<div class="container mx-auto my-10">
+    <div class="flex flex-wrap">
+        {% for i in 0..3 %}
+        <div class="xl:w-3/12 px-2">
+            <div class="rounded-3xl overflow-hidden h-60">
+                <img src="{{ 'assets/images/blog.jpg'|theme }}" class="w-full h-full object-cover" alt="">
+            </div>
+            <h2 class="text-xl font-medium my-4">
+                Lorem ipsum dolor sit amet, consectetur
+            </h2>
+            <a href="">
+                Tovább <i class="fa-regular fa-arrow-right ml-1"></i>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+</div>

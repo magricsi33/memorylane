@@ -1,0 +1,84 @@
+<a href="{{ 'termek'|page({category: product.category.slug, product: product.slug}) }}">
+    <div class="group bg-[#1a1a1b] hover:bg-zinc-900 border border-neutral-800 rounded-xl hover:border-[#2B3990] overflow-hidden p-4 relative transition-all ease-in-out">
+        <div class="line absolute top-0 left-0 w-full h-full opacity-20"></div>   
+        <div class="w-full relative z-10 bg-[white] overflow-hidden xl:h-[250px] h-[250px] rounded-2xl flex justify-center">
+            <!-- <div class="absolute right-1 top-1 w-max">
+                {% if product.variants|length > 0 %}
+                    {% set variantTotalStock = 0 %}
+
+                    {% for item in product.variants %}
+                        {% set variantTotalStock = variantTotalStock + item.stock %}
+                    {% endfor %}
+            
+                    {% if variantTotalStock == 1 %}
+                        <span class="bg-[#40300e] text-yellow-600 font-bold text-sm uppercase rounded-lg px-3">
+                            Utolsó
+                        </span>
+                    {% elseif variantTotalStock > 1 %}
+                        <span class="bg-[#2B3990] text-white font-bold text-sm uppercase rounded-lg px-3">
+                            Raktáron
+                        </span>
+                    {% else %}
+                        <span class="bg-[#441717] text-red-600 font-bold text-sm uppercase rounded-lg px-3">
+                            Elfogyott
+                        </span>
+                    {% endif %}
+                {% else %}
+                    {% if product.stock == 1 %}
+                        <span class="bg-[#40300e] text-yellow-600 font-bold text-sm uppercase rounded-lg px-3">
+                            Utolsó
+                        </span>
+                    {% elseif product.stock > 1 %}
+                        <span class="bg-[#2B3990] text-white font-bold text-sm uppercase rounded-lg px-3">
+                            Raktáron
+                        </span>
+                    {% else %}
+                        <span class="bg-[#441717] text-red-600 font-bold text-sm uppercase rounded-lg px-3">
+                            Elfogyott
+                        </span>
+                    {% endif %}
+                {% endif %}
+            </div> -->
+            <img src="{{ product.image.path|resize(250) }}" class="object-contain object-center w-full h-full transition-all ease-in-out" alt="{{ product.name }}">
+        </div>
+
+        <div class="xl:py-5 pt-5 {{ bgeee ? '' : 'text-white' }} relative z-10">
+            <p class="uppercase text-xs text-neutral-500">
+                {{ product.category.name }}
+            </p>
+            <h2 class="my-1 font-bold min-h-[45px]">
+                {{ product.name }}
+            </h2>
+            <div class="flex items-center text-xs text-neutral-500">
+                {% if product.avg_review == 0 %}
+                {% for i in 0..4 %}
+                    <i class="fa-solid fa-star text-zinc-800 text-[10px]"></i>
+                {% endfor %}
+                {% elseif product.avg_review == 5 %}
+                    {% for i in 0..4 %}
+                        <i class="fa-solid fa-star text-yellow-500  text-[10px]"></i>
+                    {% endfor %}
+                {% else %}
+                    {% for i in 0..product.avg_review-1 %}
+                        <i class="fa-solid fa-star text-yellow-500 text-[10px]"></i>
+                    {% endfor %}
+                    {% for i in 0..4-product.avg_review %}
+                        <i class="fa-solid fa-star text-zinc-800 text-[10px]"></i>
+                    {% endfor %}
+                {% endif %}
+                <p class="ml-1 mt-1">
+                    {{ product.product_reviews|length }} vélemény
+                </p>
+            </div>
+            <h3 class="font-medium text-lg mt-5">
+                <h2 class="font-bold text-xl text-primary">
+                    {{ product.getItemPrice(variant_id, cart.cart.currency.id, false, false, false)|number_format(0, ',', ' ') }}
+                    {{ cart.cart.currency.shortcode }}
+                </h2>
+            </h3>
+            <div class="hidden xl:block opacity-0 group-hover:opacity-100 bg-[#1b402f] text-[#2B3990] w-full mt-5 text-center transition-all ease-in-out rounded-xl px-9 py-2 font-bold uppercase">
+                Részletek
+            </div>
+        </div>
+    </div>
+</a>

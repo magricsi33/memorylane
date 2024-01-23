@@ -1,0 +1,18 @@
+columns:
+    id:
+        label: id
+        type: number
+        width: 50px
+    created_at:
+        label: 'Keresés dátuma'
+        type: datetime
+        sortable: true
+        width: 250px
+    name:
+        label: 'Keresett szó'
+        type: text
+        searchable: true
+    view:
+        label: Megtekintés
+        type: number
+        sortable: true

@@ -1,0 +1,20 @@
+plugin:
+    name: 'codergram.zoldszeged::lang.plugin.name'
+    description: 'codergram.zoldszeged::lang.plugin.description'
+    author: Codergram
+    icon: oc-icon-android
+    homepage: ''
+navigation:
+    main-menu-item:
+        label: Kezelő
+        url: codergram/zoldszeged/blogs
+        icon: icon-gears
+        sideMenu:
+            side-menu-item2:
+                label: Blog
+                url: codergram/zoldszeged/blogs
+                icon: icon-newspaper-o
+            side-menu-item:
+                label: Oldalak
+                url: codergram/zoldszeged/pages
+                icon: icon-align-center

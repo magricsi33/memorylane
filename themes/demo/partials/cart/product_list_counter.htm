@@ -1,0 +1,42 @@
+<div class="number flex items-center justify-between px-2 py-0">
+    {% set item = cart.cart.getItemByProduct(product.id) %}
+
+
+
+    {% if item %}
+    <button
+    data-request="onModifyItemQuantity"
+    data-request-data="id: {{ item.id }}, action: 'remove', quantity: 1"
+    data-request-flash
+        class="minus w-7 h-7 m-w-7 m-h-7 rounded-full bg-primary {{ item.quantity == 1 ? 'opacity-30' }}
+        flex justify-center items-center text-white select-none"
+        id="minus"
+    >
+        {{ item.quantity == 1 ? '<i class="fa-solid fa-trash text-xs"></i>' : '<i class="fa-solid fa-minus text-sm"></i>' }}
+    </button>
+
+    <span class="w-12 h-7 m-w-12 m-h-6 text-center font-bold text-lg select-none bg-transparent text-white">
+        {{ item.quantity }}
+    </span
+    >
+    {% endif %}
+
+    <input
+        type="number"
+        hidden
+        name="quantity"
+        id="quantity"
+        readonly
+        min="1"
+        step="1"
+        value="1"
+    />
+
+    <button
+        type="submit"
+        id="addCartBtn"
+        class="plus w-7 h-7 m-w-7 m-h-7 rounded-full bg-primary flex justify-center items-center text-white select-none"
+    >
+        <i class="fa-solid fa-plus text-xs"></i>
+    </button>
+</div>

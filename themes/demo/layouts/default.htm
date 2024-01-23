@@ -1,0 +1,372 @@
+description = "Default layout"
+
+[cart]
+
+[session]
+security = "all"
+
+[account]
+paramCode = "code"
+forceSecure = 0
+requirePassword = 0
+==
+<?php
+use LivestudioDev\Lscart\Models\Product;
+use LivestudioDev\Lscart\Models\Category;
+use RainLab\User\Facades\Auth;
+use Illuminate\Support\Facades\Cookie;
+use Carbon\Carbon;
+use Codergram\Ecommpay\Classes\EcommpayDriver;
+use Codergram\Shopforge\Models\Sitesearch;
+use Codergram\Zoldszeged\Models\Page;
+
+function onCookie() {
+
+    $lifetime = time() + 60 * 60 * 24 * 365;
+    $value = post('accept');
+
+    Cookie::queue('cookie-management', $value, $lifetime);
+
+}
+
+function onStart()
+{
+    //$ecommpay = new EcommpayDriver();
+
+    $this['menu_items'] = Page::where('show_menu', 1)->get(
+        ['menu_name', 'slug']
+    );
+    $this['footer_items'] = Page::where('show_footer', 1)->get(
+        ['menu_name', 'slug']
+    );
+
+    //$this['links'] = Page::where('public_date', '<', Carbon::now())->get();
+
+    $sitesearchs = Sitesearch::orderBy('view', 'DESC')->limit(7)->get();
+    $this['sitesearchs'] = $sitesearchs;
+
+    //$this['srdata'] = Product::select('id','name','slug','category_id')->where('status', '<>', 0)->with('image')->with('category:id,name,slug')->get();
+
+    $this['categories'] = Category::whereNull('parent_id')->where('active',  1)->with('children')->get();
+
+    $cookie = request()->cookie('cookie-management');
+
+    $this['cookie'] = !isset($cookie);
+    $this['cookieAccept'] = request()->cookie('cookie-management');
+
+    $user = Auth::user();
+
+    // if ($user) {
+    //     $json_user = new StdClass;
+    //     $json_user->id = $user->id;
+    //     $this['json_user'] = json_encode($json_user);
+    // } else {
+    //     $this['json_user'] = null;
+    // }
+
+    // $json_page = new StdClass;
+    // $json_page->id = $this->page->id;
+    // $json_page->title = $this->page->title;
+    // $this['json_page'] = json_encode($json_page);
+
+}
+
+function onSearch() {
+
+    $search = post('search');
+    $products = Product::where('name', 'LIKE', '%'.$search.'%')->limit(10)->orderBy('created_at', 'DESC')->get();
+    $productsNumber = count($products);
+
+    $siteSearch = Sitesearch::where('name', $search)->first();
+
+    if ($siteSearch) {
+        $siteSearch->update([
+            'view' => $siteSearch->view++
+        ]);
+    } else {
+        Sitesearch::create([
+            'name' => $search
+        ]);
+    }
+
+    return [
+        '#search' => $this->renderPartial('site/search', [
+            'searchProducts' => $products,  
+            'productsNumber' => $productsNumber,  
+            'search' => $search,  
+        ]),
+    ];
+}
+
+?>
+==
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <script src="https://kit.fontawesome.com/a1744b640e.js" crossorigin="anonymous"></script>
+        
+        <meta name="description" content="{{ this.page.meta_description }}">
+        <meta name="author" content="Codergram">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="generator" content="Codergram">
+        
+        <!-- Meta adatok -->
+            {% if this.page.baseFileName == 'termek' %}
+                <title>{{ product.meta_title ? product.meta_title : product.name }} - Memorylane</title>
+                <meta name="title" content="{{ product.meta_title != '' ? product.meta_title : product.name }}">
+                <meta name="description" content="{{ product.meta_description }}">
+            {% elseif this.page.baseFileName == 'termekek' %}
+                <title>{{ category.meta_title ? category.meta_title : category.name }} - Memorylane</title>
+                <meta name="title" content="{{ category.meta_title != '' ? category.meta_title : category.name }}">
+                <meta name="description" content="{{ category.meta_description }}">
+            {% else %}
+                <title>{{ this.page.meta_title ? this.page.meta_title : this.page.title }} - Memorylane</title>
+                <meta name="title" content="{{ this.page.meta_title ? this.page.meta_title : this.page.title }}">
+                <meta name="description" content="{{ this.page.meta_description }}">
+            {% endif %}
+        <!-- Meta adatok vége -->
+        <!-- OG TAG -->
+
+            {% if this.page.baseFileName == 'termek' %}
+                <meta property="og:url" content="{{ 'termek'|page({slug: product.slug}) }}" />
+                <meta property="og:type" content="product" />
+                <meta property="og:title" content="{{ product.meta_title != '' ? product.meta_title : product.name }}" />
+                <meta property="og:description" content="{{ product.meta_description != '' ? product.meta_description : this.page.meta_description }}" />
+                <meta property="og:image" content="{{ product.image.path }}" />
+            {% else %}
+                <meta property="og:url" content="{{ this.page.baseFileName|page }}" />
+                <meta property="og:type" content="website" />
+                <meta property="og:title" content="{{ this.page.meta_title ? this.page.meta_title }}" />
+                <meta property="og:description" content="{{ this.page.meta_description ? this.page.meta_description }}" />
+                <meta property="og:image" content="{{ 'assets/images/banner1.jpg'|theme }}" />
+            {% endif %}
+        <!-- OG TAG vége -->
+
+        <meta name="theme-color" content="#111">
+        <link rel="icon" type="image/png" href="/themes/demo/assets/images/logo.svg">
+        <link href="/themes/demo/assets/css/theme.css" rel="stylesheet">
+
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css" />
+        
+        {% styles %}
+
+        <!-- <script>
+            // Create BP element on the window
+            window["bp"] = window["bp"] || function () {
+                (window["bp"].q = window["bp"].q || []).push(arguments);
+            };
+            window["bp"].l = 1 * new Date();
+    
+            // Insert a script tag on the top of the head to load bp.js
+            scriptElement = document.createElement("script");
+            firstScript = document.getElementsByTagName("script")[0];
+            scriptElement.async = true;
+            scriptElement.src = 'https://pixel.barion.com/bp.js';
+            firstScript.parentNode.insertBefore(scriptElement, firstScript);
+            window['barion_pixel_id'] = 'BP-VBHDa7hxa4-31';            
+
+            // Send init event
+            bp('init', 'addBarionPixelId', window['barion_pixel_id']);
+        </script>
+
+        <noscript>
+            <img height="1" width="1" style="display:none" alt="Barion Pixel" src="https://pixel.barion.com/a.gif?ba_pixel_id='BP-VBHDa7hxa4-31'&ev=contentView&noscript=1">
+        </noscript>-->
+    </head> 
+    <body 
+        class="bg-[#f5f5f5]"
+        x-data="{ 
+            categoryOpen: 'null', 
+            buttonHover: 'null', 
+            openModal: 'null', 
+            loading: 'false', 
+            scrollDirection: 'up', 
+            scrollY: 0 }" 
+        @scroll.window="scrollDirection = window.scrollY > (scrollY || 0) ? 'down' : 'up'; scrollY = window.scrollY"
+        :class="{
+                '!overflow-hidden': categoryOpen != 'null' || openModal != 'null'
+            }">
+
+        <div @click="openModal = 'null'" 
+        class="bg-black w-full h-full bg-opacity-70 invisible fixed left-0 top-0 opacity-0 transition-all ease-in-out duration-200 overflow-hidden z-[99999] backdrop-blur-[3px]"
+        :class="{ '!opacity-100 !visible': openModal != 'null' }"></div>
+
+        {% partial 'site/headers/header4img' %}
+
+        <div
+        x-on:click="categoryOpen = 'null'"
+        class="bg-black bg-opacity-70 w-full h-full fixed left-0 top-0 max-h-0 max-w-0 overflow-hidden z-50 backdrop-blur-[5px] transition-opacity ease-in-out duration-300 opacity-0"
+        :class="{
+            '!fixed !max-h-[5000px] !max-w-[5000px] opacity-100': categoryOpen != 'null'
+        }">
+
+        </div>
+
+        <section id="layout-content" class="min-h-screen">
+            {% page %}
+        </section>
+
+        {% if cookie %}
+        <div x-data="{ hidden: 'false' }" 
+        :class="{ '!hidden': hidden == 'true' }"
+        class="fixed left-[50%] -translate-x-[50%] xl:bottom-3 bottom-0 container bg-[#1f1f20] border-t xl:border border-neutral-500 xl:p-7 p-5 z-[9999999] flex flex-wrap items-center">
+            <div class="w-full xl:w-9/12 xl:pr-5 mb-3 xl:mb-0">
+                <p class="text-white font-primary xl:text-lg mb-3 xl:mb-0">
+                    Az Ön adatainak védelme fontos számunkra
+                </p>
+                <p class="text-neutral-400 xl:text-sm text-xs">
+                    Sütiket használunk a weboldal működőképességének biztosításához, és a beleegyezéseddel weboldalunk tartalmának személyre szabásához is. 
+                    Az "Elfogadom" gombra kattintva elfogadod a sütik használatát és a weboldal viselkedésével kapcsolatos adatok átadását a célzott hirdetések 
+                    megjelenítésére a közösségi hálózatokon és más weboldalakon található hirdetési felületeken.
+                </p>
+            </div>
+            <div class="w-full xl:w-3/12">
+                <button @click="hidden = 'true'" type="button" data-request="onCookie" data-request-data="accept: 1" data-request-flash data-request-loading 
+                class="h-[50px] bg-[#2B3990] mb-3 hover:bg-opacity-50 transition-all ease-in-out px-10 text-white font-primary flex items-center justify-center clip-box w-full">
+                    Elfogadom
+                </button>
+                <button @click="hidden = 'true'" type="button" data-request="onCookie" data-request-data="accept: 0" data-request-flash data-request-loading 
+                class="h-[50px] hover:bg-[#666] text-xs hover:bg-opacity-50 transition-all ease-in-out px-10 text-white font-bold flex items-center justify-center clip-box w-full">
+                    Csak a szükségesek elfogadása
+                </button>
+            </div>
+        </div>
+        {% endif %}
+
+        {% partial 'site/registerModal' %}
+        {% partial 'site/loginModal' %}
+        {% partial 'site/searchModal' sitesearchs=sitesearchs %}
+        
+        <footer id="layout-footer">
+            {% partial 'site/footers/footer1' %}
+        </footer>
+        
+        <!-- Scripts -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="/themes/demo/assets/javascript/app.js"></script>
+        <script src="{{ 'assets/javascript/index.min.js'|theme }}"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+        {% framework extras %}
+        {% snowboard base %}
+        
+        {% scripts %}
+
+        <script>
+
+            function checkInput(input) {
+
+                var value = input.value;
+
+                if (input.name == 'search') {
+                    if (value.length >= 4) {
+
+                        $.request("onSearch", {
+                            data: {
+                                'search': input.value,
+                            }
+                        });
+
+                    }
+                }
+
+            }
+
+            $(window).on('ajaxErrorMessage', function (event, message) {
+                event.preventDefault();
+        
+                translated = "";
+
+                if (message == "A user was not found with the given credentials.") {
+                    translated = "Sajnáljuk, rossz jelszót, vagy e-mail címet adtál meg. Próbáld meg újra!";
+                } else if (message == "Invalid activation code supplied.") {
+                    translated = "A megadott aktiválási kód érvénytelen.";
+                } else if (message == "The password you entered was invalid.") {
+                    translated = "A megadott jelszó érvénytelen.";
+                } else if (message == "Successfully activated your account.") {
+                    translated = "A fiók aktiválása sikerült.";
+                } else if (message == "Successfully deactivated your account. Sorry to see you go!") {
+                    translated = "Sikeresen felfüggesztette a fiókját. További szép napot kívánunk!";
+                } else if (message == "Settings successfully saved!") {
+                    translated = "Sikerült menteni a beállításokat!";
+                } else if (message == "You must be logged in first!") {
+                    translated = "Előbb be kell jelentkeznie!";
+                } else if (message == "Your account is already activated!") {
+                    translated = "Már aktiválta a fiókját!";
+                } else if (message == "An activation email has been sent to your email address.") {
+                    translated = "Az aktiválási e-mail elküldése sikeresen megtörtént.";
+                } else if (message == "Registrations are currently disabled.") {
+                    translated = "A regisztráció jelenleg tiltva van az oldalon.";
+                } else if (message.includes("as they are not activated.")) {
+                    translated = "Ezt a felhasználót még nem aktiválták!";
+                } else if (message == 'The email has already been taken.') {
+                    translated = "Sajnáljuk, de ezzel az email címmel már regisztráltak.";
+                } else if(message.includes('The password must be between')) {
+                    translated = "A jelszó legalább 8 karakter hosszú kell legyen.";
+                } else if(message == 'A user was found to match all plain text credentials however hashed credential "password" did not match.') {
+                    translated = "A jelszó helytelen!";
+                } else if (message.includes("A(z) password megerősítés nem egyezik.")) {
+                    translated = "A két jelszó nem egyezik!";
+                } else if (message.includes("The login field is required.")) {
+                    translated = "Az e-mail cím megadása kötelező!";
+                }
+
+                if(!translated) {
+                    return;
+                }
+        
+                $.wn.flashMsg({
+                    interval: 3,
+                    text: translated,
+                    class: 'error'
+                })
+            })
+
+           // bp('consent', 'grantConsent');
+            
+        //     // Barion full pixel
+
+        //     let user = {{ json_user ? json_user|raw : 'null' }};
+        //     let page = {{ json_page|raw }};
+        //     let product = {{ json_product ? json_product|raw : 'null'  }};
+
+        //     if (user != null) {
+        //         const setUserProperties = {
+        //             'userId': user.id,
+        //         }
+        //         bp('track', 'setUserProperties', setUserProperties);
+        //     }
+            
+        //     if (product != null) {
+
+        //         const contentViewProperties = {
+        //             'contentType': 'Product',
+        //             'currency': 'HUF',
+        //             'id': product.id,
+        //             'name': product.name,
+        //             'quantity': $("input[name='quantity']").val(),
+        //             'unit': 'db',
+        //             'unitPrice': product.price / $("input[name='quantity']").val(),
+        //         } 
+        //         bp('track', 'contentView', contentViewProperties);
+        //     } else {
+
+        //         const contentViewProperties = {
+        //             'contentType': 'Page',
+        //             'id': page.id,
+        //             'name': page.title,
+        //         }  
+        //         bp('track', 'contentView', contentViewProperties);
+
+        //     }
+
+        //    // /Barion full pixel
+
+        </script>
+
+    </body>
+</html>

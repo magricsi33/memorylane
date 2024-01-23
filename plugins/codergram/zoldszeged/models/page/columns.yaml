@@ -1,0 +1,10 @@
+columns:
+    name:
+        label: 'Oldal neve'
+        type: text
+    slug:
+        label: 'Keresőbarát név'
+        type: text
+    public:
+        label: Publikus
+        type: switch

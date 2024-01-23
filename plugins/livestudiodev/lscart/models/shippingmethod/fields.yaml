@@ -1,0 +1,104 @@
+fields:
+    name:
+        label: Megnevezés
+        span: auto
+        type: text
+    active:
+        label: Aktív-e
+        span: auto
+        type: switch
+    description:
+        label: 'Szállítási mód leírása'
+        size: large
+        span: auto
+        type: richeditor
+    logo:
+        label: Logó
+        mode: file
+        useCaption: true
+        thumbOptions:
+            mode: crop
+            extension: auto
+        span: auto
+        type: fileupload
+tabs:
+    fields:
+        payments:
+            label: 'Fizetési módok'
+            prompt: 'Adjon hozzá fizetési módot'
+            span: auto
+            type: repeater
+            tab: 'Fizetési módok'
+            form:
+                fields:
+                    payment:
+                        label: 'Fizetési mód'
+                        nameFrom: name
+                        descriptionFrom: description
+                        span: auto
+                        type: relation
+                        commentAbove: 'Ez jelenik meg a lenyíló listában'
+                    value:
+                        label: 'Fizetési mód összege'
+                        span: auto
+                        type: number
+                        commentAbove: '(Opcionális) Ez az összeg az alap szállítási költséghez adódik hozzá'
+        prices:
+            label: 'Árazási szabályok'
+            prompt: 'Adjon hozzá szabályokat'
+            span: full
+            type: repeater
+            tab: 'Árazási szabályok'
+            form:
+                fields:
+                    condition1:
+                        label: 'Szabály feltétel 1'
+                        options:
+                            more: '> (Több mint)'
+                            equal: '= (Egyenlő)'
+                            less: '< (Kevessebb mint)'
+                        showSearch: 0
+                        span: auto
+                        type: dropdown
+                    condition2:
+                        label: 'Szabály feltétel 2'
+                        options:
+                            more: '> (Több mint)'
+                            equal: '= (Egyenlő)'
+                            less: '< (Kevessebb mint)'
+                        showSearch: 0
+                        span: auto
+                        type: dropdown
+                    condition1_value:
+                        label: 'Szabály 1 érték'
+                        span: auto
+                        type: number
+                    condition2_value:
+                        label: 'Szabály 2 érték'
+                        span: auto
+                        type: number
+                    type:
+                        label: 'Szabály típus'
+                        options:
+                            weight: Tömeg
+                            fullprice: Összár
+                        showSearch: 0
+                        span: auto
+                        type: dropdown
+                    value:
+                        label: 'Szállítási költség'
+                        span: auto
+                        type: number
+        delivery_delay:
+            label: 'Várható kiszállítás'
+            span: auto
+            type: number
+            comment: (napokban)
+            tab: Egyéb
+        vatkey:
+            label: Adókulcs
+            nameFrom: name
+            descriptionFrom: description
+            span: auto
+            type: relation
+            tab: Egyéb

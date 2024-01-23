@@ -1,0 +1,19 @@
+columns:
+    id:
+        label: id
+        type: number
+    name:
+        label: name
+        type: text
+    end_date:
+        label: end_date
+        type: text
+    code:
+        label: code
+        type: text
+    value_type:
+        label: value_type
+        type: text
+    value:
+        label: value
+        type: number

@@ -1,0 +1,10 @@
+1.0.1:
+    - Initialize plugin.
+1.0.2:
+    - Added Payment Gate Field to Payment Methods
+1.0.3:
+    - Alpha version
+1.0.4:
+    - Removed payment_gate from extension.
+1.0.5:
+    - Finalized plugin as extension.

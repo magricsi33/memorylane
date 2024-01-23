@@ -1,0 +1,87 @@
+<!-- {% if user is defined and user.discounts[0] is defined %}
+    {% set temp = {} %}
+    {% for discount in user.discounts[0].discounts %}
+        {% if product.category.id == discount['category'] %}
+            {% set temp = {'value': discount['value'], 'name': user.discounts[0].name} %}
+        {% endif %}
+    {% endfor %}
+    {% set empDiscount = temp %}
+{% endif %} -->
+
+<a href="{{ 'termek'|page({category: product.category.slug, product: product.slug}) }}" class="relative">
+    <!-- <div class="absolute z-10 left-2 top-2 w-full h-full bg-black opacity-70 clip-box"></div> -->
+
+    <div class="group bg-black p-0 relative transition-all ease-in-out clip-box z-20" >
+
+        <div class="xl:px-3 px-1 py-1 xl:py-2 text-[10px] font-bold text-white bg-[#777777] w-max uppercasea absolute left-2 top-2 z-20 uppercase"
+        style="clip-path: polygon(0 0,calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));">
+            {{ product.category.name }}
+        </div>
+
+        <!-- {% if product.isDiscounted %}
+            <div
+                type="type"
+                @click="openModal = 'null'"
+                class="w-[50px] h-[50px] flex items-center justify-center clip-box bg-[#2B3990] absolute -right-0 -top-0 z-20"
+            >
+                <span class="rotate-45 text-white font-primary">
+                    -{{ product.discount.discount }}%
+                </span>
+            </div>
+        {% endif %} -->
+
+        <div class="w-full relative z-10 bg-white overflow-hidden xl:h-[230px] h-[150px] flex justify-center p-4">
+
+            {% if product.created_at > 'now'|date_modify("-14 day") %}
+                <div class="px-4 py-1 text-xs font-primary text-white bg-[#2B3990] w-max uppercasea absolute left-2 bottom-2 z-20 uppercase"
+                style="clip-path: polygon(0 0,calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));">
+                    új
+                </div>
+            {% endif %}
+
+            <!-- {% if product.getStorageItem().stock == 0 %}
+                <div class="px-4 py-1 text-xs font-primary text-white bg-[#2B3990] w-max uppercasea absolute left-2 bottom-2 z-20 uppercase"
+                style="clip-path: polygon(0 0,calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));">
+                    Nincs raktáron
+                </div>
+            {% endif %} -->
+
+
+            <img src="{{ product.image.path }}" 
+            loading="lazy"
+            class="object-contain object-center w-full h-full transition-all ease-in-out group-hover:scale-105" 
+            alt="{{ product.name }}">
+   
+        </div>
+
+        <div class="relative z-10 xl:py-5 py-2 bg-[#0F0F10]">
+            <h2 class="my-1 h-[80px] font-primary xl:px-5 px-3 text-white xl:text-base text-sm">
+                {{ product.name|length > 80 ? product.name|slice(0, 80) ~ '...' : product.name }}
+            </h2>
+            <div class="description text-xs mb-3 text-[#888] h-[80px] overflow-hidden xl:px-5 px-3">
+                    
+     
+
+                    <!-- <strong class="text-[#888]">
+                        {{ prop.name }}:
+                    </strong> {{ prop.extra[prop.pivot.propertable_value].item }} {{ not loop.last ? ',' : '' }} -->
+
+     
+                
+            </div>
+        </div>
+        <div class="xl:grid xl:grid-cols-2 flex items-center flex-row-reverse w-full xl:h-[50px] h-[40px]">
+            <div class="bg-black flex items-center justify-center px-3 xl:px-0">
+                <span class="text-white font-primary hidden xl:block">Részletek</span>
+                <i class="fa-solid fa-arrow-right xl:hidden text-white"></i>
+            </div>
+            <div class="bg-[#2B3990] flex items-center justify-center h-full w-full">
+                {% partial 'product/priceSmall' empDiscount=empDiscount %}
+            </div>
+            <!-- <div class="border-[#2B3990] border-opacity-30 border text-sm text-[#2B3990] group-hover:bg-[#2B3990] group-hover:text-white w-max text-center 
+            transition-all ease-in-out rounded-xl px-3 py-3 font-bold">
+                
+            </div> -->
+        </div>
+    </div>
+</a>

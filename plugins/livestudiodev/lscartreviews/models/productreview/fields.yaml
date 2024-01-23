@@ -1,0 +1,40 @@
+fields:
+    star:
+        label: Értékelés
+        span: auto
+        type: number
+    name:
+        label: 'Beküldő neve'
+        span: auto
+        type: text
+    product:
+        label: Termék
+        span: auto
+        nameFrom: name
+        descriptionFrom: description
+        type: relation
+    variant_id:
+        label: 'Variáns / Változat'
+        emptyOption: 'Nincs változat!'
+        showSearch: true
+        span: auto
+        type: dropdown
+    accepted:
+        label: Jóváhagyva
+        span: auto
+        type: switch
+    trimmable:
+        label: 'Név trimmelése'
+        span: auto
+        default: 1
+        type: switch
+        comment: 'pl.: Foo Bar -> F. Bar vagy Foo Foo Bar -> F. F. Bar'
+    comment:
+        label: Szöveg
+        size: huge
+        span: full
+        type: textarea
+    showtext:
+        label: 'Szöveges értékelés megjelenik'
+        span: auto
+        type: switch

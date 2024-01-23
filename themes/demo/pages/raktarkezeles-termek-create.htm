@@ -1,0 +1,290 @@
+title = "Raktárkezelés"
+url = "/raktarkezeles/letrehozas"
+layout = "default"
+meta_title = "Online Zerocity Rendeléskövetés"
+is_hidden = 0
+
+[session]
+security = "user"
+allowedUserGroups[] = "raktarkezelo"
+==
+<?php
+use LivestudioDev\Lscart\Models\Category;
+use LivestudioDev\Lscart\Models\Product;
+use LivestudioDev\Lscartreviews\Models\ProductReview;
+use RainLab\User\Facades\Auth;
+
+function onStart()
+{
+    $inputs = [
+        [
+            'field' => 'name', 
+            'label' => 'Termék neve',
+            'type' => 'text',
+        ], 
+        [
+            'field' => 'supplier_price_netto', 
+            'label' => 'Termék Nettó ára',
+            'type' => 'text',
+        ], 
+        [
+            'field' => 'category', 
+            'label' => 'Kategória',
+            'type' => 'select',
+        ], 
+        [
+            'field' => 'stock', 
+            'label' => 'Raktárkészlet',
+            'type' => 'number',
+            'value' => '0'
+        ], 
+        [
+            'field' => 'url', 
+            'label' => 'Minta termék elérhetősége',
+            'type' => 'text',
+        ], 
+    ];
+    $this['inputs'] = $inputs;
+    //dd($inputs);
+}
+
+// public static function slugify($text, string $divider = '-')
+// {
+//   // replace non letter or digits by divider
+//   $text = preg_replace('~[^\pL\d]+~u', $divider, $text);
+
+//   // transliterate
+//   $text = iconv('utf-8', 'us-ascii//TRANSLIT', $text);
+
+//   // remove unwanted characters
+//   $text = preg_replace('~[^-\w]+~', '', $text);
+
+//   // trim
+//   $text = trim($text, $divider);
+
+//   // remove duplicate divider
+//   $text = preg_replace('~-+~', $divider, $text);
+
+//   // lowercase
+//   $text = strtolower($text);
+
+//   if (empty($text)) {
+//     return 'n-a';
+//   }
+
+//   return $text;
+// }
+
+function onCreateProduct() {
+    $product = new Product();
+
+    $product->name = post('name');
+
+    $supplier_price_netto = post('supplier_price_netto');
+    $supplier_price_brutto = $supplier_price_netto * 1.27;
+
+    $product->supplier_price_netto = $supplier_price_netto;
+    $product->supplier_price_brutto = $supplier_price_brutto;
+
+    $product->price_brutto = $supplier_price_brutto * 1.10;
+    $product->price = $supplier_price_brutto * 1.10;
+
+    $product->category = post('category');
+    $product->stock = post('stock');
+    $product->status = 0;
+    $product->unit_id = 1;
+    $product->description = 'URL'. post('url');
+
+    if ($product->save()) {
+        return Redirect::to("/raktarkezeles");
+    } else {
+        Flash::error("Valami hiba törént");
+    }
+
+}
+?>
+==
+<div id="raktarkezeles" class="xl:mt-28 container w-11/12 xl:w-full mx-auto">    
+    <div class="w-full mx-auto border-t border-zinc-900 text-white pb-10">
+        <div class="flex items-center border-b border-zinc-900 bg-zinc-900 py-3 w-full">
+            <div class="px-2 xl:w-7/12 w-full">
+                <p class="font-bold">
+                    Új termék létrehozása
+                </p>
+            </div>
+        </div>
+
+        <form data-request="onCreateProduct" data-request-flash>
+            <div class="mt-5 flex flex-wrap">
+                {% for input in inputs %}
+                    <div class="xl:w-3/12 w-full px-2 mb-3">
+    
+                        {% if input.type == 'select' %}
+                            <div class="w-full form-floating mb-3">
+                                {% if input.field == 'category' %}
+                                    <select class="form-control custom" name="{{ input.field }}" id="{{ input.field }}"  placeholder="{{ input.label }}">
+                                        {% for category in categories %}
+                                            <optgroup class="text-primary bg-zinc-900" label="{{ category.name }}">
+                                                
+                                                {% for child in category.children %}
+    
+                                                    {% if child.children|length == 0 %}
+                                                        <option {{ child.id == product.category.id ? 'selected' }} class="text-white bg-zinc-900" value="{{ child.id }}">{{ child.name }}</option>
+                                                    {% else %}
+                                                    
+                                                    <optgroup class="text-white bg-zinc-900" label="▸ {{ child.name }}">
+                                                        {% for sChild in child.children %}
+                                                            <option {{ sChild.id == product.category.id ? 'selected' }} class="text-white bg-zinc-900" value="{{ sChild.id }}">▸ {{ sChild.name }}</option>
+                                                        {% endfor %}
+                                                    </optgroup>
+                                                    {% endif %}
+    
+                                                {% endfor %} 
+                                                
+                                            </optgroup>
+                                        {% endfor %} 
+                                    </select>
+                                    <label for="{{ input.field }}" class="text-zinc-500 text-lg">{{ input.label }}</label>
+                                {% elseif input.field == 'status' %}
+                                    <select class="form-control custom" name="{{ input.field }}" id="{{ input.field }}"  placeholder="{{ input.label }}">
+                                        {% for i in 0..2 %}
+                                            <option {{ loop.index == 2 ? 'selected' }}  class="text-white bg-zinc-900" value="{{ loop.index-1 }}">
+                                                {{ loop.index-1 == 0 ? 'Inaktív' }}    
+                                                {{ loop.index-1 == 1 ? 'Aktív' }}
+                                                {{ loop.index-1 == 2 ? 'Aktív, de nem elérhető' }}
+                                            </option>
+                                        {% endfor %} 
+                                    </select>
+                                    <label for="{{ input.field }}" class="text-zinc-500 text-lg">{{ input.label }}</label>
+                                {% endif %}
+                            </div>
+                        {% else %}
+                            <div class="w-full form-floating mb-3">
+                                <input type="{{ input.type }}" class="form-control custom" name="{{ input.field }}" id="{{ input.field }}" value="{{ input.value }}" placeholder="{{ input.label }}">
+                                <label for="{{ input.field }}" class="text-zinc-500 text-lg mt-1">{{ input.label }}</label>
+                            </div>
+                        {% endif %}
+    
+                    </div>
+                {% endfor %}
+            </div>
+
+
+            <!-- <div class="px-2 flex items-center justify-between jus border-b border-zinc-900 bg-zinc-900 py-3 w-full">
+                <p class="font-bold">
+                    Termék változatok
+                </p>
+            </div>
+
+            <div class="border border-zinc-900 p-3">
+                <div class="mt-5 flex flex-wrap">
+                    <div class="xl:w-4/12 w-full form-floating mb-3 px-2">
+                        <input type="{{ input.type }}" class="form-control custom" name="variant_name" id="variant_name" placeholder="Megnevezés">
+                        <label for="variant_name" class="text-zinc-500 text-lg mt-1">
+                            Megnevezés
+                        </label>
+                    </div>
+                    <div class="xl:w-4/12 w-full form-floating mb-3 px-2">
+                        <input type="{{ input.type }}" class="form-control custom" name="variant_name" id="variant_name" placeholder="Megnevezés">
+                        <label for="variant_name" class="text-zinc-500 text-lg mt-1">
+                            Cikkszám
+                        </label>
+                    </div>
+                    <div class="xl:w-4/12 w-full form-floating mb-3 px-2">
+                        <input type="{{ input.type }}" class="form-control custom" name="variant_name" id="variant_name" placeholder="Megnevezés">
+                        <label for="variant_name" class="text-zinc-500 text-lg mt-1">
+                            Árdifferencia
+                        </label>
+                    </div>
+                    <div class="xl:w-4/12 w-full form-floating mb-3 px-2">
+                        <input type="{{ input.type }}" class="form-control custom" name="variant_name" id="variant_name" placeholder="Megnevezés">
+                        <label for="variant_name" class="text-zinc-500 text-lg mt-1">
+                            Raktár
+                        </label>
+                    </div>
+                </div> 
+                <div class="w-full flex justify-end">
+                    <button
+                    type="submit"
+                    class="w-max py-4 mt-5 px-8 text-white border border-[#2B3990] hover:bg-[#2B3990] bg-clip-padding shadow-lg rounded-lg transition ease-in-out
+                    disabled:opacity-50 uppercase font-bold">
+                        Hozzáadás
+                    </button>
+                </div>
+            </div>
+            {% for variant in product.variants %}
+            <div class="border border-zinc-900 p-3 flex items-center">
+                <div class="xl:w-3/12 w-full">
+                    {{ variant.name }}
+                </div>
+                <div class="xl:w-3/12 w-full">
+                    {{ variant.status == 0 ? 'Inaktív' }}
+                    {{ variant.status == 1 ? 'Aktív' }}
+                    {{ variant.status == 2 ? 'Inaktív' }}
+                </div>
+                <div class="xl:w-3/12 w-full">
+                    {{ variant.stock }} {{ product.unit.name }}
+                </div>
+                <div class="xl:w-3/12 w-full text-end">
+                    <a href="" class="font-bold text-green-600 mr-5">
+                        Módosítás
+                    </a>
+                    <a href="" class="font-bold text-red-600">
+                        Törlés
+                    </a>
+                </div>
+            </div>
+            {% endfor %} -->
+
+
+            <div class="w-full flex justify-end">
+                <a
+                href="/raktarkezeles"
+                class="w-max py-4 mt-5 mr-5 px-8 text-white border border-red-600 hover:bg-red-600 bg-clip-padding shadow-lg rounded-lg transition ease-in-out
+                disabled:opacity-50 uppercase font-bold">
+                    Mégse
+                </a>
+                <button
+                type="submit"
+                class="w-max py-4 mt-5 px-8 text-white border border-[#2B3990] hover:bg-[#2B3990] bg-clip-padding shadow-lg rounded-lg transition ease-in-out
+                disabled:opacity-50 uppercase font-bold">
+                    Létrehozás
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% put scripts %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/inputmask/4.0.9/jquery.inputmask.bundle.min.js" integrity="sha512-VpQwrlvKqJHKtIvpL8Zv6819FkTJyE1DoVNH0L2RLn8hUPjRjkS/bCYurZs0DX9Ybwu9oHRHdBZR9fESaq8Z8A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+        $(document).ready(() => {
+        Inputmask.extendAliases({
+            huf: {
+                suffix: " Ft",
+                groupSeparator: " ",
+                alias: "numeric",
+                placeholder: "0",
+                autoGroup: true,
+                digits: 0,
+                digitsOptional: false,
+                clearMaskOnLostFocus: true,
+				rightAlign: false
+            },
+
+            tel: {
+                mask: '+36 (99) 999-9999',
+                clearMaskOnLostFocus: true,
+                showMaskOnHover: false,
+            },
+        });
+
+        Inputmask.extendDefaults({
+            'removeMaskOnSubmit': true
+        });
+
+        $("#supplier_price_netto").inputmask({ alias : "huf" });
+		$("#phone").inputmask({ alias : "tel" });
+    })
+</script>
+{% endput %}

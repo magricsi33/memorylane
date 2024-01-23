@@ -1,0 +1,24 @@
+plugin:
+    name: 'codergram.shopforge::lang.plugin.name'
+    description: 'codergram.shopforge::lang.plugin.description'
+    author: Codergram
+    icon: oc-icon-shopping-cart
+    homepage: ''
+navigation:
+    main-menu-item:
+        label: Moduls
+        url: codergram/shopforge/subscribers
+        icon: icon-sitemap
+        sideMenu:
+            side-menu-item:
+                label: Feliratkozók
+                url: codergram/shopforge/subscribers
+                icon: icon-bell
+            side-menu-item2:
+                label: Oldalak
+                url: codergram/shopforge/pages
+                icon: icon-pencil
+            side-menu-item3:
+                label: Keresések
+                url: codergram/shopforge/sitesearch
+                icon: icon-search

@@ -1,0 +1,53 @@
+columns:
+    id:
+        label: id
+        type: number
+    name:
+        label: name
+        type: text
+        searchable: true
+    product_id:
+        label: product_id
+        type: number
+        searchable: true
+    partner:
+        label: partner
+        type: text
+    updated_at:
+        label: updated_at
+        type: datetime
+    stock:
+        label: stock
+        type: number
+        sortable: true
+    cikkszam:
+        label: cikkszam
+        type: text
+        searchable: true
+    price_brutto:
+        label: price_brutto
+        type: number
+        sortable: true
+    price_netto:
+        label: price_netto
+        type: number
+        sortable: true
+    category_id:
+        label: category_id
+        type: number
+        select: name
+        relation: category
+    type:
+        label: type
+        type: text
+    brand:
+        label: brand
+        type: text
+    transport:
+        label: Várható
+        type: text
+        sortable: true
+    b_sku:
+        label: 'Gyári cikksz.'
+        type: text
+        searchable: true

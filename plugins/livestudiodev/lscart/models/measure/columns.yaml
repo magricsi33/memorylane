@@ -1,0 +1,11 @@
+columns:
+    id:
+        label: Azonosító
+        type: number
+    name:
+        label: 'Mértékegység neve'
+        type: text
+        searchable: true
+    products:
+        label: 'Ennyi termék használja'
+        type: number

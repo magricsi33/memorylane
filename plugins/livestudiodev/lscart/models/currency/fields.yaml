@@ -1,0 +1,18 @@
+fields:
+    label:
+        label: 'Pénznem neve'
+        span: auto
+        type: text
+    code:
+        label: 'Pénznem kódja (pl.:  HUF)'
+        span: auto
+        type: text
+    shortcode:
+        label: 'Pénznem rövidítése (pl.: Ft)'
+        span: auto
+        type: text
+    exchange_value:
+        label: 'Valuta váltó egységértéke'
+        span: auto
+        type: number
+        comment: '(pl.: HUF = 1)'

@@ -1,0 +1,30 @@
+columns:
+    id:
+        label: Azonosító
+        type: number
+        sortable: true
+    name:
+        label: Megnevezés
+        type: text
+        searchable: true
+    pricediff:
+        label: Árdifferencia
+        type: text
+        sortable: true
+    sku:
+        label: Cikkszám
+        type: text
+        searchable: true
+        sortable: true
+    statusName:
+        label: Státusz
+        type: text
+        sortable: false
+    created_at:
+        label: 'Létrehozás '
+        type: datetime
+        sortable: true
+    stock:
+        label: Raktáron
+        type: number
+        sortable: true

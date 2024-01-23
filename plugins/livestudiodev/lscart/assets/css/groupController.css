@@ -1,0 +1,31 @@
+.card {
+    width: 100%;
+    height: 350px;
+    background-color: rgba(206, 206, 206, 0.5);
+    border-radius: 7px;
+    margin-bottom: 35px;
+    padding: 30px;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    font-size: 42px;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: all ease-in-out 250ms;
+}
+
+.card:hover {
+    background-color: rgba(206, 206, 206,1);
+    cursor: pointer;
+}
+
+.card i {
+    margin-bottom: 15px;
+    font-size: 72px;
+}
+
+a,a:hover,a:focus {
+    text-decoration: none;
+}

@@ -1,0 +1,46 @@
+fields:
+    name:
+        label: 'Akció neve'
+        span: auto
+        type: text
+    active:
+        label: 'Aktív-e az akció'
+        span: auto
+        default: 1
+        type: switch
+    date_start:
+        label: 'Akció kezdete'
+        mode: datetime
+        span: auto
+        type: datepicker
+    date_end:
+        label: 'Akció vége'
+        mode: datetime
+        span: auto
+        type: datepicker
+    discount:
+        label: 'Kedvezmény mértéke'
+        span: auto
+        disabled: 0
+        type: number
+tabs:
+    fields:
+        products:
+            label: Termékek
+            prompt: 'Adjon hozzá termékeket'
+            span: full
+            type: repeater
+            tab: Termékek
+            form:
+                fields:
+                    product:
+                        label: Termék
+                        nameFrom: name
+                        descriptionFrom: description
+                        span: auto
+                        type: relation
+                    active:
+                        label: 'Szerepel az akcióban'
+                        span: auto
+                        default: 1
+                        type: switch

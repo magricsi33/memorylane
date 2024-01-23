@@ -1,0 +1,95 @@
+{% if user and not product.isDiscounted and (empDiscount is not null and empDiscount|length > 0) %}
+    <!-- Felhasználói kedvezmény -->
+    <del>
+        <h2 class="prim mb-0">
+            {{ product.getItemPrice(variant_id, cart.cart.currency.id, false, false, false)|number_format(0, ',', ' ') }}
+            {{ cart.cart.currency.shortcode }}
+        </h2>
+        <!-- <p class="text-secondary">
+            {{ product.getItemPriceNetto(variant_id, cart.cart.currency.id, false, false, false)|number_format(0, ',', ' ') }}
+            {{ cart.cart.currency.shortcode }} + ÁFA
+        </p> -->
+    </del>
+    <div class="absolute right-0 top-0 bg-primary px-2 py-1 oswald font-medium rounded-lg">
+        {{ empDiscount.value }}%
+    </div>
+    <h2 class="font-medium text-4xl text-primary oswald">
+        {{ product.getItemPrice(variant_id, null, false, null, user and user.discounts ? user.discounts : null)|number_format(0, ',', ' ') }}
+        {{ cart.cart.currency.shortcode }}
+    </h2>
+    <p class="mb-0 text-success mt-3">{{ empDiscount.name }}</p>
+    <!-- <p class="text-secondary">
+        {{ product.getItemPriceNetto(variant_id, null, false, null, user and user.discounts ? user.discounts : null)|number_format(0, ',', ' ') }}
+        {{ cart.cart.currency.shortcode }} + ÁFA
+    </p> -->
+    <!-- /Felhasználói kedvezmény -->
+{% elseif not user and product.isDiscounted %}
+<div class="flex items-center gap-3">
+
+    <!-- {% if empDiscount is not null and empDiscount|length > 0 %}
+        <p class="mb-0 text-success mt-3 font-weight-bold">
+            {{ empDiscount.name }}, -{{ empDiscount.value }}%
+        </p>
+    {% endif %} -->
+
+    <h2 class="text-primary font-primary">
+        {{ product.getItemPrice(variant_id, null, true, null, null)|number_format(0, ',', ' ') }}
+        {{ cart.cart.currency.shortcode }}
+    </h2>
+    <del>
+        <p class="opacity-50">
+            {{ product.getItemPrice(variant_id, cart.cart.currency.id, false, false, false)|number_format(0, ',', ' ') }}
+            {{ cart.cart.currency.shortcode }}
+        </p>
+    </del>
+</div>
+{% else %}
+    {% if product.isDiscounted %}
+    
+        <div class="flex items-center gap-3">
+            <del>
+                <p class="text-xs">
+                    {{ product.getItemPrice(variant_id, cart.cart.currency.id, false, false, false)|number_format(0, ',', ' ') }}
+                    {{ cart.cart.currency.shortcode }}
+                </p>
+            </del>
+            <!-- {% if empDiscount is not null and empDiscount|length > 0 %}
+                <p class="mb-0 text-success mt-3 font-weight-bold">
+                    {{ empDiscount.name }}, -{{ empDiscount.value }}%
+                </p>
+            {% endif %} -->
+    
+            <h2 class="font-medium text-xl font-primary">
+                {{ product.getItemPrice(variant_id, null, true, null, null)|number_format(0, ',', ' ') }}
+                {{ cart.cart.currency.shortcode }}
+            </h2>
+        </div>
+
+    {% else %}
+        <!-- Alap árképzés -->
+        <h2 class="font-medium text-sm font-primary">
+            {{ product.getItemPrice(variant_id, cart.cart.currency.id, false, false, false)|number_format(0, ',', ' ') }}
+            {{ cart.cart.currency.shortcode }}
+        </h2>
+        <!-- Alap árképzés -->
+    {% endif %}
+
+    <!-- Akció -->
+
+    <div class="mt-0">
+        {% if empDiscount is not null and empDiscount|length > 0 %}
+        <h2 class="mb-0 prim">
+            {{ product.getItemPrice(variant_id, cart.cart.currency.id,true, null , user and user.discounts ? user.discounts : null)|number_format(0, ',', ' ') }}
+            {{ cart.cart.currency.shortcode }}
+        </h2>
+        <small>
+            Nettó ár:
+            {{ product.getItemPriceNetto(variant_id, cart.cart.currency.id,true, null , user and user.discounts ? user.discounts : null)|number_format(0, ',', ' ') }}
+            {{ cart.cart.currency.shortcode }} + ÁFA
+        </small>
+        {% endif %}
+    </div>
+    
+    <!-- / Akció -->
+
+{% endif %}

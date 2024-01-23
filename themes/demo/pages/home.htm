@@ -1,0 +1,199 @@
+title = "Főoldal" 
+url = "/" 
+layout = "default" 
+==
+<?php
+use LivestudioDev\Lscart\Models\Category;
+use LivestudioDev\Lscart\Models\Product;
+use Codergram\Slider\Models\Slider;
+use Codergram\Slider\Models\Banner;
+use Codergram\Shopforge\Models\Subscriber;
+use \Winter\Storm\Database\Traits\Validation;
+use LivestudioDev\Lscartreviews\Models\ProductReview;
+
+function onStart()
+{
+
+    $this['categories'] = Category::whereNull('parent_id')->where('active',  1)->with('children')->get();
+
+    $products = Product::where('status', '<>', 0)->orderBy('sort_order', 'ASC')->limit(8)->with('properties', 'image')->get();
+
+    $this['sliders'] = Slider::orderBy('sort_order', 'asc')->get();
+    $this['banners'] = Banner::all();
+
+    // foreach ($products as $item) {
+
+    //     $item->product_reviews = ProductReview::where('product_id', $item->id)->where('accepted', 1)->get();
+    //     $sum = 0;
+    
+    //     if(count($item->product_reviews) > 0) {
+    //         foreach($item->product_reviews as $review) {
+    //             $sum += floatval($review->star);
+    //         }
+    
+    //         $item->avg_review = floatval($sum / count($item->product_reviews));
+    //     } else {
+    //         $item->avg_review = 0;
+    //     }
+    
+    // }
+    
+    $products = Product::with('properties', 'image')
+        ->where('status', 1)
+        ->orderBy('created_at', 'DESC')
+        ->limit(20)
+        ->get();
+    
+    $products = $products->toArray();
+
+    $products = Product::hydrate($products);
+
+    $this['products'] = $products;
+    //$this['random_products'] = Product::inRandomOrder()->where([['status', 1]])->with('properties', 'image')->limit(4)->get();
+    // $this['new_products'] = $new_products;
+
+}
+
+function onCreateSub() {
+
+    $data = post();
+
+    $rules = [
+        'email' => 'required|email',
+    ];
+
+    $messages = [
+        'required' => 'A(z) :attribute megadása kötelező!',
+        'email' => 'A(z) :attribute mező formátuma nem megfelelő!',
+    ];
+
+    $validation = Validator::make($data, $rules, $messages);
+
+    $validation->setAttributeNames([
+        'email' => 'e-mail',
+    ]);
+
+    if ($validation->fails()) {
+        throw new ValidationException($validation);
+    } else {
+
+        $equal = 0;
+        $subs = Subscriber::all();
+
+        foreach ($subs as $item) {
+            if ($item->email == post('email')) {
+                $equal = 1;
+            }
+        }
+
+        if ($equal == 1) {
+            Flash::error("Már feliratkoztál hírlevelünkre. Egy e-mail cím, csak egy személyhez tartozhat.");
+        } else {
+            $sub = new Subscriber();
+            $sub->email = post('email');
+            $sub->active = 1;
+            
+    
+        
+            if ($sub->save()) {
+                Flash::success("Sikeresen feliratkoztál hírlevelünkre!");
+            } else {
+                Flash::error("Valami hiba törént");
+            }
+        }
+
+    }
+
+}
+?>
+==
+<div id="home">
+    {% partial 'elements/sliders/full' %}
+    <div class="w-full mx-auto pb-20 pt-20">
+        <div class="container mx-auto mt-6 w-11/12">
+
+            <!-- <div class="grid xl:grid-cols-2 gap-6 flex items-center justify-center">
+                <div class="bg-[#0F0F10] relative clip-box-big">
+                    <div class="bg-gradient-to-t from-black to-transparent absolute left-0 top-0 w-full h-full"></div>
+                    <img src="{{ 'assets/images/1.png'|theme }}" class="w-full xl:h-[300px] h-[200px] object-cover" alt="">
+                    <div class="font-primary xl:text-4xl text-2xl text-white py-5 pl-8 pr-5 absolute bottom-0 left-0 w-full z-20">
+                        Telefonok és kiegészítők
+                    </div>
+                </div>
+                <div class="bg-[#0F0F10] relative clip-box-big">
+                    <div class="bg-gradient-to-t from-black to-transparent absolute left-0 top-0 w-full h-full"></div>
+                    <img src="{{ 'assets/images/2.png'|theme }}" class="w-full xl:h-[300px] h-[200px] object-cover" alt="">
+                    <div class="font-primary xl:text-4xl text-2xl text-white py-5 pl-8 pr-5 absolute bottom-0 left-0 w-full z-20">
+                        Számítógépalkatrészek
+                    </div>
+                </div>
+            </div> -->
+
+            <div class="w-full flex flex-wrap items-center gap-3 xl:gap-0 justify-between pt-[80px]">
+                <!-- <div>
+                    <h2 class="font-primary text-white xl:text-5xl text-4xl">
+
+                    </h2>
+                    <p class="text-[#888] mt-2">
+                        Válogass legújabb termékeink között
+                    </p>
+                </div> -->
+                <div>
+                    <!-- <a href="">
+                        <div class="h-[50px] bg-[#2B3990] hover:bg-opacity-50 px-10 text-white font-bold flex items-center justify-center clip-box">
+                            Összes termék megtekintése
+                        </div>
+                    </a> -->
+                </div>
+            </div>
+            <div class="grid xl:grid-cols-4 gap-5 mt-6">
+                {% for product in products %}
+                    {% partial 'elements/product/productBox' product=product %}
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- {% partial 'elements/ctoBoxs/simple' %} -->
+
+        <!-- {% if banners|length > 0 %}
+            {% partial 'elements/banners/simple' banner=random(banners) %}
+        {% endif %}
+
+        <div class="container mx-auto mt-6 w-11/12">
+
+            <div class="w-full flex flex-wrap gap-3 xl:gap-0 items-center justify-between pt-[80px]">
+                <div>
+                    <h2 class="font-primary text-white xl:text-5xl text-4xl">
+                        Népszerű termékek
+                    </h2>
+                    <p class="text-[#888] mt-2">
+                        Válogass legnépszerűbb termékeink között
+                    </p>
+                </div>
+                <div>
+                    <a href="">
+                        <div class="h-[50px] bg-[#2B3990] px-10 text-white font-bold flex items-center justify-center clip-box">
+                            Összes termék megtekintése
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="grid xl:grid-cols-4 gap-5 mt-6">
+                {% for product in products %}
+                    {% partial 'elements/product/productBox' product=product %}
+                {% endfor %}
+            </div>
+
+        </div>
+        {% if banners|length > 1 %}
+        {% partial 'elements/banners/simple' banner=random(banners) %}
+        {% endif %} -->
+    </div>
+</div>
+
+{% put scripts %}
+<script>
+	const nexticon = '<i class="fa-regular fa-chevron-right"></i>';
+	const previcon = '<i class="fa-regular fa-chevron-left"></i>';
+</script>
+{% endput %}

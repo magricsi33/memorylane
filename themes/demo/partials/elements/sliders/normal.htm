@@ -1,0 +1,77 @@
+<div class="relative xl:h-[750px] h-[500px] bg-red-500 overflow-hidden">
+    <div class="absolute left-0 top-0 w-full h-full slider-gradient z-10 p-32">   
+        <div class="xl:w-6/12">
+            <h2 class="text-6xl text-white font-primary">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            </h2>
+            <p class="text-neutral-400 text-2xl mt-6 mb-12">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut convallis eu est imperdiet convallis. Pellentesque ut enim a mi molestie sollicitudin. Praesent elementum malesuada semper.
+            </p>
+            <div class="flex items-center gap-3">
+                <a href="" class="py-3 px-6 bg-primary text-xl text-white font-bold">
+                    Bővebben
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="owl-carousel owl-theme owl-slider overflow-hidden relative ml-auto xl:w-9/12">
+        {% for slider in sliders %}
+        <div class="xl:h-[750px] h-[500px] relative bg-cover bg-center bg-no-repeat
+        xl:bg-[url({{ slider.image.path }})] 
+        bg-[url({{ slider.image_mobile.path }})] 
+        px-16 overflow-hidden">
+            <div class="2xl:container mx-auto flex h-full relative z-10">
+                <!-- <div class="xl:w-6/12 flex flex-col justify-center">
+                    <div class="flex items-center mb-12">
+                        <div class="bg-[#2B3990] w-8 h-8 rounded-full mr-5 text-white flex items-center justify-center">
+                            <i class="fa-solid fa-fire-flame-curved"></i>
+                        </div>
+                        <p class="text-sm font-bold text-[#2B3990]">
+                            Népszerű              
+                        </p>
+                    </div>
+                    <h1 class="xl:text-6xl text-4xl text-[#222] font-bold baloo">
+                        Xiaomi Mi Electric Scooter 3 elektromos roller
+                    </h1>
+                    <p class="xl:text-lg !text-[#222] mb-12">
+                        300 W, hatótávolság 30 Km, maximális sebesség 25 Km/h, Fekete                
+                    </p>
+                    <p class="baloo text-white text-5xl font-bold mr-5 text-primary mb-12">
+                        184 000 Ft
+                    </p>
+                    <a href="">
+                        <div class="bg-[#2B3990] w-max baloo text-white transition-all ease-in-out rounded-xl px-9 py-4 font-bold uppercase">
+                            Részletek
+                        </div>
+                    </a>
+                </div> -->
+                <!-- <div class="xl:w-6/12 h-full py-16 overflow-hidden relative flex justify-center items-center">
+                    <div class="absolute w-[350px] h-[120%] bg-gradient-to-t from-[#2B3990] to-[#39ca9500] rotate-12"></div>
+                    <img src="{{ 'assets/images/roller2.png'|theme }}" class="w-full h-full object-contain relative z-10" alt="">
+                </div> -->
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+
+{% put scripts %}
+<script>
+	const nexticon = '<i class="fa-regular fa-chevron-right"></i>';
+	const previcon = '<i class="fa-regular fa-chevron-left"></i>';
+
+    $('.owl-slider').owlCarousel({
+        loop:true,
+        margin:0,
+        nav:true,
+        dots:true,
+        navText: [
+            previcon,
+            nexticon    
+        ],
+        items:1
+    })
+
+</script>
+{% endput %}

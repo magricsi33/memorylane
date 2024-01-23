@@ -1,0 +1,177 @@
+title = "Profil"
+url = "/profil"
+layout = "default"
+is_hidden = 0
+
+[account]
+paramCode = "code"
+forceSecure = 0
+requirePassword = 0
+==
+<?php
+use LivestudioDev\Lscart\Models\Category;
+use LivestudioDev\Lscart\Models\Order;
+
+function onStart()
+{
+    $orders = Order::where('user_id', Auth::id())->whereOr('email', Auth::user()->email)->orderBy('created_at', 'DESC')->get();
+    $this['orders'] = $orders;
+
+    //dd($orders[0]->items[0]->history);
+
+}
+?>
+==
+<div x-data="{ tab: '1' }" class="flex xl:flex-nowrap flex-wrap container mx-auto mt-12 gap-3">
+    <div class="bg-[#0F0F10] p-5 clip-box xl:w-[300px] xl:min-w-[300px] xl:h-[600px] w-full flex flex-col justify-between">
+
+        <div class="flex flex-col h-full">
+            <div class="flex items-center gap-3 mb-6">
+                <i class="fa-solid fa-circle-user text-4xl text-white"></i>
+                <div class="">
+                    <h1 class="font-primary text-white text-lg ">
+                        {{ user.name }}
+                    </h1>
+                    <p class="text-neutral-400 text-sm">
+                        {{ user.email }}
+                    </p>
+                </div>
+            </div>
+            
+            <div class="flex flex-col">
+                <button type="button" @click="tab = '1'"
+                :class="{ '!bg-[#2B3990]': tab == '1' }"
+                class="h-[50px] hover:bg-[#2B3990] hover:bg-opacity-50 transition-all ease-in-out px-5 text-white font-primary w-full text-start">
+                    Rendeléseim
+                </button>
+                <button type="button" @click="tab = '2'"
+                :class="{ '!bg-[#2B3990]': tab == '2' }"
+                class="h-[50px] hover:bg-[#2B3990] hover:bg-opacity-50 transition-all ease-in-out px-5 text-white font-primary w-full text-start">
+                    Adatok szerkesztése
+                </button>
+                <button type="button" @click="tab = '3'"
+                :class="{ '!bg-[#2B3990]': tab == '3' }"
+                class="h-[50px] hover:bg-[#2B3990] hover:bg-opacity-50 transition-all ease-in-out px-5 text-white font-primary w-full text-start">
+                    Profil inaktíválása
+                </button>
+            </div>
+        </div>
+        <button 
+        type="button" data-request="onLogout" data-request-data="redirect: '/'"
+        class="h-[50px] hover:bg-[#2B3990] hover:bg-opacity-50 transition-all ease-in-out px-5 text-white font-primary w-full text-start">
+            Kijelentkezés
+        </button>
+    </div>
+    <div class="w-full">
+        <div class="xl:w-9/12 w-11/12 mx-auto hidden" :class="{ '!block': tab == '1' }">
+            
+            <h3 class="text-2xl font-primary mb-1 text-white">
+                Rendelési előzményeid
+            </h3>
+            <p class="text-neutral-400">
+                Megtekintheted az eddig leadott rendeléseid.
+            </p>
+            <div x-data="{ order: 'null' }" class="mt-12 flex flex-col w-full gap-2">
+                {% for order in orders %}
+                <div>
+                    <div @click="order = order == 'order{{ loop.index }}' ? 'null' : 'order{{ loop.index }}' " 
+                    class="bg-[#303237] hover:bg-[#30323790] transition-all ease-in-out flex xl:flex-nowrap flex-wrap p-3 cursor-pointer">
+                        <div class="xl:w-[80px] xl:min-w-[80px] mb-3 xl:mb-0 w-6/12">
+                            <p class="text-[10px] uppercase xl:mb-1 font-bold text-neutral-400">Azonosító</p>
+                            <p class="font-bold text-white text-sm">{{ order.order_number }}</p>
+                            <p class="text-neutral-400 text-xs xl:hidden">{{ order.created_at|date('Y. m. d. H:i') }}</p>
+
+                        </div>
+                        <div class="w-[150px] min-w-[150px] mb-3 xl:mb-0 hidden xl:block">
+                            <p class="text-[10px] uppercase xl:mb-1 font-bold text-neutral-400">Időpont</p>
+                            <p class="font-bold text-white text-sm">{{ order.created_at|date('Y. m. d. H:i') }}</p>
+                        </div>
+                        <div class="xl:w-full w-6/12 mb-3 xl:mb-0">
+                            <p class="text-[10px] uppercase xl:mb-1 font-bold text-neutral-400">Fizetési mód</p>
+                            <p class="font-bold text-white text-sm">{{ order.payment.name }} </p>
+                        </div>
+                        <div class="w-[100px] min-w-[100px] mb-3 xl:mb-0">
+                            <p class="text-[10px] uppercase xl:mb-1 font-bold text-neutral-400">Fizetendő</p>
+                            <p class="font-bold text-white text-sm">{{ order.absolutePrice|number_format(0, '', ' ') }} Ft</p>
+                        </div>
+                        <div class="w-[100px] min-w-[100px] mb-3 xl:mb-0">
+                            <p class="text-[10px] uppercase xl:mb-1 font-bold text-neutral-400">Státusz</p>
+                            <p class="font-bold text-[{{ order.orderStatusColor }}] text-sm">{{ order.orderStatus }}</p>
+                        </div>
+                        <div class="w-max min-w-max flex items-center pl-3">
+                            <i class="fa-solid fa-caret-left text-white text-lg transition-all ease-in-out" 
+                            :class="{ '-rotate-90': order == 'order{{ loop.index }}' }"></i>
+                        </div>
+                    </div>
+                    <div class="hidden" :class="{ '!block': order == 'order{{ loop.index }}' }">
+                        <div class="bg-[#1e1f21] bg-opacity-70 p-5">
+                            {% for item in order.items %}
+                            <div class="grid xl:grid-cols-4 grid-cols-1 gap-2 xl:gap-0 text-white text-sm py-3 border-b border-neutral-800">
+                                <p class="xl:col-span-2 font-bold ">
+                                    {{ item.product.name }}
+                                </p>
+                                <p>
+                                    {{ item.quantity }} db
+                                </p>
+                                <p>
+                                    {{ item.history['bruttoPrice']|number_format(0, '', ' ') }} Ft
+                                </p>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="xl:w-9/12 w-11/12 mx-auto hidden" :class="{ '!block': tab == '2' }">
+            {% component 'account' %}
+        </div>
+        <div class="xl:w-9/12 w-11/12 mx-auto hidden" :class="{ '!block': tab == '3' }">
+
+            <div id="accountDeactivateForm" >
+                <form data-request="onDeactivate" data-request-complate="redirect: '/'">
+                    <h3 class="text-2xl font-primary mb-1 text-white">
+                        Inaktívra szeretnéd állítani a profilod?
+                    </h3>
+                    <p class="text-neutral-400">
+                        Fiókodat letiltjuk, adataid pedig eltávolítjuk az oldalról. Fiókod
+                        bármikor újraaktiválhatod, ha újra bejelentkezel.
+                    </p>
+                    <div class="w-full flex flex-col gvap-1 mb-6 mt-12">
+                        <label
+                            for="accountDeletePassword"
+                            class="text-white font-medium mb-[3px] text-sm"
+                            required
+                            >A folytatáshoz add meg a jelenlegi jelszavad:
+                            <sup class="text-red-500 text-[8px]">kötelező</sup></label
+                        >
+                        <input
+                            type="password"
+                            required
+                            class="bg-[#1b1c1f] h-[55px] px-4 w-full text-white focus:outline-0"
+                            name="password"
+                            id="accountDeletePassword"
+                        />
+                    </div>
+                    <div class="flex items-center gap-5">
+                        <button 
+                            type="submit"
+                            class="h-[50px] bg-[#2B3990] hover:bg-opacity-50 transition-all ease-in-out px-10 text-white font-primary flex items-center justify-center clip-box w-full">
+                            Profil inaktíválása
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+{% put scripts %}
+<script>
+	const nexticon = '<i class="fa-regular fa-chevron-right"></i>';
+	const previcon = '<i class="fa-regular fa-chevron-left"></i>';
+</script>
+{% endput %}

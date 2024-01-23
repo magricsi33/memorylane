@@ -1,0 +1,143 @@
+{% if loadingActive %}
+    {% partial 'site/loadingModal' %}
+{% endif %}
+
+<div class="fixed left-0 top-0 h-screen w-[1px] z-[99] xl:hidden">
+    <button
+    @click="openModal = 'productFilterModal'"
+    type="button"
+    class="bg-black gap-3 -rotate-90 !w-[100px] absolute text-white font-bold top-[50%] -translate-y-[50%] text-[15px]
+    -left-[37px] py-[2px]">
+        Szűrés
+    </button>
+</div>
+
+<div id="shippingCost">
+    {% partial 'cart/shippingCost' %}
+</div>
+
+<div class="flex flex-wrap mt-10 items-start">
+
+    <div class="2xl:w-3/12 xl:w-3/12 lg:w-4/12 md:w-6/12 w-full md:pr-4 mb-5 xl:min-h-screen hidden xl:block">
+        <div class="bg-[#0F0F10] shadow-lg mb-6 z-10">
+            {% partial 'product/filter' dynamic_filters=dynamic_filters filter=filter %}
+        </div>
+    </div>
+
+    <!-- Filter modal -->
+
+    <div :class="{ '!opacity-100 !max-w-[95%]': openModal == 'productFilterModal' }" 
+        class="fixed top-0 right-0 h-screen w-full max-w-[0%] overflow-auto opacity-0 transition-all ease-in-out duration-200 bg-[#161719] z-[999999]">
+        <div class="bg-[#000] flex items-center justify-between px-3 py-3">
+            <img src="{{ 'assets/images/logo.png'|theme }}" 
+            class="object-contain logo h-full w-[100px]" 
+            alt="">
+
+            <button @click="openModal = 'null'" class="w-8 h-8 min-w-[32px] min-h-[32px] bg-[#666] flex items-center justify-center text-white rounded-full"> 
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+
+        <div class="py-2" >
+            {% partial 'product/filter' dynamic_filters=dynamic_filters filter=filter %}
+        </div>
+    </div>
+
+    <!-- /Filter modal -->   
+
+    <div class="xl:w-9/12 w-full">
+        <h1 class="text-primary xl:text-3xl text-2xl font-bold mb-3">
+            {{ category.name }}
+        </h1>
+    
+        <div class="text-white mb-6 text-sm">
+            {{ category.description|raw }}
+        </div>
+
+        <div class="grid xl:grid-cols-4 grid-cols-2 gap-2 mb-6">
+            {% for child in category.children %}
+
+            <a href="{{ 'termekek'|page({category: category.slug, slug: child.slug}) }}">
+                <div class="bg-[#30323750] hover:bg-[#2B3990] text-white xl:px-4 px-2 xl:h-[65px] h-[55px] relative transition-all ease-in-out flex items-center">
+
+                    <div class="xl:w-[40px] w-[26px] xl:min-w-[40px] min-w-[26px] h-8 mr-2">
+                        <img src="{{ child.products[0].image.path }}" class="w-full h-full object-contain" alt="{{ child.name }}">
+                    </div>
+
+                    <p class="font-semibold text-xs xl:text-sm"> 
+                        {{ child.name|length > 25 ? child.name|slice(0, 25)~'...' : child.name }}
+                    </p>
+
+                </div>
+            </a>
+
+            {% endfor %}
+        </div>
+
+        <div class="flex items-center mb-3 border-b border-neutral-700 xl:px-4 w-full overflow-x-auto">
+
+            {% set sortings = [
+                [
+                    'Népszerűség',
+                    'popular',
+                ],
+                [
+                    'Legolcsóbb elöl',
+                    'price_asc',
+                ],
+                [
+                    'Legdrágább elöl',
+                    'price_desc',
+                ],
+                [
+                    'Név szerint növekvő',
+                    'abc_asc',
+                ],
+                [
+                    'Név szerint csökkenő',
+                    'abc_desc',
+                ],
+            ] %}
+
+            <!-- {% for sorting in sortings %}
+            <form action="">
+                <input type="text" value="{{ sorting[1] }}" name="orderBy" hidden>
+                {% for key, filter in dynamic_filters %}
+                    {% if key != 'orderBy' %}
+                        <input type="text" name="{{ key }}[]" value="{{ filter[0] }}" class="form-control" hidden>
+                    {% endif %}
+                {% endfor %}
+                <button type="submit" class="px-5 py-4 text-xs font-medium text-white relative border-t border-x border-b border-b-transparent border-neutral-500 hover:bg-[#2B3990] 
+                transition-all ease-in-out after:content-[''] after:!absolute after:left-0 after:-bottom-0 after:w-full after:h-2 w-max
+                before:content-[''] before:absolute before:left-0 before:-top-[1px] before:w-full before:h-1 {{ orderBy == sorting[1] ? 'after:bg-transparent before:bg-[#2B3990]' : '' }}">
+                    {{ sorting[0] }}
+                </button>
+            </form>
+            {% endfor %} -->
+        </div>
+
+        {% if products|length == 0 %}
+            <div class="w-full md:px-4 mb-5 flex items-center justify-center flex-col py-10 text-center text-white ">
+                <i class="fa-solid fa-face-sad-cry mb-2 text-5xl text-[#2B3990]"></i>
+                <p class="text-xl mt-3 font-bold">
+                    Nem találtunk terméket
+                </p>
+                <p class="text-sm text-neutral-500">
+                    A megadott keresési feltételek alapján nem találtunk terméket
+                </p>
+            </div>
+        {% else %}
+            <div id="productList" class="grid xl:grid-cols-3 gap-3">
+                {% for product in products %}
+                    {% partial 'elements/product/productBox' product=product %}
+                {% endfor %}
+            </div>
+        {% endif %} 
+
+
+        <div class="flex items-center w-max mx-auto pagi mt-12">
+            {{ products.render|raw }}
+        </div>
+       
+    </div>
+</div>

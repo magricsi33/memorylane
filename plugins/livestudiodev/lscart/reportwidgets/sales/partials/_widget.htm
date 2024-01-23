@@ -1,0 +1,33 @@
+<?php 
+$today = $this->vars["today"];
+$month = $this->vars["month"];
+$default = $this->vars["default"];
+?>
+
+<div class="report-widget">
+	<h3>Eladások / Rendelések</h3>
+
+    <div class="table-container clickable">
+        <table class="table data" data-provides="rowlink">
+            <thead>
+                <tr>
+                    <th><span>Időintervallum</span></th>
+                    <th><span>Darabszám</span></th>
+                    <th><span>Érték</span></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><i class="fas fa-info mr-3"></i>Mai nap</td>
+                    <td><?= $today->count ?> db</td>
+                    <td><?= number_format($today->accum) . " " . $default->currency->code ?></td>
+				</tr>
+				<tr>
+					<td><i class="fas fa-info mr-3"></i>Hónapban</td>
+                    <td><?= $month->count ?> db</td>
+                    <td><?= number_format($month->accum) . " " . $default->currency->code ?></td>
+				</tr>
+            </tbody>
+        </table>
+	</div>
+</div>

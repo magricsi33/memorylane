@@ -1,0 +1,21 @@
+<?php 
+
+$model = $vars["formModel"];
+$coupon = $model->coupon;
+
+?>
+<ul>
+	<?php if($coupon) { ?> 
+		<li>Felhasznált kupon: <b><?= $coupon->name ?></b></li>
+	<?php } ?>
+	<hr>
+	<li>Összes Nettó: <b><?= number_format($model->getTotalPrice(),0); ?> <?= $model->currency->shortcode ?> + Áfa (<?= number_format($model->getVatPrice(),0) ?> <?= $model->currency->shortcode ?>)</b></li>
+	<li>Összes Bruttó: <b><?= number_format($model->getTotalPriceBrutto(),0); ?> <?= $model->currency->shortcode ?></b></li>
+	<li>+ Szállítási költség: <b><?= number_format($model->getShippingCost(),0); ?> <?= $model->currency->shortcode ?></b></li>
+	<hr>
+	<li>Absolute Nettó: <b><?= number_format($model->getAbsoluteNetto(),0); ?> <?= $model->currency->shortcode ?></b></li>
+	<li>Absolute Bruttó: <b><?= number_format($model->getAbsolutePrice(),0); ?> <?= $model->currency->shortcode ?></b></li>
+	<hr>
+	<li>Szállítási mód: <b><?= $model->shipping->name ?></b></li> 
+	<li>Fizetési mód: <b><?= $model->payment->name ?></b></li>
+</ul>

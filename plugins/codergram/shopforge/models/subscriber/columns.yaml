@@ -1,0 +1,19 @@
+columns:
+    id:
+        label: id
+        type: number
+    created_at:
+        label: created_at
+        type: datetime
+    name:
+        label: name
+        type: text
+    email:
+        label: email
+        type: text
+    theme:
+        label: theme
+        type: text
+    active:
+        label: active
+        type: text

@@ -1,0 +1,13 @@
+<div class="" id="cart">
+    <span class="text-primary" style="float:right">
+        <i class="fas fa-shopping-cart"></i>
+        {{ __SELF__.cart.items|length }}
+    </span>
+    {#
+    <ul>
+        {% for item in __SELF__.cart.items %}
+        {% set product = item.product %}
+        <li>{{ product.name }} x {{item.quantity}}</li>
+        {% endfor %}
+    </ul>#}
+</div>

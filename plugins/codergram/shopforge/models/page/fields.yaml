@@ -1,0 +1,54 @@
+fields:
+    category:
+        label: Elhelyezkedés
+        options:
+            Header: Header
+            Footer: Footer
+            'Header & Footer': 'Header & Footer'
+            'Sehol, csak url': 'Sehol, csak url'
+        showSearch: true
+        span: auto
+        type: dropdown
+    slug:
+        label: slug
+        span: auto
+        readOnly: 1
+        preset:
+            field: name
+            type: slug
+        type: text
+secondaryTabs:
+    fields:
+        name:
+            label: Cím
+            span: auto
+            type: text
+            tab: Megjelenés
+        body:
+            label: Szöveg
+            size: giant
+            span: full
+            type: richeditor
+            tab: Megjelenés
+        image:
+            label: Kép
+            mode: image
+            useCaption: true
+            thumbOptions:
+                mode: crop
+                extension: auto
+            span: auto
+            type: fileupload
+            tab: Megjelenés
+        public_date:
+            label: 'Publikálási dátum'
+            mode: datetime
+            span: auto
+            type: datepicker
+            tab: Publikálás
+        code:
+            label: code
+            span: auto
+            type: text
+            commentAbove: 'NE ÍRJ IDE SEMMIT!'
+            tab: Dev
