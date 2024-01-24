@@ -21,11 +21,12 @@
             <div class="h-full w-full xl:px-5 px-3">
                 {% partial 'product/priceSmall' %}
             </div>
-            <h2 class="h-[25px] font-primary xl:px-5 px-3 xl:text-base text-sm my-3">
-                {{ product.name|length > 80 ? product.name|slice(0, 80) ~ '...' : product.name }}
+            <h2 class="xl:h-[25px] xl:px-5 px-3 my-3">
+                <span class="xl:block hidden xl:text-base font-primary">{{ product.name|length > 80 ? product.name|slice(0, 80) ~ '...' : product.name }}</span>
+                <span class="xl:hidden text-xl font-primary">{{  product.name }}</span>
             </h2>
 
-            <div class="description text-xs text-[#666] h-[50px] overflow-hidden xl:px-5 px-3 mb-3">
+            <div class="description text-xs text-[#666] xl:h-[50px] overflow-hidden xl:px-5 px-3 mb-3">
 
                 {{ product.meta_description|length > 100 ? product.meta_description|slice(0, 100) ~ '...' : product.meta_description }}
                 
