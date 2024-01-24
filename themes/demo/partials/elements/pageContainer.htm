@@ -2,7 +2,7 @@
 
         {% set container = section.full_width ? 'w-full' : 'container mx-auto xl:w-full w-11/12 relative z-50' %}
 
-        <div class="flex flex-col gap-3 relative text-white
+        <div class="flex flex-col gap-3 relative 
         {{ section.modify_margin ? 'mt-['~section.margin_top ?? '24px'~'px] mb-['~section.margin_bottom ?? '24px'~'px]' : not loop.first ? 'my-12' : 'mb-12' }}
         {{ section.use_bg and section.bg_image and section.bg_padding ? 'pt-20 pb-40 xl:py-['~section.bg_padding~'px]' : (section.use_bg and section.bg_image ? 'py-40' : '') }}" 
         x-data="{ activeImg: null }">
@@ -21,31 +21,31 @@
             {% for key, content in section.contents %}
                 {% if content.type == 'title' %}
                     <div class="{{ container }}">
-                        <h2 class="xl:text-5xl text-2xl font-bold uppercase xl:text-center font-primary {{ section.use_bg and section.bg_image ? 'text-white relative z-20  w-11/12 mx-auto' : '' }}">
+                        <h2 class="xl:text-5xl text-2xl font-bold uppercase xl:text-center font-primary {{ section.use_bg and section.bg_image ? ' relative z-20  w-11/12 mx-auto' : '' }}">
                             {{ content.title }}
                         </h2>
                     </div>
                 {% elseif content.type == 'text' %}
                     <div class="{{ container }}">
-                        <div class="mt-3 text-white product-description">
+                        <div class="mt-3  product-description">
                             {{ content.text|raw }}
                         </div>
                     </div>
                 {% elseif content.type == 'text-big' %}
                     <div class="{{ container }}">
-                        <div class="xl:text-3xl text-xl xl:text-center mt-3 text-white font-primary {{ section.use_bg and section.bg_image ? 'relative z-20  w-11/12 mx-auto' : '' }}">
+                        <div class="xl:text-3xl text-xl xl:text-center mt-3  font-primary {{ section.use_bg and section.bg_image ? 'relative z-20  w-11/12 mx-auto' : '' }}">
                             {{ content.text|raw }}
                         </div>
                     </div>
                 {% elseif content.type == 'text-medium' %}
                     <div class="{{ container }}">
-                        <div class="xl:text-2xl text-lg xl:text-center mt-3 text-white font-primary {{ section.use_bg and section.bg_image ? 'relative z-20  w-11/12 mx-auto' : '' }}">
+                        <div class="xl:text-2xl text-lg xl:text-center mt-3  font-primary {{ section.use_bg and section.bg_image ? 'relative z-20  w-11/12 mx-auto' : '' }}">
                             {{ content.text|raw }}
                         </div>
                     </div>
                 {% elseif content.type == 'text-normal' %}
                     <div class="{{ container }}">
-                        <div class="text-lg xl:text-center mt-3 text-white font-primary {{ section.use_bg and section.bg_image ? 'relative z-20  w-11/12 mx-auto' : '' }}">
+                        <div class="text-lg xl:text-center mt-3  font-primary {{ section.use_bg and section.bg_image ? 'relative z-20  w-11/12 mx-auto' : '' }}">
                             {{ content.text|raw }}
                         </div>
                     </div>
@@ -75,10 +75,10 @@
                 {% elseif content.type == 'parallax' %}
 
                 <div class="{{ container }}">
-                    <p class="xl:text-[48px] text-3xl xl:leading-[55px] text-white xl:text-center font-primary">
+                    <p class="xl:text-[48px] text-3xl xl:leading-[55px]  xl:text-center font-primary">
                         {{ content.title }}
                     </p>
-                    <div class="xl:text-2xl text-lg text-white xl:text-center mt-3">
+                    <div class="xl:text-2xl text-lg  xl:text-center mt-3">
                         {{ content.text|raw }}
                     </div>
                 </div>
@@ -148,7 +148,7 @@
                     <button type="button" class="absolute left-5 top-[50%] -translate-y-[50%] flex items-center justify-center rounded-full w-16 h-16 bg-[#00B3E3] bg-opacity-70 hover:bg-opacity-100 transition-all
                      ease-in-out" 
                     x-on:click="activeImg = (activeImg == 1 ? 1 : activeImg - 1)">
-                        <i class="fa-solid fa-angle-left text-2xl text-white"></i>
+                        <i class="fa-solid fa-angle-left text-2xl "></i>
                     </button>
                     {% for item in content.gallery %}
                     <div 
@@ -164,7 +164,7 @@
                     <button type="button" class="absolute right-5 top-[50%] -translate-y-[50%] flex items-center justify-center rounded-full w-16 h-16 bg-[#00B3E3] bg-opacity-70 hover:bg-opacity-100 transition-all
                      ease-in-out" 
                     x-on:click="activeImg = (activeImg > {{ content.gallery|length-1 }} ? 1 : activeImg + 1)">
-                        <i class="fa-solid fa-angle-right text-2xl text-white"></i>
+                        <i class="fa-solid fa-angle-right text-2xl "></i>
                     </button>
                 </div>
 

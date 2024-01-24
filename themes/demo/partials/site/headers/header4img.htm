@@ -18,7 +18,7 @@
                         @mouseout="buttonHover = 'null'"
                         x-on:click="categoryOpen === {{ category.id }} ? categoryOpen = 'null' : categoryOpen = {{ category.id }}"
                         :class="{
-                            'text-[#2B3990]': categoryOpen === {{ category.id }},
+                            'text-[#38a093]': categoryOpen === {{ category.id }},
                             'text-black': categoryOpen !== {{ category.id }},
                             'bg-white bg-opacity-10': buttonHover === {{ category.id }},
                             'text-opacity-50': buttonHover != {{ category.id }} && buttonHover != 'null'
@@ -176,7 +176,7 @@ xl:fixed sticky xl:top-[88px] top-0 w-full text-white transition-all ease-in-out
 </header> -->
 
 <div class="w-full h-[40px] bg-[#38a093] flex items-center justify-center text-white font-bold">
-    Ingynes házhozszállítás
+    Ingyenes házhozszállítás 2024. február 14.-ig
 </div>
 
 <div :class="{ '!opacity-100 !max-w-[80%]': openModal == 'mobileMenu' }" 

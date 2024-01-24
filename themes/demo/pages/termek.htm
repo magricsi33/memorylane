@@ -179,19 +179,19 @@ function onChangeVariants()
                     </div>
 
                     <div class="flex flex-col gap-2 mt-6">
-                        <div class="flex items-center text-[#26bc5f] font-medium text-sm">
+                        <div class="flex items-center text-[#38a093] font-medium text-sm">
                             <div class="w-5 flex items-center justify-center h-auto mr-2">
-                                <i class="fa-solid fa-truck-fast text-[#26bc5f]"></i>
+                                <i class="fa-solid fa-truck-fast text-[#38a093]"></i>
                             </div> 1-2 munkanap szállítás
                         </div>
-                        <div class="flex items-center  text-[#26bc5f] font-medium text-sm">
+                        <div class="flex items-center  text-[#38a093] font-medium text-sm">
                             <div class="w-5 flex items-center justify-center h-auto mr-2">
-                                <i class="fa-solid fa-pen-ruler text-[#26bc5f]"></i>
+                                <i class="fa-solid fa-pen-ruler text-[#38a093]"></i>
                             </div> Személyreszabott
                         </div>
-                        <div class="flex items-center  text-[#26bc5f] font-medium text-sm">
+                        <div class="flex items-center  text-[#38a093] font-medium text-sm">
                             <div class="w-5 flex items-center justify-center h-auto mr-2">
-                                <i class="fa-solid fa-user-tie text-[#26bc5f]"></i>
+                                <i class="fa-solid fa-user-tie text-[#38a093]"></i>
                             </div> Személyes átvétel
                         </div>
                         <!-- <div class="flex items-center  text-[#26bc5f] font-medium text-sm">
@@ -283,16 +283,16 @@ function onChangeVariants()
                                 </div>
                                 {% else %}
                                     <button form="addToCartForm" type="submit" id="addCartBtn" 
-                                    class="h-[50px] bg-[#151C1C] hover:bg-opacity-50 transition-all ease-in-out px-10 text-white font-primary flex items-center justify-center clip-box w-full">
+                                    class="h-[50px] bg-[#151C1C] hover:bg-opacity-50 transition-all ease-in-out px-10 text-white font-primary flex items-center justify-center w-full rounded-lg">
                                         Kosárba
                                     </button>
                                 {% endif %}
                             {% elseif product.status == 2 %}
-                                <div class="h-[50px] bg-yellow-600 px-10 text-white font-primary flex items-center justify-center clip-box w-full">
+                                <div class="h-[50px] bg-yellow-600 px-10 text-white font-primary flex items-center justify-center w-full rounded-lg">
                                     A termék nem érhető el
                                 </div>
                             {% elseif product.status == 0 %}
-                                <div class="h-[50px] bg-[#151C1C30] px-10 text-white font-primary flex items-center justify-center clip-box w-full">
+                                <div class="h-[50px] bg-[#151C1C30] px-10 text-white font-primary flex items-center justify-center w-full rounded-lg">
                                     A terméket jelenleg nem forgalmazzuk webáruházunkban
                                 </div>
                             {% endif %}
