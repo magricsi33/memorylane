@@ -47,6 +47,10 @@ navigation:
                 label: Rendelések
                 url: livestudiodev/lscart/orders
                 icon: icon-bell
+    main-menu-item3:
+        label: Editior
+        url: livestudiodev/lscart/editiors
+        icon: icon-pencil
 permissions:
     isDeveloper:
         tab: 'livestudiodev.lscart::lang.plugin.name'

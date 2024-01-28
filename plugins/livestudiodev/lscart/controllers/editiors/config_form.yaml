@@ -1,0 +1,10 @@
+name: Editiors
+form: $/livestudiodev/lscart/models/editior/fields.yaml
+modelClass: LivestudioDev\Lscart\Models\Editior
+defaultRedirect: livestudiodev/lscart/editiors
+create:
+    redirect: 'livestudiodev/lscart/editiors/update/:id'
+    redirectClose: livestudiodev/lscart/editiors
+update:
+    redirect: livestudiodev/lscart/editiors
+    redirectClose: livestudiodev/lscart/editiors

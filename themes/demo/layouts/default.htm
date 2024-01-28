@@ -214,7 +214,7 @@ function onSearch() {
         {% if cookie %}
         <div x-data="{ hidden: 'false' }" 
         :class="{ '!hidden': hidden == 'true' }"
-        class="fixed left-[50%] -translate-x-[50%] xl:bottom-3 bottom-0 container bg-[#1f1f20] border-t xl:border border-neutral-500 xl:p-7 p-5 z-[9999999] flex flex-wrap items-center">
+        class="fixed left-[50%] -translate-x-[50%] xl:bottom-3 bottom-0 container bg-[#151C1C] border-t xl:border border-neutral-500 xl:p-7 p-5 z-[9999999] flex flex-wrap items-center">
             <div class="w-full xl:w-9/12 xl:pr-5 mb-3 xl:mb-0">
                 <p class="text-white font-primary xl:text-lg mb-3 xl:mb-0">
                     Az Ön adatainak védelme fontos számunkra
@@ -227,7 +227,7 @@ function onSearch() {
             </div>
             <div class="w-full xl:w-3/12">
                 <button @click="hidden = 'true'" type="button" data-request="onCookie" data-request-data="accept: 1" data-request-flash data-request-loading 
-                class="h-[50px] bg-[#151C1C] rounded-lg mb-3 hover:bg-opacity-50 transition-all ease-in-out px-10 text-white font-primary flex items-center justify-center clip-box w-full">
+                class="h-[50px] bg-white rounded-lg mb-3 hover:bg-opacity-50 transition-all ease-in-out px-10 text-[#151C1C] font-primary flex items-center justify-center clip-box w-full">
                     Elfogadom
                 </button>
                 <button @click="hidden = 'true'" type="button" data-request="onCookie" data-request-data="accept: 0" data-request-flash data-request-loading 

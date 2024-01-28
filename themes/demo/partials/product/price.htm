@@ -29,10 +29,10 @@
             {{ product.getItemPrice(variant_id, cart.cart.currency.id, false, false, false)|number_format(0, ',', ' ') }}
             {{ cart.cart.currency.shortcode }}
         </h2>
-        <p class="text-secondary">
+        <!-- <p class="text-secondary">
             {{ product.getItemPriceNetto(variant_id, cart.cart.currency.id, false, false, false)|number_format(0, ',', ' ') }}
             {{ cart.cart.currency.shortcode }} + ÁFA
-        </p>
+        </p> -->
     </del>
     <br />
     <p class="prim mb-0 mt-3">{{ discount.name }}: -{{ discount.discount }}%</p>
@@ -40,10 +40,10 @@
         {{ product.getItemPrice(variant_id, null, true, null, null)|number_format(0, ',', ' ') }}
         {{ cart.cart.currency.shortcode }}
     </h2>
-    <p class="text-secondary">
+    <!-- <p class="text-secondary">
         {{ product.getItemPriceNetto(variant_id, null, true, null, null)|number_format(0, ',', ' ') }}
         {{ cart.cart.currency.shortcode }} + ÁFA
-    </p>
+    </p> -->
 {% else %}
     {% if product.isDiscounted %}
     
@@ -63,10 +63,10 @@
             {{ product.getItemPrice(variant_id, null, true, null, null)|number_format(0, ',', ' ') }}
             {{ cart.cart.currency.shortcode }}
         </h2>
-        <p class="text-neutral-500 text-sm font-primary">
+        <!-- <p class="text-neutral-500 text-sm font-primary">
             {{ product.getItemPriceNetto(variant_id, null, true, null, null)|number_format(0, ',', ' ') }}
             {{ cart.cart.currency.shortcode }} + ÁFA
-        </p>
+        </p> -->
 
     {% else %}
         <!-- Alap árképzés -->
@@ -75,10 +75,10 @@
                 {{ product.getItemPrice(variant_id, cart.cart.currency.id, false, false, false)|number_format(0, ',', ' ') }}
                 {{ cart.cart.currency.shortcode }}
             </h2>
-            <p class="text-neutral-500 text-sm font-primary">
+            <!-- <p class="text-neutral-500 text-sm font-primary">
                 {{ product.getItemPriceNetto(variant_id, cart.cart.currency.id, false, false, false)|number_format(0, ',', ' ') }}
                 {{ cart.cart.currency.shortcode }} + ÁFA 
-            </p>
+            </p> -->
         {% else %}
             <h2 class="font-medium text-4xl text-primary font-primary">
                 Érdeklődés
@@ -102,11 +102,11 @@
             {{ product.getItemPrice(variant_id, cart.cart.currency.id,true, null , user and user.discounts ? user.discounts : null)|number_format(0, ',', ' ') }}
             {{ cart.cart.currency.shortcode }}
         </h2>
-        <small>
+        <!-- <small>
             Nettó ár:
             {{ product.getItemPriceNetto(variant_id, cart.cart.currency.id,true, null , user and user.discounts ? user.discounts : null)|number_format(0, ',', ' ') }}
             {{ cart.cart.currency.shortcode }} + ÁFA
-        </small>
+        </small> -->
         {% endif %}
     </div>
 

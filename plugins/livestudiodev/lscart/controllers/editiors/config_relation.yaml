@@ -1,0 +1,8 @@
+items:
+    label: Items
+    view:
+        list: $/livestudiodev/lscart/models/editioritem/columns.yaml
+        toolbarButtons: create|delete
+    manage:
+        form: $/livestudiodev/lscart/models/editioritem/fields.yaml
+        recordsPerPage: 10

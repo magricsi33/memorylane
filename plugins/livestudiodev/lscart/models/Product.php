@@ -22,7 +22,7 @@ class Product extends Model
 
     protected $slugs = ['slug' => 'name'];
 
-    public $jsonable = ['materials', 'parameters', 'sizes', 'containers', 'options', 'gallery_links', 'b_sku'];
+    public $jsonable = ['materials', 'parameters', 'sizes', 'containers', 'options', 'gallery_links', 'b_sku', 'editior_inputs'];
 
     public $fillable = [
         'b_sku', 

@@ -1,0 +1,6 @@
+fields:
+    items:
+        span: full
+        cssClass: ''
+        path: items
+        type: partial

@@ -6,6 +6,7 @@ layout = "default"
 use LivestudioDev\Lscart\Models\Category;
 use LivestudioDev\Lscart\Models\Product;
 use LivestudioDev\Lscart\Models\Discount;
+use LivestudioDev\Lscart\Models\Editior;
 use LivestudioDev\Lscartreviews\Models\ProductReview;
 
 function onStart()
@@ -112,6 +113,28 @@ function onChangeVariants()
         '#button' => $this->renderPartial('product/button', ["variant_id" => $id])
     ];
 }
+
+function onOpenEditior() {
+
+    $editiorArray = request()->cookie('editior') ? json_decode(request()->cookie('editior'), true) : [];
+    $youHaveTheEditior = 0;
+
+    $editior = new Editior;
+    $editior->product_id = post('product_id');
+    $editior->variant_id = 0;
+    $editior->datas = [];
+    $editior->save();
+
+    $editiorArray[] = $editior->id;
+
+    $editiorArrayJson = json_encode($editiorArray);
+
+    Cookie::queue('editior', $editiorArrayJson, 60*24*30);
+
+    return redirect('szerkeszto/'.$editior->id.'/'.$editior->product->slug);
+
+}
+
 ?>
 ==
 <div class="w-full bg-gradient-to-b from-[#00000020] to-transparent">
@@ -152,9 +175,10 @@ function onChangeVariants()
             </div>
         </div>
         <div class="xl:w-5/12 xl:px-3 xl:min-h-full w-full relative">
+            <!-- data-request="onAddCartItem" -->
             <form 
             data-request-complete="addToCart()" 
-            data-request="onAddCartItem" 
+            data-request="onOpenEditior" 
             data-request-flash id="addToCartForm" class="flex flex-col xl:justify-between h-full">
                 <input type="hidden" name="product_id" value="{{ product.id }}" />
                 <div>
@@ -243,7 +267,7 @@ function onChangeVariants()
                     {% partial 'product/stock' %}
                 </div> -->
 
-                <div class="text-neutral-800">
+                <div class="text-neutral-800 text-sm italic">
                     {% if product.meta_description %}
                         {{ product.meta_description|length > 150 ? product.meta_description|slice(0, 150) ~ '...' : product.meta_description }}
                     {% endif %}
@@ -253,7 +277,24 @@ function onChangeVariants()
                         {% partial 'product/variant' %}
                     </div>
                     
-                    <div class="flex flex-wrap items-center w-full">
+                    <div class="bg-[#151C1C] text-white p-5 rounded-lg relative flex items-center gap-5">
+                        <i class="fa-solid fa-pen-paintbrush text-7xl"></i>
+                        <div>
+                            <h3 class="text-3xl font-primary">
+                                Egyedi tervezés
+                            </h3>
+                            <p class="text-sm mb-3">
+                                Tervezd meg a saját képkereted.
+                            </p>
+                            <button form="addToCartForm" type="submit" id="addCartBtn" 
+                            class="bg-[#fff] text-[#151C1C] hover:bg-opacity-90 rounded-lg w-max oswald transition-all ease-in-out px-9 h-12 font-medium uppercase 
+                            flex items-center justify-center">
+                                Tovább a tervezőbe
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- <div class="flex flex-wrap items-center w-full">
                         {% if product.status == 1 %}
                         
                             <div class="lg:w-4/12 w-full lg:pr-2 mb-5 lg:mb-0">
@@ -270,7 +311,7 @@ function onChangeVariants()
                                     min="1" 
                                     readonly x-model="count">
                                     <button @click="count = count + 1" type="button" class="text-2xl font-medium bg-[#151C1C] flex items-center justify-center w-8 h-8 min-w-[32px] hover:bg-opacity-80 rounded-full text-white">+</button>
-                                  </div>
+                                </div>
                             </div>
 
                         {% endif %}
@@ -296,11 +337,6 @@ function onChangeVariants()
                                     A terméket jelenleg nem forgalmazzuk webáruházunkban
                                 </div>
                             {% endif %}
-                            <!-- <a href="">
-                                <div class="hover:text-[#2B3990] transition-all ease-in-out rounded-full h-12 w-12 flex items-center justify-center">
-                                    <i class="fa-light fa-heart text-xl"></i>
-                                </div>
-                            </a> -->
                         </div>
                         {% else %}
                         <div class="lg:w-8/12 {{ product.status != 1 ? 'lg:w-full' }} w-full lg:pl-2 flex justify-between">
@@ -310,7 +346,7 @@ function onChangeVariants()
                             </div>
                         </div>
                         {% endif %}
-                    </div>
+                    </div> -->
                 </div>
             </form>
         </div>

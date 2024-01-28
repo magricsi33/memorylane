@@ -54,20 +54,20 @@ function onStart()
     </div> -->
    
     <div class="flex items-center justify-center">
-        <i class="fa-thin fa-circle-check text-[#26bc5f] text-7xl"></i>
+        <i class="fa-solid fa-circle-check text-[#38a093] text-7xl"></i>
     </div>
     
-    <h1 class="sm:text-5xl text-4xl font-primary mt-10 text-white">
-        <span class="text-[#26bc5f] font-primary">Sikeres</span> vásárlás, köszönjük!
+    <h1 class="sm:text-5xl text-4xl font-primary mt-10">
+        <span class="text-[#38a093] font-primary">Sikeres</span> vásárlás, köszönjük!
     </h1>
 
-    <p class="text-neutral-400 text-lg">
+    <p class="text-neutral-500 text-lg mb-6">
         Megrendelésed rögzítettük.
     </p>
 
     {% if order.payment.name == 'Utalás bankszámlára' %}
 
-        <div class="bg-[#26bc5f05] p-8 my-3 xl:w-7/12 clip-box">
+        <div class="bg-[#38a09305] p-8 my-3 xl:w-7/12 clip-box">
             <p class="text-white text-lg">
                 A következő számlára kérjük utalja át a megrendelés összegét. Az utalás közleményében kérjük feltüntetni
                 a <strong>rendelés azonosítóját</strong>.
@@ -89,12 +89,10 @@ function onStart()
         </div>
 
     {% endif %}
-
-    <a href="/">
-        <div class="h-[50px] bg-[#2B3990] mb-3 hover:bg-opacity-50 transition-all ease-in-out px-10 text-white font-primary flex items-center 
-        justify-center clip-box w-full">
-            Tovább a főoldalra
-        </div>
+    
+    <a href="/"
+    class="h-[50px]  bg-[#151C1C] rounded-lg hover:bg-opacity-80 transition-all ease-in-out px-10 text-[#fff] font-primary flex items-center justify-center w-max">
+        Tovább a főoldalra
     </a>
 
     {% elseif order and (order.status != 5 and order.status != 0) %}

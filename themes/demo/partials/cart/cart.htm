@@ -16,10 +16,13 @@
                     <img src="{{ product.image.path }}" class="w-full h-full object-contain" alt="{{ product.name }}">
                 </div>
                 <div class="xl:mt-0 mt-3">
-                    <a href="{{ 'termek'|page({slug: product.slug}) }}" target="_blank" class="font-medium w-full text-sm">
+                    <a href="{{ 'editior'|page({editiorId: item.editior_id, productSlug: product.slug, cartitemId: item.id}) }}" target="_blank" class="font-medium w-full text-sm">
                         {{ product.name }}
                         {% if item.variant %}
-                        - ( {{ item.variant.name }} )
+                            - {{ item.variant.name }}
+                        {% endif %}
+                        {% if item.editior_id %}
+                            - EV{{ item.editior.id }}{{ item.product.id }}
                         {% endif %}
                     </a>
                     <p class="text-neutral-400 font-bold text-sm">

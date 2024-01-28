@@ -30,30 +30,53 @@
     </div>
 {% endif %} -->
 {% if product.variants|length > 0 %}                   
-    <div class="grid xl:grid-cols-4 gap-2 mb-5">
-       
+    {% if product.need_editior and this.page.baseFileName == 'termek' %}
+        <p class="font-primary mb-2">
+            Változatok
+        </p>
+        <div class="flex flex-wrap gap-2 mb-5">
+            
             {% for variant in product.variants.sortBy('id') %}
-            <input 
-            data-request="onChangeVariants"
-            name="variant_id" 
-            value="{{ variant.id }}" 
-            type="radio" hidden
-            class="variantCheck"
-            {{ variant.id == variant_id ? 'checked' }}
-            id="variant{{ variant.id }}"
-            {{ variant.stock == 0 ? 'disabled' }} >
-            <label for="variant{{ variant.id }}" class="w-full">
-                <div class="{{ variant.stock == 0 ? 'cursor-not-allowed opacity-40' : 'hover:border-[#151C1C] cursor-pointer' }} py-3 px-3 border-2 rounded-lg 
-                 bg-white border-neutral-200 {{ variant.id == variant_id ? '!border-[#151C1C] !bg-[#151C1C] text-white' }}">
+                <div class="">
                     <p class="font-medium text-sm">
-                        {{ variant.name }}
-                    </p>
-                    <p class="text-xs font-light">
-                        {{ '+'~variant.pricediff~ ' Ft' }}
+                        {{ variant.name }}{{ not loop.last ? ',' : '' }}
                     </p>
                 </div>
-            </label>
             {% endfor %}
-    
-    </div>
+
+        </div>
+    {% else %}
+
+        {% if this.page.baseFileName == 'editior' %}
+            <div class="flex flex-col gap-2 mb-5">
+                <p class="font-primary">
+                    Változatok
+                </p>
+                {% for variant in product.variants.sortBy('id') %}
+                <input 
+                data-request="onChangeVariants"
+                name="variant_id" 
+                value="{{ variant.id }}" 
+                type="radio" hidden
+                class="variantCheck"
+                {{ variant.id == variant_id ? 'checked' }}
+                id="variant{{ variant.id }}"
+                {{ variant.stock == 0 ? 'disabled' }} >
+                <label for="variant{{ variant.id }}" class="w-full">
+                    <div class="{{ variant.stock == 0 ? 'cursor-not-allowed opacity-40' : 'hover:border-[#151C1C] cursor-pointer' }} py-3 px-3 border-2 rounded-lg 
+                    bg-white border-neutral-200 {{ variant.id == variant_id ? '!border-[#151C1C] !bg-[#151C1C] text-white' }}">
+                        <p class="font-medium text-sm">
+                            {{ variant.name }}
+                        </p>
+                        <p class="text-xs font-light">
+                            {{ '+'~variant.pricediff~ ' Ft' }}
+                        </p>
+                    </div>
+                </label>
+                {% endfor %}
+
+            </div>
+        {% endif %}
+
+    {% endif %}
 {% endif %}

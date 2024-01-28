@@ -25,6 +25,7 @@ class CartItem extends Model
 
     public $belongsTo = [
         'cart' => Cart::class,        
+        'editior' => Editior::class,        
         'variant'   => ['LivestudioDev\Lscart\Models\ProductVariant', 'key' => 'variant_id'],
     ];
 

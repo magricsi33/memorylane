@@ -9,7 +9,7 @@
 		
 		<?php if(isset($product)){?>
 
-			<img src='"<?= $product->image->path ?>"' alt='' style='max-height:250px;max-width:100%'>
+			<img src='<?= $product->image->path ?>' alt='' style='max-height:250px;max-width:100%'>
 			<h4 style="font-weight:bold;"><?= $product->name ?></h4>
 			<p style="font-weight: bold;">
 				Változat: <?= $variant ? $variant->name : '' ?>
@@ -17,7 +17,9 @@
 			<p style="font-weight: bold;">
 				Mennyiség: <?= $item->quantity ?> <?= $item->product->unit->name ?>
 			</p>
-
+			<div>
+				/szerkeszto/<?php echo $item->editior_id ?>/netflix-kepkeret/
+			</div>
 		<?php } ?>
 
 	</div>

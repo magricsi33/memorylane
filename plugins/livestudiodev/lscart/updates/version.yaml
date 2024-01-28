@@ -216,3 +216,21 @@
 1.1.17:
     - 'Updated table livestudiodev_lscart_products'
     - builder_table_update_livestudiodev_lscart_products_12.php
+1.1.18:
+    - 'Created table livestudiodev_lscart_editiors'
+    - builder_table_create_livestudiodev_lscart_editiors.php
+1.1.19:
+    - 'Updated table livestudiodev_lscart_products'
+    - builder_table_update_livestudiodev_lscart_products_13.php
+1.1.20:
+    - 'Updated table livestudiodev_lscart_cartitems'
+    - builder_table_update_livestudiodev_lscart_cartitems_3.php
+1.1.21:
+    - 'Updated table livestudiodev_lscart_products'
+    - builder_table_update_livestudiodev_lscart_products_14.php
+1.1.22:
+    - 'Created table livestudiodev_lscart_editior_items'
+    - builder_table_create_livestudiodev_lscart_editior_items.php
+1.1.23:
+    - 'Updated table livestudiodev_lscart_orderitems'
+    - builder_table_update_livestudiodev_lscart_orderitems_4.php

@@ -9,14 +9,15 @@
 			<img src="{{ product.image.path }}" class="w-full h-full object-contain" alt="{{ product.name }}">
 		</div>
 		<div class="">
-			<a href="{{ 'termek'|page({slug: product.slug}) }}" target="_blank" class="font-medium w-full text-xs">
-				<p>
-					{{ product.name }}
-					{% if item.variant %}
-						( {{ item.variant.name }} )
-					{% endif %}
-				</p>
-			</a>
+			<p class="font-medium w-full text-xs">
+				{{ product.name }}
+				{% if item.variant %}
+					- {{ item.variant.name }}
+				{% endif %}
+				{% if item.editior_id %}
+					- EV{{ item.editior.id }}{{ item.product.id }}
+				{% endif %}
+			</p>
 			<p class="text-xs text-neutral-800">
 				{{ item.quantity }} x
 				{{ product.getItemPrice(item.variant_id, null, true, false, user ? user.discounts : null)|number_format(0, ',', ' ') }}

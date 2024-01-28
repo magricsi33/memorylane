@@ -135,6 +135,7 @@ class Cart extends Model
                     }
                 }
             }
+
             $i_history = [];
             $i_history["discountPriceBrutto"] = $cartitem->product->getItemPrice($cartitem->variant_id, null, true, $coupon, $discounts);
             $i_history["discountPriceNetto"] = $cartitem->product->getItemPriceNetto($cartitem->variant_id, null, true, $coupon, $discounts);
@@ -145,6 +146,7 @@ class Cart extends Model
             $oitem->history = $i_history;
             $oitem->order_id = $order->id;
             $oitem->variant_id = $cartitem->variant_id;
+            $oitem->editior_id = $cartitem->editior_id;
             $oitem->product = $cartitem->product;
             $oitem->quantity = $cartitem->quantity;
             $oitem->extras = $cartitem->extras;

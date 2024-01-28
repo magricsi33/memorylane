@@ -146,3 +146,115 @@ tabs:
             path: $/livestudiodev/lscart/controllers/products/add_properties.htm
             type: partial
             tab: Tulajdonságok
+        need_editior:
+            label: 'Tervezés szükséges'
+            span: auto
+            type: switch
+            tab: Editior
+        editior_inputs:
+            label: 'Szerkesztő mezők'
+            prompt: 'Add new item'
+            style: default
+            span: full
+            type: repeater
+            tab: Editior
+            form:
+                fields:
+                    name:
+                        label: név
+                        span: auto
+                        type: text
+                    code:
+                        label: code
+                        span: auto
+                        type: text
+                    default:
+                        label: default
+                        span: auto
+                        type: text
+                    type:
+                        label: type
+                        options:
+                            text: text
+                            image: image
+                            textarea: textarea
+                        showSearch: true
+                        span: auto
+                        type: dropdown
+                    class:
+                        label: class
+                        span: auto
+                        type: text
+                    itemClass:
+                        label: itemClass
+                        span: auto
+                        type: text
+                        tab: Editior
+                    z:
+                        label: z-index
+                        span: auto
+                        type: number
+                    Desktop:
+                        label: Desktop
+                        span: full
+                        type: section
+                    w:
+                        label: width
+                        span: auto
+                        type: text
+                    h:
+                        label: height
+                        span: auto
+                        type: text
+                    l:
+                        label: left
+                        span: auto
+                        type: text
+                    t:
+                        label: top
+                        span: auto
+                        type: text
+                    b:
+                        label: bottom
+                        span: auto
+                        type: text
+                    r:
+                        label: right
+                        span: auto
+                        type: text
+                    size:
+                        label: size
+                        span: auto
+                        type: text
+                    Mobil:
+                        label: Mobil
+                        span: full
+                        type: section
+                    mobil_w:
+                        label: width
+                        span: auto
+                        type: text
+                    mobil_h:
+                        label: height
+                        span: auto
+                        type: text
+                    mobil_l:
+                        label: left
+                        span: auto
+                        type: text
+                    mobil_t:
+                        label: top
+                        span: auto
+                        type: text
+                    mobil_b:
+                        label: bottom
+                        span: auto
+                        type: text
+                    mobil_r:
+                        label: right
+                        span: auto
+                        type: text
+                    mobil_size:
+                        label: size
+                        span: auto
+                        type: text

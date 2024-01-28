@@ -12,6 +12,8 @@ use LivestudioDev\Lscart\Models\Currency;
 use LivestudioDev\Lscart\Models\ProductVariant;
 use LivestudioDev\Lscart\Models\ShippingMethod;
 use LivestudioDev\Lscart\Models\Settings;
+use LivestudioDev\Lscart\Models\Editior;
+use LivestudioDev\Lscart\Models\EditiorItem;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Cms\Classes\ComponentBase;
 use Exception;
@@ -409,6 +411,36 @@ class Cart extends ComponentBase
 
 	public function onAddCartItem()
 	{
+		
+		$editiorId = post('editior_id');
+		$editior = Editior::find(post('editior_id'));
+
+		$inputs = collect(\Input::all())->except('quantity', 'editior_id', 'product_id');
+
+		foreach ($inputs as $key => $input) {
+
+			$item = EditiorItem::where('code', $key)->where('editior_id', $editiorId)->first();
+
+			if (!$item) {
+				$item = new EditiorItem;
+			}
+
+			$item->name = $key;
+			$item->code = $key;
+			$item->data = $input;
+			$item->editior_id = $editiorId;
+
+			if ($input instanceof \Symfony\Component\HttpFoundation\File\UploadedFile) {
+				$item->image = $input;
+			}
+
+			$item->save();
+
+		}
+
+		$editior->variant_id = post('variant_id');
+		$editior->save();
+
 		$extras = [];
         $settings = Settings::instance();
 
@@ -418,6 +450,7 @@ class Cart extends ComponentBase
 		$item = new CartItem();
 		$item->product = Product::find(post('product_id'));
 		$item->quantity = post('quantity');
+		$item->editior_id = $editiorId;
 
 		if($variantid){
 			$item->variant = ProductVariant::find(post('variant_id'));
@@ -452,13 +485,14 @@ class Cart extends ComponentBase
 				} elseif ($stock > 0) {
 
 					$item->cart_id = $this->cart->id;
-					
+
 					if ($this->cart->hasProduct($item)) {
 						$this->cart->addQuantity($item);
 					} else {
 						$this->cart->add($item);
 					}
-			
+
+
 					\Flash::success("Termék sikeresen kosárba téve.");
 					return $this->refreshCart();
 
