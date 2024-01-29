@@ -21,12 +21,18 @@
         <a data-request="onSetCartPayment" data-request-data="payment_mode: {{ item.payment }}" class="w-full">
             <div class="bg-[#fff] px-4 w-full rounded-lg border border-neutral-200 hover:border-[#151C1C] p-5 flex items-center justify-between cursor-pointer
             {{ cart.cart.payment.id == item.payment ? '!border-[#151C1C] !bg-[#fff] bg-opacity-5' : '' }} {{ not loop.last ? 'mb-5' }}">
-                <div>
-                    <p class="font-medium font-primary text-xl">
-                        {{ method.name }}
-                    </p>   
-                    <div class="text-neutral-500 text-sm raw">
-                        {{ method.description|raw }}
+                <div class="flex items-center">
+                    <div class="w-8 h-8 flex items-center justify-center rounded-md bg-white border border-neutral-400 
+                    {{ cart.cart.payment.id == item.payment ? '!bg-[#38a093]' : '' }}">
+                        <div class="w-4 h-4 rounded-md bg-white"></div>
+                    </div>
+                    <div class="ml-3">
+                        <p class="font-medium font-primary text-xl">
+                            {{ method.name }}
+                        </p>   
+                        <div class="text-neutral-500 text-sm raw">
+                            {{ method.description|raw }}
+                        </div>
                     </div>
                 </div>
                 <p class="font-semibold text-sm">

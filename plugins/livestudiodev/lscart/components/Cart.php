@@ -414,32 +414,35 @@ class Cart extends ComponentBase
 		
 		$editiorId = post('editior_id');
 		$editior = Editior::find(post('editior_id'));
+		$product = Product::find(post('product_id'));
 
 		$inputs = collect(\Input::all())->except('quantity', 'editior_id', 'product_id');
 
-		foreach ($inputs as $key => $input) {
+		if ($product->need_editior) {
+			foreach ($inputs as $key => $input) {
 
-			$item = EditiorItem::where('code', $key)->where('editior_id', $editiorId)->first();
-
-			if (!$item) {
-				$item = new EditiorItem;
+				$item = EditiorItem::where('code', $key)->where('editior_id', $editiorId)->first();
+	
+				if (!$item) {
+					$item = new EditiorItem;
+				}
+	
+				$item->name = $key;
+				$item->code = $key;
+				$item->data = $input;
+				$item->editior_id = $editiorId;
+	
+				if ($input instanceof \Symfony\Component\HttpFoundation\File\UploadedFile) {
+					$item->image = $input;
+				}
+	
+				$item->save();
+	
 			}
-
-			$item->name = $key;
-			$item->code = $key;
-			$item->data = $input;
-			$item->editior_id = $editiorId;
-
-			if ($input instanceof \Symfony\Component\HttpFoundation\File\UploadedFile) {
-				$item->image = $input;
-			}
-
-			$item->save();
-
+	
+			$editior->variant_id = post('variant_id');
+			$editior->save();
 		}
-
-		$editior->variant_id = post('variant_id');
-		$editior->save();
 
 		$extras = [];
         $settings = Settings::instance();
@@ -450,7 +453,10 @@ class Cart extends ComponentBase
 		$item = new CartItem();
 		$item->product = Product::find(post('product_id'));
 		$item->quantity = post('quantity');
-		$item->editior_id = $editiorId;
+
+		if ($product->need_editior) {
+			$item->editior_id = $editiorId;
+		}
 
 		if($variantid){
 			$item->variant = ProductVariant::find(post('variant_id'));

@@ -178,7 +178,11 @@ function onOpenEditior() {
             <!-- data-request="onAddCartItem" -->
             <form 
             data-request-complete="addToCart()" 
-            data-request="onOpenEditior" 
+            {% if product.need_editior %}
+                data-request="onOpenEditior" 
+            {% else %}
+                data-request="onAddCartItem" 
+            {% endif %}
             data-request-flash id="addToCartForm" class="flex flex-col xl:justify-between h-full">
                 <input type="hidden" name="product_id" value="{{ product.id }}" />
                 <div>
@@ -273,28 +277,31 @@ function onOpenEditior() {
                     {% endif %}
                 </div>
                 <div id="addToCart" class="border-t border-b border-neutral-300 py-5 my-3">
+                    
                     <div id="variant">
                         {% partial 'product/variant' %}
                     </div>
-                    
-                    <div class="bg-[#151C1C] text-white p-5 rounded-lg relative flex items-center gap-5">
-                        <i class="fa-solid fa-pen-paintbrush text-7xl"></i>
-                        <div>
-                            <h3 class="text-3xl font-primary">
-                                Egyedi tervezés
-                            </h3>
-                            <p class="text-sm mb-3">
-                                Tervezd meg a saját képkereted.
-                            </p>
-                            <button form="addToCartForm" type="submit" id="addCartBtn" 
-                            class="bg-[#fff] text-[#151C1C] hover:bg-opacity-90 rounded-lg w-max oswald transition-all ease-in-out px-9 h-12 font-medium uppercase 
-                            flex items-center justify-center">
-                                Tovább a tervezőbe
-                            </button>
-                        </div>
-                    </div>
 
-                    <!-- <div class="flex flex-wrap items-center w-full">
+                    {% if product.need_editior %}
+                        <div class="bg-[#151C1C] text-white p-5 rounded-lg relative flex items-center gap-5">
+                            <i class="fa-solid fa-pen-paintbrush text-7xl"></i>
+                            <div>
+                                <h3 class="text-3xl font-primary">
+                                    Egyedi tervezés
+                                </h3>
+                                <p class="text-sm mb-3">
+                                    Tervezd meg a saját képkereted.
+                                </p>
+                                <button form="addToCartForm" type="submit" id="addCartBtn" 
+                                class="bg-[#fff] text-[#151C1C] hover:bg-opacity-90 rounded-lg w-max oswald transition-all ease-in-out px-9 h-12 font-medium uppercase 
+                                flex items-center justify-center">
+                                    Tovább a tervezőbe
+                                </button>
+                            </div>
+                        </div>
+                    {% else %}
+
+                    <div class="flex flex-wrap items-center w-full">
                         {% if product.status == 1 %}
                         
                             <div class="lg:w-4/12 w-full lg:pr-2 mb-5 lg:mb-0">
@@ -346,7 +353,10 @@ function onOpenEditior() {
                             </div>
                         </div>
                         {% endif %}
-                    </div> -->
+                    </div>
+
+                    {% endif %}
+
                 </div>
             </form>
         </div>

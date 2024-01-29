@@ -13,11 +13,15 @@
     <div class="flex flex-wrap">
         {% for key, item in cart.shippingMethods() %}
         <a data-request="onSetCartShipping" data-request-data="shipping_mode: {{ item.id }}, payment_mode: 1" data-request-loading class="w-full">
-            <div class="bg-[#fff] px-4 w-full rounded-lg border border-neutral-200 hover:border-[#151C1C] p-5 flex items-center justify-between cursor-pointer  
+            <div class="bg-[#fff] px-4 w-full rounded-lg border border-neutral-200 hover:border-[#151C1C] p-5 flex items-center justify-between cursor-pointer shadow-md 
             {{ not loop.last ? 'mb-5' }} w-full
-            {{ cart.cart.shipping.id == item.id ? '!border-[#151C1C] !bg-[#fff] !text-white bg-opacity-5' : '' }}">
+            {{ cart.cart.shipping.id == item.id ? '!border-[#151C1C]' : '' }}">
                 <div class="flex flex-wrap items-center">
-                    <img src="{{ item.logo.path }}" class="h-full w-[80px] mr-3 hidden xl:block" alt="{{ item.name }}">
+                    <div class="w-8 h-8 flex items-center justify-center rounded-md bg-white border border-neutral-400 
+                    {{ cart.cart.shipping.id == item.id ? '!bg-[#38a093]' : '' }}">
+                        <div class="w-4 h-4 rounded-md bg-white"></div>
+                    </div>
+                    <img src="{{ item.logo.path }}" class="h-full w-[80px] mx-3 hidden xl:block" alt="{{ item.name }}">
                     <div>
                         <p class="font-medium font-primary text-xl {{ cart.cart.shipping.id == item.id ? '' : '' }}">
                             {{ item.name }}
@@ -27,7 +31,7 @@
                         </div>
                     </div>
                 </div>
-                <p class="font-semibold text-sm">
+                <p class="font-semibold text-sm {{ cart.cart.shipping.id == item.id ? '' : '' }}">
                     {% if item.getSelfCost(cart.cart) == 0 %}
                         Ingyenes
                     {% else %}
