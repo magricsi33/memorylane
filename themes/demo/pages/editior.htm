@@ -152,6 +152,13 @@ function onSaveEditior()
                                 right-[{{ imageInput['mobil_r'] }}]
                                 top-[{{ imageInput['mobil_t'] }}]
                                 bottom-[{{ imageInput['mobil_b'] }}]
+    
+                                md:w-[{{ imageInput['tablet_w'] }}]
+                                md:h-[{{ imageInput['tablet_h'] }}]
+                                md:left-[{{ imageInput['tablet_l'] }}]
+                                md:right-[{{ imageInput['tablet_r'] }}]
+                                md:top-[{{ imageInput['tablet_t'] }}]
+                                md:bottom-[{{ imageInput['tablet_b'] }}]
 
                                 z-[{{ imageInput['z'] }}]
                                 {{ imageInput['class'] }} 
@@ -258,7 +265,7 @@ function onSaveEditior()
                                             <label for="{{ input['code'] }}_id" class="text-sm w-5 h-5 flex items-center justify-center">
                                                 <i class="fa-solid fa-up-down"></i>
                                             </label>
-                                            <input type="range" value="0" min="-300" max="300" step="0.1" name="{{ input['code'] }}_vertical" id="{{ input['code'] }}_id" x-model="vertical_{{ input['code'] }}"
+                                            <input type="range" value="0" min="-300" max="300" step="0.05" name="{{ input['code'] }}_vertical" id="{{ input['code'] }}_id" x-model="vertical_{{ input['code'] }}"
                                             class="w-full">
                                             <div class="w-16">
                                                 <span x-text="vertical_{{ input['code'] }}" class="text-xs"></span><span class="text-xs">px</span>

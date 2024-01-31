@@ -69,6 +69,13 @@ input[type="range"]::-webkit-slider-thumb {
     border-radius: 100%;
  }
 
+@media (max-width: 990px) {
+    input[type="range"]::-webkit-slider-thumb {
+        height: 20px !important;
+        width: 20px !important;    
+     }
+}
+
 .scrollspy-example {
     position: relative;
     height: 100vh;

@@ -258,3 +258,35 @@ tabs:
                         label: size
                         span: auto
                         type: text
+                    Tablet:
+                        label: Tablet
+                        span: full
+                        type: section
+                    tablet_w:
+                        label: width
+                        span: auto
+                        type: text
+                    tablet_h:
+                        label: height
+                        span: auto
+                        type: text
+                    tablet_l:
+                        label: left
+                        span: auto
+                        type: text
+                    tablet_t:
+                        label: top
+                        span: auto
+                        type: text
+                    tablet_b:
+                        label: bottom
+                        span: auto
+                        type: text
+                    tablet_r:
+                        label: right
+                        span: auto
+                        type: text
+                    tablet_size:
+                        label: size
+                        span: auto
+                        type: text
