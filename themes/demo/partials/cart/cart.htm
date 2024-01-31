@@ -11,18 +11,18 @@
     {% for item in cart.cart.items %}
         {% set product = item.product %}
         <div class="w-full {{ cart.cart.items|length > 1 ? 'border-b border-neutral-300' : '' }} py-6 bg-opacity-40 xl:p-5 flex flex-wrap items-center">
-            <div class="w-full xl:w-6/12 flex items-center flex-wrap xl:pr-6">
+            <div class="w-full xl:w-6/12 flex items-center flex-wrap xl:flex-nowrap xl:pr-6">
                 <div class="xl:w-[80px] w-full xl:min-w-[80px] min-w-[60px] xl:h-[80px] h-[100px] bg-white p-2 mr-3 clip-box overflow-hidden">
                     <img src="{{ product.image.path }}" class="w-full h-full object-contain" alt="{{ product.name }}">
                 </div>
                 <div class="xl:mt-0 mt-3">
+                    {% if item.editior_id %}
+                        <p class="text-xs italic">Tervező azonosító: {{ item.editior.id }}{{ item.product.id }}</p>
+                    {% endif %}
                     <a href="{{ 'editior'|page({editiorId: item.editior_id, productSlug: product.slug, cartitemId: item.id}) }}" target="_blank" class="font-medium w-full text-sm">
                         {{ product.name }}
                         {% if item.variant %}
                             - {{ item.variant.name }}
-                        {% endif %}
-                        {% if item.editior_id %}
-                            - EV{{ item.editior.id }}{{ item.product.id }}
                         {% endif %}
                     </a>
                     <p class="text-neutral-400 font-bold text-sm">

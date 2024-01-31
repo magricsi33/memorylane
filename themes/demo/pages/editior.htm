@@ -76,13 +76,16 @@ function onSaveEditior()
 
 ?>
 ==
+
+
+
 <!-- <div class="xl:hidden flex items-center justify-center text-center">
     <p class="font-bold text-xl mt-12">
         A szerkesztői felület jelenleg csak nagyképernyőn működik. Például számítógép, laptop
     </p>
 </div> -->
 <form 
-    data-request-complete="addToCart()" 
+    data-request-complete="saveImg()" 
     data-request="onAddCartItem" 
     data-request-flash 
     data-request-files
@@ -122,7 +125,7 @@ function onSaveEditior()
         {% endfor %}
 
 
-        <div x-data="
+        <div id="canvas" x-data="
         { {% for data in dataArray %}
             {{ data }}
         {% endfor %} }" class="">
@@ -398,68 +401,46 @@ function onSaveEditior()
 
 </form>
 {% put scripts %}
+
+<script src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
+
 <script>
 
-function addToCart() {
-    //
-}
+    function saveImg() {
 
-var loadImg = function(inputId, outputId, type) {
-    var input = document.getElementById(inputId);
-    var output = document.getElementById(outputId);
-
-    console.log(input.value);
-
-    if (type === 'image') {
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
-            
-            reader.onload = function(e) {
-                output.src = e.target.result;
-            };
-
-            reader.readAsDataURL(input.files[0]);
-
-            input.parentNode.classList.add('active');
-        }
-    } else if (type === 'text' || type === 'textarea') {
-        output.innerText = input.value;
     }
 
-    $.request("onSaveEditior", {
-        data: {
-            value: input.value,
-            name: input.name,
-            type: input.type,
+    var loadImg = function(inputId, outputId, type) {
+        var input = document.getElementById(inputId);
+        var output = document.getElementById(outputId);
+
+        console.log(input.value);
+
+        if (type === 'image') {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    output.src = e.target.result;
+                };
+
+                reader.readAsDataURL(input.files[0]);
+
+                input.parentNode.classList.add('active');
+            }
+        } else if (type === 'text' || type === 'textarea') {
+            output.innerText = input.value;
         }
-    });
-    
-};
 
-</script>
-<script>
-    $(document).ready(function() {
-        // A mozgatható elemek aktiválása
-        $('.custom-file').draggable({
-            containment: "parent",
-            stop: function(event, ui) {
-                // Itt frissítheted a pozíció adatokat
-                var position = ui.helper.position();
-                console.log(position);
-                // Itt küldheted az új pozíciót a szervert
+        $.request("onSaveEditior", {
+            data: {
+                value: input.value,
+                name: input.name,
+                type: input.type,
             }
         });
+        
+    };
 
-        // A méretezhető elemek aktiválása
-        $('.custom-file').resizable({
-            containment: "parent",
-            stop: function(event, ui) {
-                // Itt frissítheted a méret adatokat
-                var size = { width: ui.size.width, height: ui.size.height };
-                console.log(size);
-                // Itt küldheted az új méretet a szervert
-            }
-        });
-    });
 </script>
 {% endput %}
