@@ -20,7 +20,7 @@
         <div class="w-full relative z-10 overflow-hidden xl:h-[300px] h-[300px] flex justify-center bg-white">
 
             <img src="{{ product.image.path|resize(500) }}" loading="lazy"
-            class="object-contain object-center w-full h-full transition-all ease-in-out group-hover:scale-105" 
+            class="{{ product.need_editior ? 'object-cover' : 'object-contain' }} object-center w-full h-full transition-all ease-in-out group-hover:scale-105" 
             alt="">
 
         </div>
@@ -31,9 +31,8 @@
             </div>
             <h2 class="xl:h-[25px] xl:px-5 px-3 my-3">
                 <span class="xl:block hidden xl:text-base font-primary">{{ product.name|length > 80 ? product.name|slice(0, 80) ~ '...' : product.name }}</span>
-                <span class="xl:hidden xl:text-xl text-lg font-primary">{{  product.name }}</span>
+                <span class="xl:hidden xl:text-xl text-lg font-primary">{{ product.name }}</span>
             </h2>
-
             <div class="description text-xs text-[#666] xl:h-[50px] overflow-hidden xl:px-5 px-3 mb-3">
 
                 {{ product.meta_description|length > 100 ? product.meta_description|slice(0, 100) ~ '...' : product.meta_description }}
