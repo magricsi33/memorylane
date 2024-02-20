@@ -283,19 +283,20 @@ function onOpenEditior() {
                     </div>
 
                     {% if product.need_editior %}
-                        <div class="bg-[#151C1C] text-white p-5 rounded-lg relative gap-5">
-                            
-                            <h3 class="xl:text-3xl text-3xl font-primary">
-                                Egyedi tervezés
-                            </h3>
-                            <p class="text-sm mb-3">
-                                Tervezd meg a saját képkereted.
-                            </p>
-                            <button form="addToCartForm" type="submit" id="addCartBtn" 
-                            class="bg-[#38a093] text-white hover:bg-opacity-90 rounded-lg font-bold w-full oswald transition-all ease-in-out px-5 py-3 uppercase 
-                            flex items-center justify-center gap-3">
-                                <i class="fa-solid fa-pen-paintbrush text-white"></i> Tovább a tervezőbe
-                            </button>
+                        <div class="border border-neutral-300 p-5 rounded-lg relative flex flex-wrap justify-center xl:justify-start items-center gap-3">
+                            <div class="flex items-center justify-center w-20 min-w-[80px] h-20 rounded-full bg-[#38a093]">
+                                <i class="fa-solid fa-pen-paintbrush text-4xl text-white"></i>
+                            </div>
+                            <div>
+                                <h3 class="xl:text-2xl text-2xl font-primary mb-1 text-center xl:text-start">
+                                    Tervezd meg a saját képkereted.
+                                </h3>
+                                <button form="addToCartForm" type="submit" id="addCartBtn" 
+                                class="bg-[#151C1C] text-white hover:bg-opacity-80 rounded-lg font-bold w-full oswald transition-all ease-in-out px-5 py-3 uppercase 
+                                flex items-center justify-center gap-3">
+                                     Tovább a tervezőbe
+                                </button>
+                            </div>
 
                         </div>
                     {% else %}
@@ -355,7 +356,25 @@ function onOpenEditior() {
                     </div>
 
                     {% endif %}
-
+                    {% if product.related_products|length > 0 %}
+                    <div class="flex flex-wrap mt-6">
+                        <h3 class="text-lg mb-3 font-primary">
+                            Kapcsolódó Termékek
+                        </h3>
+                        <div class="grid xl:grid-cols-2 gap-1 mb-3 w-full">
+                            {% for item in product.related_products %}
+                            <a href="{{ 'termek'|page({category: item.category.slug, product: item.slug}) }}">
+                                <div class="bg-[#fff] hover:border-[#38a093] relative transition-all ease-in-out z-20 border border-neutral-200 rounded-lg overflow-hidden flex items-center gap-1 pr-3"> 
+                                    <img src="{{ item.image.path }}" class="w-20 h-20 object-contain" alt="">
+                                    <p class="text-xs font-bold">
+                                        {{ item.name }}
+                                    </p>
+                                </div>
+                            </a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endif %}
                 </div>
             </form>
         </div>
@@ -412,18 +431,6 @@ function onOpenEditior() {
             {% endfor %}
         </div>
 
-        <div class="flex flex-wrap mt-20">
-            {% if product.related_products|length > 0 %}
-            <h3 class=" font-medium text-3xl w-full mb-5 text-center font-primary">
-                Kapcsolódó Termékek
-            </h3>
-            {% endif %}
-            {% for item in product.related_products %}
-            <div class="xl:w-3/12 w-full mb-3 px-2 xl:mb-0"> 
-                {% partial 'elements/product/productBox' product=item %}
-            </div>
-            {% endfor %}
-        </div>
         <div class="flex flex-wrap mt-20">
             <h3 class=" font-medium text-3xl w-full mb-5 text-center font-primary">
                 Hasonló Termékek

@@ -19,6 +19,7 @@ use Carbon\Carbon;
 use Codergram\Ecommpay\Classes\EcommpayDriver;
 use Codergram\Shopforge\Models\Sitesearch;
 use Codergram\Zoldszeged\Models\Page;
+use LivestudioDev\Lscart\Models\Settings;
 
 function onCookie() {
 
@@ -39,6 +40,9 @@ function onStart()
     $this['footer_items'] = Page::where('show_footer', 1)->get(
         ['menu_name', 'slug']
     );
+
+    $settings = Settings::instance();
+    $this['head_text'] = $settings->head_text;
 
     //$this['links'] = Page::where('public_date', '<', Carbon::now())->get();
 
@@ -144,7 +148,7 @@ function onSearch() {
         <!-- OG TAG vége -->
 
         <meta name="theme-color" content="#111">
-        <link rel="icon" type="image/png" href="/themes/demo/assets/images/logo.svg">
+        <link rel="icon" type="image/png" href="/themes/demo/assets/images/favicon2.svg">
         <link href="/themes/demo/assets/css/theme.css" rel="stylesheet">
 
         <script src="https://cdn.tailwindcss.com"></script>

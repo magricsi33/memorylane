@@ -27,3 +27,8 @@ tabs:
             span: auto
             type: switch
             tab: Alapértelmezett
+        head_text:
+            label: 'Megjelenített szöveg'
+            span: auto
+            type: text
+            tab: Alapértelmezett

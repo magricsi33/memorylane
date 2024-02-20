@@ -14,8 +14,6 @@
                 <div class="h-full hidden xl:block">
                     
                     <button 
-                        @mouseover="buttonHover = {{ category.id }}"
-                        @mouseout="buttonHover = 'null'"
                         x-on:click="categoryOpen === {{ category.id }} ? categoryOpen = 'null' : categoryOpen = {{ category.id }}"
                         :class="{
                             'text-[#38a093]': categoryOpen === {{ category.id }},
@@ -23,7 +21,7 @@
                             'bg-white bg-opacity-10': buttonHover === {{ category.id }},
                             'text-opacity-50': buttonHover != {{ category.id }} && buttonHover != 'null'
                         }"
-                        class="py-1 h-full w-max px-3 flex items-center text-sm font-medium cursor-pointer transition-all ease-in-out relative"
+                        class="hover:text-[#38a093] py-1 h-full w-max px-3 flex items-center text-sm font-medium cursor-pointer transition-all ease-in-out relative"
                     >
                         {{ category.name }}
                         <div 
@@ -76,6 +74,16 @@
                     {% endif %}
                 </div>
                 {% endfor %}
+
+                {% for item in menu_items %}
+                    <a 
+                    href="/hu{{ item.slug == '/' ? '/' : '/'~item.slug }}" 
+                    {{ item.redirect ? 'target="_blank"' : '' }}
+                    class="hover:text-[#38a093]  py-1 h-full w-max px-3 flex items-center text-sm font-medium cursor-pointer transition-all ease-in-out relative">
+                        {{ item.menu_name }}
+                    </a>
+                {% endfor %}
+
             </div>
         </div>
         <div class="flex items-center">
@@ -176,7 +184,7 @@ xl:fixed sticky xl:top-[88px] top-0 w-full text-white transition-all ease-in-out
 </header> -->
 
 <div class="w-full h-[40px] bg-[#38a093] items-center justify-center text-white font-bold xl:text-base text-sm hidden xl:flex">
-    Ingyenes házhozszállítás 2024. február 14.-ig
+    {{ head_text }}
 </div>
 
 <div :class="{ '!opacity-100 !max-w-[80%]': openModal == 'mobileMenu' }" 
