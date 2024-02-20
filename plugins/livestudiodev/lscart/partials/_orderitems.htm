@@ -17,8 +17,11 @@
 			<p style="font-weight: bold;">
 				Mennyiség: <?= $item->quantity ?> <?= $item->product->unit->name ?>
 			</p>
-			<div>
-				/szerkeszto/<?php echo $item->editior_id ?>/netflix-kepkeret/
+			<a href="https://memorylane.hu/szerkeszto/<?= $item->editior_id ?>/<?= $product->slug ?>/<?= $item->editior_id ?>">
+				Megtekintés
+			</a>
+			<div style="font-size: 10px">
+				/szerkeszto/<?= $item->editior_id ?>/<?= $product->slug ?>/<?= $item->editior_id ?>
 			</div>
 		<?php } ?>
 
