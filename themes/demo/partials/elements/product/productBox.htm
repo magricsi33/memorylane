@@ -17,11 +17,11 @@
             {% endif %}
         </div>
 
-        <div class="w-full relative z-10 overflow-hidden xl:h-[300px] h-[300px] flex justify-center bg-white">
+        <div class="w-full relative z-10 overflow-hidden xl:h-[300px] h-[300px] flex justify-center bg-white pb-3">
 
             <img src="{{ product.image.path|resize(500) }}" loading="lazy"
-            class="{{ not product.need_editior ? 'object-cover' : 'object-contain' }}  object-center w-full h-full transition-all ease-in-out group-hover:scale-105" 
-            alt="">
+            class="{{ not product.need_editior ? 'object-cover' : 'object-contain' }} object-center w-full h-full transition-all ease-in-out group-hover:scale-105" 
+            alt="{{ product.name }}">
 
         </div>
 

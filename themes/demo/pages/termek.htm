@@ -365,7 +365,7 @@ function onOpenEditior() {
                             {% for item in product.related_products %}
                             <a href="{{ 'termek'|page({category: item.category.slug, product: item.slug}) }}">
                                 <div class="bg-[#fff] hover:border-[#38a093] relative transition-all ease-in-out z-20 border border-neutral-200 rounded-lg overflow-hidden flex items-center gap-1 pr-3"> 
-                                    <img src="{{ item.image.path }}" class="w-20 h-20 object-contain" alt="">
+                                    <img src="{{ item.image.path }}" class="w-20 h-20 object-contain" alt="{{ product.name }}">
                                     <p class="text-xs font-bold">
                                         {{ item.name }}
                                     </p>
