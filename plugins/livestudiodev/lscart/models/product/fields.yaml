@@ -290,3 +290,13 @@ tabs:
                         label: size
                         span: auto
                         type: text
+        editor_image:
+            label: 'Szerkesztési kép'
+            mode: image
+            useCaption: true
+            thumbOptions:
+                mode: crop
+                extension: auto
+            span: auto
+            type: fileupload
+            tab: Editior

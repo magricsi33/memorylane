@@ -65,7 +65,8 @@ class Product extends Model
             'imageWidth' => 800, 
             'imageHeight' => 600, 
             'quality' => 90
-        ]
+        ],
+        'editor_image' => 'System\Models\File',    
     ];
 
     public $hasMany = [

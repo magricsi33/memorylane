@@ -79,7 +79,7 @@
                     <a 
                     href="/hu{{ item.slug == '/' ? '/' : '/'~item.slug }}" 
                     {{ item.redirect ? 'target="_blank"' : '' }}
-                    class="hover:text-[#38a093]  py-1 h-full w-max px-3 flex items-center text-sm font-medium cursor-pointer transition-all ease-in-out relative">
+                    class="hover:text-[#38a093] py-1 h-full w-max px-3 items-center text-sm font-medium cursor-pointer transition-all ease-in-out relative hidden xl:flex">
                         {{ item.menu_name }}
                     </a>
                 {% endfor %}

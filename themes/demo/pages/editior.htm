@@ -130,9 +130,9 @@ function onSaveEditior()
             {{ data }}
         {% endfor %} }" class="">
             <div id="addToCart" class="w-full mb-3 flex flex-wrap xl:flex-nowrap">
-                <div class="xl:w-9/12 xl:relative fixed flex items-start justify-start w-full mb-6 xl:mb-0 xl:px-0 px-3" >
-                    <div class="w-full h-max sticky top-20 overflow-hidden">
-                        <img src="{{ 'assets/images/netflix-edit-all.png'|theme }}" class="w-full h-full object-contain" alt="{{ product.name }}">
+                <div class="xl:w-9/12 xl:relative fixed w-full flex items-start justify-center z-50 xl:bg-transparent bg-black bg-opacity-50 backdrop-blur-md" >
+                    <div class="h-[280px] xl:h-auto w-auto relative xl:sticky xl:top-20">
+                        <img src="{{ product.editor_image.path }}" class="w-full object-top h-full xl:max-h-[1000px] object-contain" alt="{{ product.name }}">
 
                         {% for imageInput in inputs %}
 
@@ -156,13 +156,6 @@ function onSaveEditior()
                                 top-[{{ imageInput['mobil_t'] }}]
                                 bottom-[{{ imageInput['mobil_b'] }}]
     
-                                md:w-[{{ imageInput['tablet_w'] }}]
-                                md:h-[{{ imageInput['tablet_h'] }}]
-                                md:left-[{{ imageInput['tablet_l'] }}]
-                                md:right-[{{ imageInput['tablet_r'] }}]
-                                md:top-[{{ imageInput['tablet_t'] }}]
-                                md:bottom-[{{ imageInput['tablet_b'] }}]
-
                                 z-[{{ imageInput['z'] }}]
                                 {{ imageInput['class'] }} 
                                 ">
@@ -183,12 +176,12 @@ function onSaveEditior()
                                 xl:top-[{{ imageInput['t'] }}] 
                                 xl:bottom-[{{ imageInput['b'] }}] 
 
-                                w-[{{ imageInput['mobil_w'] }}] 
+                                w-[{{ imageInput['mobil_w'] }}]
                                 h-[{{ imageInput['mobil_h'] }}]
-                                left-[{{ imageInput['mobil_l'] }}] 
-                                right-[{{ imageInput['mobil_r'] }}]  
-                                top-[{{ imageInput['mobil_t'] }}] 
-                                bottom-[{{ imageInput['mobil_b'] }}] 
+                                left-[{{ imageInput['mobil_l'] }}]
+                                right-[{{ imageInput['mobil_r'] }}]
+                                top-[{{ imageInput['mobil_t'] }}]
+                                bottom-[{{ imageInput['mobil_b'] }}]
 
                                 z-[{{ imageInput['z'] }}]
                                 {{ imageInput['class'] }} 
@@ -317,7 +310,7 @@ function onSaveEditior()
                             {% partial 'product/variant' %}
                         </div>
 
-                        <div class="mb-6 mt-3">
+                        <div class="mb-6 mt-3 relative">
                             {% if product.status == 0 %}
                             <h2 class="font-medium text-4xl text-primary font-primary">
                                 {{ product.getItemPrice(variant_id, cart.cart.currency.id, false, false, false)|number_format(0, ',', ' ') }}
